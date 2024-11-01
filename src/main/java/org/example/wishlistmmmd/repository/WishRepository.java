@@ -35,9 +35,6 @@ public class WishRepository {
         return false;
     }
 
-    public void loginStatus(HttpStatus response) {
-
-    }
 
     public void getUserData(String username) throws SQLException {
         String SQL = "SELECT userID, name FROM userprofile WHERE username=?";

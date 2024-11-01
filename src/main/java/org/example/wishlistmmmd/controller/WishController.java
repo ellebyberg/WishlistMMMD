@@ -28,11 +28,20 @@ public class WishController {
         if (ws.validateLogin(username, password)) {
             HttpSession session = request.getSession();
             session.setAttribute("loggedIn", true);
-            return "redirect:/home";
+            //TODO: Der skal laves et if-tjek på følgende controller metoder for at sikre, at brugeren er logget ind.
+            /*
+            Boolean loggedIn = (Boolean) session.getAttribute("loggedIn");
+
+                if (loggedIn == null || !loggedIn) {
+                    return "redirect:/login";
+                }
+             */
+            return "redirect:/home"; //TODO: Erstat med userProfileHomePage, når denne er færdig. Redirect fører ingen vegne i øjeblikket.
         } else {
             return "redirect:/loginPage?error";
         }
     }
+
     @GetMapping("/loginPage")
     public String loginPage(@RequestParam(value = "error", required = false)String error, Model model) {
         if (error != null) {
