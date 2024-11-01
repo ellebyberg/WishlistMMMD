@@ -29,7 +29,7 @@ public class WishlistMmmdApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        wr.getUserData("cliu");
+        wr.getUserData("dkim");
     }
 
 
