@@ -13,6 +13,8 @@ public class WishlistMmmdApplication {
         SpringApplication.run(WishlistMmmdApplication.class, args);
         WishRepository wr = new WishRepository();
         wr.getUserData("cliu");
+
+
     }
 
 }
