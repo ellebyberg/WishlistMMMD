@@ -11,9 +11,16 @@ import java.sql.SQLException;
 
 @SpringBootApplication
 public class WishlistMmmdApplication implements CommandLineRunner {
+    //Ved at implementere CommandLineRunner, kan du køre kode, når
+    // Spring applikationen er startet op. Metoden run bliver kaldt
+    // automatisk efter, at applikationen er startet.
 
     @Autowired
     private WishRepository wr;
+    //Denne annotation Autowired fortæller Spring, at den skal injicere en
+    // instans af WishRepository i denne klasse. Spring håndterer automatisk
+    // livscyklussen for beans, så vi ikke selv skal oprette dem med new.
+
 
     public static void main(String[] args) throws SQLException {
         SpringApplication.run(WishlistMmmdApplication.class, args);

@@ -20,6 +20,13 @@ public class DatabaseConfig {
     public ConnectionManager connectionManager() {
     return ConnectionManager.getInstance(db_url, db_user, db_password);
 }
+//I vores WishRepository har vi en ConnectionManager-afhængighed/dependency specificeret i
+//konstruktøren. Når Spring skaber en instans af WishRepository, så gennemsøger den alle
+//beans for at en af typen ConnectionManager. Vi har her DatabaseConfig annoteret metoden
+//ConnectionManager connectionManager med @Bean og den er public, så Spring vil anvende denne
+//til at oprette ConnectionManager-instansen og injicere den automatisk i WishRepository.
+
+
 
 
 }

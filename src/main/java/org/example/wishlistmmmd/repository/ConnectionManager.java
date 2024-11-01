@@ -11,6 +11,8 @@ import java.sql.SQLException;
 public class ConnectionManager {
     //Ved singleton vil vi sikre, at der kun oprettes én instans af en klasse. Det vil vi gerne have fx i forbindelse
     //med databaseforbindelse, for at undgå konflikter og spare ressourcer.
+    //Vi sikrer det bl.a. ved at konstruktøren er private og der tjekkes via metode
+    //for om der allerede er én instans af klassen (Denne kaldes fra Spring Configurations-klassen DataConfig)
 
     private Connection conn; //attribut til selve dataforbindelsen
     private static ConnectionManager instance; //statisk instans af klassen selv, for at sikre der kun findes én instans
