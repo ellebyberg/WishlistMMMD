@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"
+xmlns:th="https://thymeleaf.org">
+<!--her angives at vi arbejder med thymeleaf og prefix th skal anvendes, når der skal kaldes attributter-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>wishListView</title>
+</head>
+<body>
+<header>
+<h1>Wishlist</h1>
+</header>
+<main>
+    <div th:if="${errorMessage}"> <!-- Bruges til at vise en fejlbesked, hvis TouristController L87-89 opfyldes. -->
+        <p th:text="${errorMessage}" style="color:red;"></p>
+    </div>
+    <div th:if="${tagsErrorMessage}">
+        <p th:text="${tagsErrorMessage}" style="color:red;"></p>
+    </div>
+    <table>
+        <thead>
+        <tr><!-- tr betyder en række af celler i en tabel-->
+            <th class="teksttabel">Navn</th> <!-- th angiver indhold af hver celle i øverste række af tabellen-->
+            <th class="teksttabel">Beskrivelse</th>
+            <th class="teksttabel">Funktioner</th>
+        </tr>
+        </thead>
+        <tbody class="teksttabel" th:each="attraction : ${listOfAttractions}">
+        <tr><!-- her kommer næste række i tabellen-->
+            <td th:text="${attraction.name}"></td> <!-- td angiver indhold af hver celle-->
+            <td th:text="${attraction.getDescription()}"></td> <!-- td angiver indhold af hver celle-->
+            <td>
+
+                <form th:action="@{attractions/{attractionName}/edit(attractionName=${attraction.name})}"
+                      method="get">
+                    <button type="submit" class="submitbutton">Opdater</button>
+                </form>
+
+                <form th:action="@{attractions/delete/{attractionName}(attractionName=${attraction.name})}"
+                      method="post" onsubmit="return confirmDeletion()">
+                    <button type="submit" class="submitbutton">Slet</button>
+                </form>
+
+                <script>
+                    function confirmDeletion() {
+                        return confirm("Are you sure you want to delete? This action cannot be reversed.")
+                    }
+                </script>
+                <a th:href="@{attractions/{attractionName}/tags(attractionName=${attraction.name})}" method="get">
+                    <button class="submitbutton">Tags</button>
+                </a>
+
+                <a th:href="@{attractions/{attractionName}(attractionName=${attraction.name})}">
+                    <button class="submitbutton">See more information</button>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <form th:action="@{attractions/add}" method=get>
+        <button type="submit" class="tilføjattractionbutton">Tilføj Attraktion</button>
+    </form>
+
+
+</body>
+</html>
