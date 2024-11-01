@@ -5,10 +5,8 @@ import org.example.wishlistmmmd.model.WishList;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -49,8 +47,20 @@ public class WishRepository {
         }
     }
 
-    public void checkExpiredList() {
+    public void checkExpiredList() throws SQLException {
+        String sql = "SELECT wishListID FROM wishlist WHERE expireDate < ?";
+        LocalDate today = LocalDate.now();
+        Date sqlDate = Date.valueOf(today);
 
+        try(PreparedStatement ps = dbConnection.prepareStatement(sql)) {
+            ps.setDate(1, sqlDate);
+            try(ResultSet rs = ps.executeQuery()) {
+                while(rs.next()) {
+                    int wishListID = rs.getInt("wishListID");
+                    //TODO: Indsæt kald til deleteWishlist() når denne metode er færdig.
+                }
+            }
+        }
     }
 
 
