@@ -11,9 +11,10 @@ public class WishList {
     private Date expireDate;
     private List<Wish> wishesOnTheList;
 
-    public WishList(String listName, Date expireDate) {
+    public WishList(String listName, Date expireDate, int wishListID) {
         this.listName = listName;
         this.expireDate = expireDate;
+        this.wishListID = wishListID;
     }
 
     public int getWishListID() {

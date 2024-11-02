@@ -48,6 +48,7 @@ public class WishRepository {
 
     public List<WishList> showListOfWishLists(int userID) {
         List<WishList> listOfWishLists = new ArrayList<>();
+        listOfWishLists.clear();
 
         String SQL = "SELECT wishlist.wishlistID AS listID, wishlist.listName AS listName, wishlist.expireDate FROM wishlist\n" +
                 "JOIN combiuserlist ON combiuserlist.wishListID = wishlist.wishListID\n" +
@@ -56,22 +57,21 @@ public class WishRepository {
         try(PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
             ps.setInt(1, userID);
             ResultSet rs = ps.executeQuery();
+
             while(rs.next()) {
                 int listID = rs.getInt("listID");
                 String listName = rs.getString("listName");
                 Date expDate = rs.getDate("expireDate");
-
-
+                listOfWishLists.add(new WishList(listName,expDate,listID));
             }
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return listOfWishLists;
     }
 
     public List<Wish> showWishesInSpecificWishList(int wishListID) {
+        return null;
 
     }
 
@@ -96,7 +96,16 @@ public class WishRepository {
 
     }
 
-    public void deleteWish() {
+    public void deleteWish(int wishID) {
+
+        String SQL = "DELETE FROM wish WHERE wishID =?";
+
+        try(PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
+            ps.setInt(1,wishID);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
 
 
