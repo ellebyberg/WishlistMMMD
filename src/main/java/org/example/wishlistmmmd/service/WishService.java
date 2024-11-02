@@ -21,4 +21,7 @@ public class WishService {
     public boolean isUsernameAvailable(String username) throws SQLException {
         return wr.isUsernameAvailable(username);
     }
+    public void resetPassword(String password, String username) throws SQLException {
+        wr.resetPassword(password, username);
+    }
 }
