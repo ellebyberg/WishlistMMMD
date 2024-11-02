@@ -1,14 +1,13 @@
 package org.example.wishlistmmmd.repository;
 
+import org.example.wishlistmmmd.model.UserProfile;
 import org.example.wishlistmmmd.model.Wish;
 import org.example.wishlistmmmd.model.WishList;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -33,6 +32,31 @@ public class WishRepository {
             }
         }
         return false;
+    }
+
+    public void addUserToDB(UserProfile up) throws SQLException {
+        String sql = "INSERT INTO userprofile(name, birthdate, username, password) VALUES(?,?,?,?)";
+        try (PreparedStatement ps = dbConnection.prepareStatement(sql)) {
+            ps.setString(1, up.getName());
+//            ps.setString(2, up.getGender());
+            ps.setDate(2, Date.valueOf(up.getBirthdate()));
+            ps.setString(3, up.getUsername());
+            ps.setString(4, up.getPassword());
+            ps.executeUpdate();
+        }
+    }
+
+    public boolean isUsernameAvailable(String username) throws SQLException {
+        String sql = "SELECT COUNT(username) FROM userprofile WHERE username=?";
+        try (PreparedStatement ps = dbConnection.prepareStatement(sql)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) == 0;
+                }
+            }
+        }
+        return true;
     }
 
 
