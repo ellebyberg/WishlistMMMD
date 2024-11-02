@@ -66,12 +66,14 @@ public class WishController {
 
         UserProfile up = new UserProfile(name, gender, birthdate, username, password);
         up.setUserID(-1); // TODO: Lav en metode, der laver et lookup i SQL for at rette userID til, hvad det måtte være i DB.
+
         if (ws.isUsernameAvailable(username)) {
             ws.addUserToDB(up);
             return "redirect:/userProfileHomepage";
         } else {
             redirectAttributes.addFlashAttribute("invalidUserNameErr", "The username is unavailable. Please try again using a different username.");
-            return "redirect:/loginPage";
+//            return "redirect:/loginPage"; //TODO: Beslutte hvilken html der giver mest mening at redirecte til. Husk at flytte fejlbesked, hvis andet end status quo.
+            return "redirect:/createAccountPage";
         }
     }
     @GetMapping("/createAccountPage")

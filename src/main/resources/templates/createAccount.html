@@ -6,6 +6,10 @@
 </head>
 <body>
 <h1>Create Account</h1>
+<div th:if="${invalidUserNameErr}">
+    <p th:text="${invalidUserNameErr}" style="color: red;">
+    </p>
+</div>
 <p>Please fill out all the fields below to create an account</p>
 <form action="/saveAccount" method="post">
     <label for="name"></label>
