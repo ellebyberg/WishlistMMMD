@@ -50,9 +50,8 @@ public class WishRepository {
         List<WishList> listOfWishLists = new ArrayList<>();
         listOfWishLists.clear();
 
-        String SQL = "SELECT wishlist.wishlistID AS listID, wishlist.listName AS listName, wishlist.expireDate FROM wishlist\n" +
-                "JOIN combiuserlist ON combiuserlist.wishListID = wishlist.wishListID\n" +
-                "WHERE userID =?";
+        String SQL = "SELECT wishlist.wishlistID AS listID, wishlist.listName AS listName, " +
+                "wishlist.expireDate FROM wishlist WHERE userID =?";
 
         try(PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
             ps.setInt(1, userID);
@@ -71,9 +70,29 @@ public class WishRepository {
     }
 
     public List<Wish> showWishesInSpecificWishList(int wishListID) {
-        return null;
 
+        List<Wish> listOfWishes = new ArrayList<>();
+
+        String SQL = "SELECT wish.wishname, wish.description, wish.wishid, link FROM wish \n" +
+                "INNER JOIN combiwishlist ON wish.wishid = combiwishlist.wishid WHERE wishlistid = ?;";
+
+        try(PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
+            ps.setInt(1, wishListID);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                int wishID = rs.getInt("wishid");
+                String wishName = rs.getString("wishname");
+                String wishDescription = rs.getString("description");
+                String link = rs.getString("link");
+                listOfWishes.add(new Wish(wishID, wishName, wishDescription, link));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listOfWishes;
     }
+
 
     public void updateWishList() {
 
@@ -102,6 +121,7 @@ public class WishRepository {
 
         try(PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
             ps.setInt(1,wishID);
+            ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();

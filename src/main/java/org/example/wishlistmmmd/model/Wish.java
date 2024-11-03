@@ -3,14 +3,12 @@ package org.example.wishlistmmmd.model;
 public class Wish {
 
     private int wishID;
-    private int wishListID;
     private String wishName;
     private String description;
     private String link;
 
-    public Wish(int wishID, int wishListID, String wishName, String description, String link) {
+    public Wish(int wishID, String wishName, String description, String link) {
         this.wishID = wishID;
-        this.wishListID = wishListID;
         this.wishName = wishName;
         this.description = description;
         this.link = link;
@@ -22,14 +20,6 @@ public class Wish {
 
     public void setWishID(int wishID) {
         this.wishID = wishID;
-    }
-
-    public int getWishListID() {
-        return wishListID;
-    }
-
-    public void setWishListID(int wishListID) {
-        this.wishListID = wishListID;
     }
 
     public String getWishName() {

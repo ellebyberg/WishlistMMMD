@@ -1,12 +1,24 @@
 package org.example.wishlistmmmd.controller;
 
+import org.example.wishlistmmmd.model.Wish;
+import org.example.wishlistmmmd.model.WishList;
+import org.example.wishlistmmmd.service.WishService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class WishController {
+
+    private final WishService ws;
+
+    public WishController(WishService ws) {
+        this.ws = ws;
+    }
 
 //    @GetMapping("/welcomePage")
 //    public String welcomePage() {
@@ -18,10 +30,21 @@ public class WishController {
 //
 //    }
 //
-//    @GetMapping("/userProfileHomePage")
-//    public String userProfileHomePage() {
-//
-//    }
+    @GetMapping("/profilehomepage/{userID}")
+    public String userProfileHomePage(@PathVariable int userID, Model model) {
+        List<WishList> listOfWishLists = ws.showListOfWishLists(userID);
+        model.addAttribute("listOfWishLists", listOfWishLists);
+        return "wishListView";
+
+    }
+
+    @GetMapping("/profilehomepage/{userID}/{wishListID}")
+    public String userProfileHomePage(@PathVariable int wishListID, @PathVariable int userID, Model model) {
+        List<Wish> listOfWishes = ws.showListOfWishes(wishListID);
+        model.addAttribute("listOfWishes", listOfWishes);
+        return "wishView";
+
+    }
 //
 //    @GetMapping("/createWishlist")
 //    public String createWishList() {
