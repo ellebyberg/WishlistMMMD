@@ -1,5 +1,6 @@
 package org.example.wishlistmmmd.controller;
 
+import org.example.wishlistmmmd.model.UserProfile;
 import org.example.wishlistmmmd.model.Wish;
 import org.example.wishlistmmmd.model.WishList;
 import org.example.wishlistmmmd.service.WishService;
@@ -36,7 +37,9 @@ public class WishController {
     @GetMapping("/{userID}")
     public String showUserHomePage(@PathVariable int userID, Model model) {
         List<WishList> listOfWishLists = ws.showListOfWishLists(userID);
+        UserProfile up = ws.getUserData(userID);
         model.addAttribute("listOfWishLists", listOfWishLists);
+        model.addAttribute("UserProfile",up);
         return "wishListView";
 
     }
