@@ -23,13 +23,9 @@ xmlns:th="https://thymeleaf.org">
         </thead>
         <tbody class="teksttabel" th:each="wishlist : ${listOfWishLists}">
         <tr><!-- her kommer næste række i tabellen-->
-            <td th:text="${wishlist.getListName()}"></td> <!-- td angiver indhold af hver celle-->
-            <td th:text="${wishlist.getExpireDate()}"></td> <!-- td angiver indhold af hver celle-->
-        <td>
-            <form th:action="@{profilehomepage/{userID}/{wishListID}}" method=get>
-                <button type="submit" class="viewWishes">View Wish</button>
-            </form>
-        </td>
+            <td th:text="${wishlist.listName}"></td> <!-- td angiver indhold af hver celle-->
+            <td th:text="${wishlist.expireDate}"></td> <!-- td angiver indhold af hver celle-->
+
         </tr>
         </tbody>
     </table>

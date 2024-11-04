@@ -14,11 +14,7 @@ public class WishlistMmmdApplication {
         SpringApplication.run(WishlistMmmdApplication.class, args);
         WishRepository wr = new WishRepository();
 
-        for(WishList w: wr.showListOfWishLists(2)){
-            System.out.println(w.getListName());
-            System.out.println(w.getExpireDate());
-            System.out.println(w.getWishListID());
-        }
+        System.out.println(wr.getUserData(2));
     }
 
 }

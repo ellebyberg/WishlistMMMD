@@ -1,5 +1,6 @@
 package org.example.wishlistmmmd.repository;
 
+import org.example.wishlistmmmd.model.UserProfile;
 import org.example.wishlistmmmd.model.Wish;
 import org.example.wishlistmmmd.model.WishList;
 import org.springframework.stereotype.Repository;
@@ -23,17 +24,26 @@ public class WishRepository {
 
     }
 
-    public void getUserData(String username) throws SQLException {
-        String SQL = "SELECT userID, name FROM userprofile WHERE username=?";
+    public UserProfile getUserData(int userID) {
+        UserProfile up = null;
 
-        PreparedStatement ps = dbConnection.prepareStatement(SQL);
-        ps.setString(1,username);
-        ResultSet rs = ps.executeQuery();
-        if(rs.next()) {
-            int userID = rs.getInt("userID");
-            String name = rs.getString("name");
-            System.out.println("UserID: "+userID+" Name: "+name);
+        String SQL = "SELECT name, userid, birthdate, password, username FROM userprofile WHERE userID=?";
+
+        try (PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
+            ps.setInt(1, userID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                String name = rs.getString("name");
+                Date birthdate = rs.getDate("birthdate");
+                String password = rs.getString("password");
+                String username = rs.getString("username");
+
+                up = new UserProfile(userID, name, birthdate, username, password);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return up;
     }
 
     public void checkExpiredList() {
@@ -53,15 +63,15 @@ public class WishRepository {
         String SQL = "SELECT wishlist.wishlistID AS listID, wishlist.listName AS listName, " +
                 "wishlist.expireDate FROM wishlist WHERE userID =?";
 
-        try(PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
+        try (PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
             ps.setInt(1, userID);
             ResultSet rs = ps.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 int listID = rs.getInt("listID");
                 String listName = rs.getString("listName");
                 Date expDate = rs.getDate("expireDate");
-                listOfWishLists.add(new WishList(listName,expDate,listID));
+                listOfWishLists.add(new WishList(listName, expDate, listID));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,11 +86,11 @@ public class WishRepository {
         String SQL = "SELECT wish.wishname, wish.description, wish.wishid, link FROM wish \n" +
                 "INNER JOIN combiwishlist ON wish.wishid = combiwishlist.wishid WHERE wishlistid = ?;";
 
-        try(PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
+        try (PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
             ps.setInt(1, wishListID);
             ResultSet rs = ps.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 int wishID = rs.getInt("wishid");
                 String wishName = rs.getString("wishname");
                 String wishDescription = rs.getString("description");
@@ -119,14 +129,13 @@ public class WishRepository {
 
         String SQL = "DELETE FROM wish WHERE wishID =?";
 
-        try(PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
-            ps.setInt(1,wishID);
+        try (PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
+            ps.setInt(1, wishID);
             ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
 
 
     }

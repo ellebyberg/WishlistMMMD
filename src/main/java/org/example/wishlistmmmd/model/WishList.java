@@ -1,6 +1,5 @@
 package org.example.wishlistmmmd.model;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class WishList {
         this.wishListID = wishListID;
     }
 
-    public int getWishListID() {
+    public int getID() {
         return wishListID;
     }
 

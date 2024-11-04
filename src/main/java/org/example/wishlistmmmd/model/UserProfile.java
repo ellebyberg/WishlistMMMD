@@ -1,21 +1,20 @@
 package org.example.wishlistmmmd.model;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class UserProfile {
     private int userID;
     private String name;
-    private String gender;
-    private LocalDate birthdate;
+    private Date birthdate;
     private String username;
     private String password;
     private List<WishList> listOfWishList;
 
-    public UserProfile(int userID, String name, String gender, LocalDate birthdate, String username, String password) {
+    public UserProfile(int userID, String name, Date birthdate, String username, String password) {
         this.userID = userID;
         this.name = name;
-        this.gender = gender;
         this.birthdate = birthdate;
         this.username = username;
         this.password = password;
@@ -33,11 +32,8 @@ public class UserProfile {
         return name;
     }
 
-    public String getGender() {
-        return gender;
-    }
 
-    public LocalDate getBirthdate() {
+    public Date getBirthdate() {
         return birthdate;
     }
 
@@ -51,5 +47,10 @@ public class UserProfile {
 
     public List<WishList> getListOfWishList() {
         return listOfWishList;
+    }
+
+    @Override
+    public String toString() {
+        return "Name: "+name+" Birthdate: "+birthdate+" Username: "+username+" Password: "+password;
     }
 }
