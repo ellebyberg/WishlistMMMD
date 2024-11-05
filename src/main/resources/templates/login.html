@@ -13,7 +13,7 @@
 <div th:if="${errorMessage}" class="error"> <!-- Fejlbesked, hvis login failer -->
     <p th:text="${errorMessage}" style="color: red;"></p>
 </div>
-<form action="/loginValidation" method="post">
+<form action="/makemywishcometrue/loginValidation" method="post">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required>
     <label for ="password">Password:</label>

@@ -44,6 +44,8 @@ public class WishController {
         if (ws.validateLogin(username, password)) {
             HttpSession session = request.getSession();
             session.setAttribute("loggedIn", true);
+            int userID = ws.getUserIDFromDB(username);
+
             //TODO: Der skal laves et if-tjek på følgende controller metoder for at sikre, at brugeren er logget ind.
             /*
             Boolean loggedIn = (Boolean) session.getAttribute("loggedIn");
@@ -52,8 +54,10 @@ public class WishController {
                     return "redirect:/login";
                 }
              */
-            return "redirect:/makemywishcometrue/{userid}"; //TODO: Erstat med userProfileHomePage, når denne er færdig. Redirect fører ingen vegne i øjeblikket.
+//            return "redirect:/makemywishcometrue/{userid}"; //TODO: Erstat med userProfileHomePage, når denne er færdig. Redirect fører ingen vegne i øjeblikket.
+            return "redirect:/makemywishcometrue/"+userID;
         } else {
+            System.out.println("Login validation else block");
             return "redirect:/loginPage?error";
         }
     }

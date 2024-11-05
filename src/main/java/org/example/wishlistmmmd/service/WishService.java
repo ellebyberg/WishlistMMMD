@@ -24,6 +24,9 @@ public class WishService {
     public boolean validateLogin(String username, String password) throws SQLException {
         return wr.validateLogin(username, password);
     }
+    public int getUserIDFromDB(String username) {
+        return wr.getUserIDFromDB(username);
+    }
     public void addUserToDB(UserProfile up) throws SQLException {
         wr.addUserToDB(up);
     }
