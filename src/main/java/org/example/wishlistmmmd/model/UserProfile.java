@@ -19,6 +19,13 @@ public class UserProfile {
         this.username = username;
         this.password = password;
     }
+    public UserProfile(String name, String gender, LocalDate birthdate, String username, String password) {
+        this.name = name;
+        this.gender = gender;
+        this.birthdate = birthdate;
+        this.username = username;
+        this.password = password;
+    }
 
     public void setListOfWishList(List<WishList> listOfWishList) {
         this.listOfWishList = listOfWishList;
@@ -26,6 +33,9 @@ public class UserProfile {
 
     public int getUserID() {
         return userID;
+    }
+    public void setUserID(int newUserID) {
+        this.userID = newUserID;
     }
 
     public String getName() {

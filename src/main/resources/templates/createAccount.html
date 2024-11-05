@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Account</title>
+</head>
+<body>
+<h1>Create Account</h1>
+<div th:if="${invalidUserNameErr}">
+    <p th:text="${invalidUserNameErr}" style="color: red;">
+    </p>
+</div>
+<p>Please fill out all the fields below to create an account</p>
+<form action="/saveAccount" method="post">
+    <label for="name"></label>
+    <input type="text" id="name" name="name" placeholder="Full Name" required> <br>
+
+    <select name="gender" required>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+    </select> <br>
+
+    <label for="birthday">Birthday</label> <br>
+    <input type="date" id="birthday" name="birthdate" required>
+
+    <label for="username"></label> <br>
+    <input type="text" id="username" name="username" placeholder="Username" required>
+
+    <label for="password"></label> <br>
+    <input type="password" id="password" name="password" placeholder="Password" required> <br>
+    <input type="checkbox" onclick="showPasswordCheckBox()">Show Password <br>
+
+    <button type ="submit">Create User</button> <br>
+    <!--Nedenfor en tilbage knap som udgangspunkt til en homepage. -->
+    <a th:href="@{userProfileHomePage}">Go Back</a>
+
+</form>
+
+</body>
+</html>
+<script>
+    function showPasswordCheckBox() {
+        var x = document.getElementById("password");
+        if (x.type === "password") { // === er et 'strict' check mellem typerne. 1 og '1' med === er ikke lig med hinanden.
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
