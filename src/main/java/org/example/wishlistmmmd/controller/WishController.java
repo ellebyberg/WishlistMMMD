@@ -74,15 +74,11 @@ public class WishController {
 //        //return redirectSaveWish
 //    }
 
-    @PostMapping("/deleteWish/{wishname}")
-    public String deleteWish(@PathVariable String wishName) {
-        return "redirect:/wishListView";
-        //Når et ønske er fjernet fra listen (og DB), så skal vi komme tilbage til oversigten med den givne ønskeseddel
-        //I det view skal der være en delete button ud for hver wish:
-        //        <form th:action="@{/delete/{wishName}(wishName=${wish.wishName})}"
-        //                      method="post" onsubmit="return confirmDeletion()">
-        //                    <button type="submit" class="submitbutton">Slet</button>
-        //                </form>
+    @PostMapping("/deleteWish/{userid}/{wishid}")
+    public String deleteWish(@PathVariable int userid, @PathVariable int wishid) {
+        ws.deleteWish(wishid);
+        return "redirect:/makemywishcometrue/"+userid ;
+
     }
 
 }

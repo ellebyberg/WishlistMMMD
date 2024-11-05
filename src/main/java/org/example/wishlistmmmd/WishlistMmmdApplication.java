@@ -12,9 +12,6 @@ public class WishlistMmmdApplication {
 
     public static void main(String[] args) throws SQLException {
         SpringApplication.run(WishlistMmmdApplication.class, args);
-        WishRepository wr = new WishRepository();
-
-        System.out.println(wr.getUserData(2));
     }
 
 }

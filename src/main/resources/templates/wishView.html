@@ -4,32 +4,43 @@
 <!--her angives at vi arbejder med thymeleaf og prefix th skal anvendes, når der skal kaldes attributter-->
 
 <head>
-  <meta charset="UTF-8">
-  <title>wishListView</title>
+    <meta charset="UTF-8">
+    <title>wishListView</title>
 </head>
 <body>
 <header>
-  <h1>Wishes on the list</h1>
+    <h1>Wishes on the list</h1>
 </header>
 <main>
 
-  <table>
-    <thead>
-    <tr><!-- tr betyder en række af celler i en tabel-->
-      <th class="teksttabel">Wish</th> <!-- th angiver indhold af hver celle i øverste række af tabellen-->
-      <th class="teksttabel">Description</th>
-      <th class="teksttabel">Link</th>
-      <th class="teksttabel">Functions</th>
-    </tr>
-    </thead>
-    <tbody class="teksttabel" th:each="wish : ${listOfWishes}">
-    <tr><!-- her kommer næste række i tabellen-->
-      <td th:text="${wish.getWishName()}"></td> <!-- td angiver indhold af hver celle-->
-      <td th:text="${wish.getDescription()}"></td> <!-- td angiver indhold af hver celle-->
-      <td th:text="${wish.getLink()}"></td> <!-- td angiver indhold af hver celle-->
-    </tr>
-    </tbody>
-  </table>
+    <table>
+        <thead>
+        <tr><!-- tr betyder en række af celler i en tabel-->
+            <th class="teksttabel">Wish</th> <!-- th angiver indhold af hver celle i øverste række af tabellen-->
+            <th class="teksttabel">Description</th>
+            <th class="teksttabel">Link</th>
+            <th class="teksttabel">Functions</th>
+        </tr>
+        </thead>
+        <tbody class="teksttabel" th:each="wish : ${listOfWishes}">
+        <tr><!-- her kommer næste række i tabellen-->
+            <td th:text="${wish.getWishName()}"></td> <!-- td angiver indhold af hver celle-->
+            <td th:text="${wish.getDescription()}"></td> <!-- td angiver indhold af hver celle-->
+            <td th:text="${wish.getLink()}"></td> <!-- td angiver indhold af hver celle-->
+            <td>
+                <form th:action="@{/makemywishcometrue/deleteWish/{userid}/{wishid}(userid=${userID},wishid=${wish.wishID})}"
+                      method="post" onsubmit="return confirmDeletion()">
+                    <button type="submit" class="submitbutton">Slet</button>
+                </form>
+                <script>
+                    function confirmDeletion() {
+                        return confirm("Are you sure you want to delete this wish? This action cannot be reversed.")
+                    }
+                </script>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </main>
 </body>
 </html>

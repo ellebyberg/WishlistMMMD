@@ -29,4 +29,8 @@ public class WishService {
         return wr.getUserData(userID);
     }
 
+    public void deleteWish(int wishID) {
+        wr.deleteWish(wishID);
+    }
+
 }
