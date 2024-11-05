@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -53,7 +53,7 @@ public class WishRepository {
         try (PreparedStatement ps = dbConnection.prepareStatement(sql)) {
             ps.setString(1, up.getName());
 //            ps.setString(2, up.getGender());
-            ps.setDate(2, Date.valueOf(up.getBirthdate()));
+            ps.setDate(2, (java.sql.Date) up.getBirthdate());
             ps.setString(3, up.getUsername());
             ps.setString(4, up.getPassword());
             ps.executeUpdate();
@@ -108,6 +108,8 @@ public class WishRepository {
         String sql = "SELECT wishListID FROM wishlist WHERE expireDate < ?";
         LocalDate today = LocalDate.now();
         Date sqlDate = Date.valueOf(today);
+
+
 
         try(PreparedStatement ps = dbConnection.prepareStatement(sql)) {
             ps.setDate(1, sqlDate);

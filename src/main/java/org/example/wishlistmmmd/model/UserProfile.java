@@ -1,6 +1,5 @@
 package org.example.wishlistmmmd.model;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -19,10 +18,8 @@ public class UserProfile {
         this.username = username;
         this.password = password;
     }
-    public UserProfile(String name, String gender, LocalDate birthdate, String username, String password) {
+    public UserProfile(String name, Date birthdate, String username, String password) {
         this.name = name;
-        this.gender = gender;
-        this.birthdate = birthdate;
         this.username = username;
         this.password = password;
     }
