@@ -80,6 +80,23 @@ public class WishRepository {
             ps.executeUpdate();
         }
     }
+    public int getUserIDFromDB(String username) {
+        String sql ="SELECT userid FROM userprofile WHERE username=?";
+        int userID = -1;
+
+        try(PreparedStatement ps = dbConnection.prepareStatement(sql)) {
+            ps.setString(1,username);
+
+            try(ResultSet rs = ps.executeQuery() ) {
+                if (rs.next()) {
+                    userID = rs.getInt("userid");
+                }
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return userID;
+    }
 
 
     public UserProfile getUserData(int userID) {
