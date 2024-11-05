@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.sql.Date;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -51,7 +52,7 @@ public class WishController {
                     return "redirect:/login";
                 }
              */
-            return "redirect:/home"; //TODO: Erstat med userProfileHomePage, når denne er færdig. Redirect fører ingen vegne i øjeblikket.
+            return "redirect:/makemywishcometrue/{userid}"; //TODO: Erstat med userProfileHomePage, når denne er færdig. Redirect fører ingen vegne i øjeblikket.
         } else {
             return "redirect:/loginPage?error";
         }
@@ -74,9 +75,9 @@ public class WishController {
         return "login";
     }
     @PostMapping("/saveAccount")
-    public String saveNewAccountToDB(@RequestParam String name, @RequestParam String gender, @RequestParam LocalDate birthdate, @RequestParam String username, @RequestParam String password, RedirectAttributes redirectAttributes) throws SQLException {
+    public String saveNewAccountToDB(@RequestParam String name, @RequestParam Date birthdate, @RequestParam String username, @RequestParam String password, RedirectAttributes redirectAttributes) throws SQLException {
 
-        UserProfile up = new UserProfile(name, gender, birthdate, username, password);
+        UserProfile up = new UserProfile(name,birthdate, username, password);
         up.setUserID(-1); // TODO: Lav en metode, der laver et lookup i SQL for at rette userID til, hvad det måtte være i DB.
 
         if (ws.isUsernameAvailable(username)) {
