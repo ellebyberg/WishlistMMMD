@@ -11,7 +11,7 @@
     </p>
 </div>
 <p>Please fill out all the fields below to create an account</p>
-<form action="/saveAccount" method="post">
+<form action="/makemywishcometrue/saveAccount" method="post">
     <label for="name"></label>
     <input type="text" id="name" name="name" placeholder="Full Name" required> <br>
 
@@ -33,7 +33,8 @@
 
     <button type ="submit">Create User</button> <br>
     <!--Nedenfor en tilbage knap som udgangspunkt til en homepage. -->
-    <a th:href="@{userProfileHomePage}">Go Back</a>
+    <a th:href="@{/makemywishcometrue/loginPage}"><button type="button">Go Back</button></a>
+
 
 </form>
 
