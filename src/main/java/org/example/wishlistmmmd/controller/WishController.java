@@ -80,6 +80,20 @@ public class WishController {
     public String showCreateAccountPage() {
         return "createAccount";
     }
+    @GetMapping("/showResetPasswordPage")
+    public String showResetPasswordPage() {
+        return "resetPassword";
+    }
+    @PostMapping("/resetPassword")
+    public String resetPasswordAction(@RequestParam String password, @RequestParam String username, RedirectAttributes redirectAttributes) throws SQLException {
+        if (!ws.isUsernameAvailable(username)) {
+            ws.resetPassword(password, username);
+            return "redirect:/userProfileHomePage";
+        } else {
+            redirectAttributes.addFlashAttribute("PasswordErr93","Something went wrong, please try again.");
+            return "redirect:/showResetPasswordPage";
+        }
+    }
 //
 //    @GetMapping("/userProfileHomePage")
 //    public String userProfileHomePage() {

@@ -58,6 +58,14 @@ public class WishRepository {
         }
         return true;
     }
+    public void resetPassword(String password, String username) throws SQLException {
+        String sql = "UPDATE userprofile SET password = ? WHERE username = ?";
+        try(PreparedStatement ps = dbConnection.prepareStatement(sql)) {
+            ps.setString(1, password);
+            ps.setString(2, username);
+            ps.executeUpdate();
+        }
+    }
 
 
     public void getUserData(String username) throws SQLException {
