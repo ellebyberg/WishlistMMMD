@@ -8,6 +8,7 @@ import org.example.wishlistmmmd.model.UserProfile;
 import org.example.wishlistmmmd.repository.WishRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 
 import java.sql.SQLException;
@@ -20,6 +21,7 @@ public class WishService {
     public WishService(WishRepository wr) {
         this.wr = wr;
     }
+
 
     public boolean validateLogin(String username, String password) throws SQLException {
         return wr.validateLogin(username, password);
@@ -47,6 +49,10 @@ public class WishService {
 
     public UserProfile getUserData(int userID) {
         return wr.getUserData(userID);
+    }
+
+    public void createWishList(String listName, Date expireDate, int userID) {
+        wr.createWishlist(listName, expireDate, userID);
     }
 
     public void deleteWish(int wishID) {

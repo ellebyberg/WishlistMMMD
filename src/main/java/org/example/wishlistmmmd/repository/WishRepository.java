@@ -141,7 +141,20 @@ public class WishRepository {
 
 
     //CRUD WISHLIST
-    public void createWishlist() {
+    public void createWishlist(String listName, Date expireDate, int userID) {
+
+        String SQL = "INSERT INTO wishlist (listName, expireDate, userID) VALUES (?,?,?)";
+
+        try(PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
+            ps.setString(1,listName);
+            ps.setDate(2,expireDate);
+            ps.setInt(3,userID);
+            int affectedRows = ps.executeUpdate();
+            //Eventuelt laver jeg metoden om til at returnere int (affected Rows), så jeg kan bruge dette i Controlleren
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
