@@ -104,7 +104,7 @@ public class WishController {
     public String resetPasswordAction(@RequestParam String password, @RequestParam String username, RedirectAttributes redirectAttributes) throws SQLException {
         if (!ws.isUsernameAvailable(username)) {
             ws.resetPassword(password, username);
-            return "redirect:/userProfileHomePage";
+            return "redirect:/makemywishcometrue/loginPage";
         } else {
             redirectAttributes.addFlashAttribute("PasswordErr93","Something went wrong, please try again.");
             return "redirect:/showResetPasswordPage";
