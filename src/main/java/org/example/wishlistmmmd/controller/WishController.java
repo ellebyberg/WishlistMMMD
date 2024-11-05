@@ -130,17 +130,18 @@ public class WishController {
         return "wishView";
 
     }
-//
-//    @GetMapping("/createWishlist")
-//    public String createWishList() {
-//
-//    }
-//
-//    @PostMapping("/saveWishlist")
-//    public String saveWishlist() {
-//        //return redirectUserProfile;
-//    }
-//
+
+    @GetMapping("{userID}/createWishlist")
+    public String createWishList(@PathVariable int userID, Model model) {
+
+
+    }
+
+    @PostMapping("/saveWishlist")
+    public String saveWishlist(@RequestParam String listName, @RequestParam Date expireDate) {
+        //return redirectUserProfile;
+    }
+
 //    @GetMapping("/addWish")
 //    public String addWish() {
 //

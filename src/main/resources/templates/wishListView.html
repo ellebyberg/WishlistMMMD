@@ -34,14 +34,18 @@ xmlns:th="https://thymeleaf.org">
 
             <td>
                 <a th:href="@{/makemywishcometrue/{userID}/{wishListID}(userID=${UserProfile.userID}, wishListID=${wishlist.ID})}">
-                    <button type="button">Vis ønskeliste</button>
+                    <button type="button">Show list</button>
                 </a>
             </td>
 
         </tr>
         </tbody>
     </table>
-
+    <!--
+    <form th:action="@{/makemywishcometrue/}" method=get>
+        <button type="submit" class="createNewList">Create new list</button>
+    </form>   Denne skal tilrettes og med korrekt type
+-->
 </main>
 </body>
 </html>

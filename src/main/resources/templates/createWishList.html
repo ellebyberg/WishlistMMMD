@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Create New WishList</h1>
+<p>Please fill out all the fields below to create a new wishList</p>
+
+<form action="/makemywishcometrue/saveWishList" method="post">
+    <label for="listName"></label>
+    <input type="text" id="listName" name="name" placeholder="Full Name" required> <br>
+
+   <label for="expireDate">Birthday</label> <br>
+    <input type="date" id="expireDate" name="expireDate" required>
+
+    <button type ="submit">save</button> <br>
+    <!--Nedenfor en tilbage knap som udgangspunkt til en homepage. -->
+    <a th:href="@{/makemywishcometrue/loginPage}"><button type="button">Go Back</button></a>
+
+
+</form>
+</body>
+
+</html>
