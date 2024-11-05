@@ -57,8 +57,7 @@ public class WishController {
 //            return "redirect:/makemywishcometrue/{userid}"; //TODO: Erstat med userProfileHomePage, når denne er færdig. Redirect fører ingen vegne i øjeblikket.
             return "redirect:/makemywishcometrue/"+userID;
         } else {
-            System.out.println("Login validation else block");
-            return "redirect:/loginPage?error";
+            return "redirect:/loginPage?error=true";
         }
     }
     public String checkLoginStatus(HttpServletRequest request) {
@@ -75,22 +74,22 @@ public class WishController {
     public String loginPage(@RequestParam(value = "error", required = false)String error, Model model) {
         if (error != null) {
             model.addAttribute("errorMessage", "An error has occurred. Please try again.");
-        }
+        } //TODO virker ikke lige nu
         return "login";
     }
     @PostMapping("/saveAccount")
     public String saveNewAccountToDB(@RequestParam String name, @RequestParam Date birthdate, @RequestParam String username, @RequestParam String password, RedirectAttributes redirectAttributes) throws SQLException {
 
         UserProfile up = new UserProfile(name,birthdate, username, password);
-        up.setUserID(-1); // TODO: Lav en metode, der laver et lookup i SQL for at rette userID til, hvad det måtte være i DB.
+        up.setUserID(ws.getUserIDFromDB(username)); // TODO: Lav en metode, der laver et lookup i SQL for at rette userID til, hvad det måtte være i DB.
 
         if (ws.isUsernameAvailable(username)) {
             ws.addUserToDB(up);
-            return "redirect:/userProfileHomepage";
+            return "redirect:/makemywishcometrue/"+up.getUserID();
         } else {
             redirectAttributes.addFlashAttribute("invalidUserNameErr", "The username is unavailable. Please try again using a different username.");
 //            return "redirect:/loginPage"; //TODO: Beslutte hvilken html der giver mest mening at redirecte til. Husk at flytte fejlbesked, hvis andet end status quo.
-            return "redirect:/createAccountPage";
+            return "redirect:/makemywishcometrue/createAccountPage";
         }
     }
     @GetMapping("/createAccountPage")
