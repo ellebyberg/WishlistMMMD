@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"
+xmlns:th="https://thymeleaf.org">
+<!--her angives at vi arbejder med thymeleaf og prefix th skal anvendes, når der skal kaldes attributter-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>wishListView</title>
+</head>
+<body>
+<header>
+<h1>Wishlist</h1>
+    <h2 th:text="${UserProfile.name}"></h2>
+    <h2 th:text="${UserProfile.username}"></h2>
+    <h2 th:text="${UserProfile.birthdate}"></h2>
+
+</header>
+
+<main>
+
+    <table>
+        <thead>
+        <tr><!-- tr betyder en række af celler i en tabel-->
+            <th class="teksttabel">WishList</th> <!-- th angiver indhold af hver celle i øverste række af tabellen-->
+            <th class="teksttabel">Expiry Date</th>
+            <th class="teksttabel"></th>
+        </tr>
+        </thead>
+        <tbody class="teksttabel" th:each="wishlist : ${listOfWishLists}">
+        <tr><!-- her kommer næste række i tabellen-->
+            <td th:text="${wishlist.listName}"></td> <!-- td angiver indhold af hver celle-->
+            <td th:text="${wishlist.expireDate}"></td> <!-- td angiver indhold af hver celle-->
+
+
+            <td>
+                <a th:href="@{/makemywishcometrue/{userID}/{wishListID}(userID=${UserProfile.userID}, wishListID=${wishlist.ID})}">
+                    <button type="button">Vis ønskeliste</button>
+                </a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+
+</main>
+</body>
+</html>

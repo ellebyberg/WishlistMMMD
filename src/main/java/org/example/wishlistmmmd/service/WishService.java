@@ -1,17 +1,26 @@
 package org.example.wishlistmmmd.service;
 
 import org.example.wishlistmmmd.model.UserProfile;
+import org.example.wishlistmmmd.model.Wish;
+import org.example.wishlistmmmd.model.WishList;
+import org.example.wishlistmmmd.repository.WishRepository;
+import org.example.wishlistmmmd.model.UserProfile;
 import org.example.wishlistmmmd.repository.WishRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import java.sql.SQLException;
 
 @Service
 public class WishService {
-    private WishRepository wr;
-    public WishService() {
-        wr = new WishRepository();
+
+    private final WishRepository wr;
+
+    public WishService(WishRepository wr) {
+        this.wr = wr;
     }
+
     public boolean validateLogin(String username, String password) throws SQLException {
         return wr.validateLogin(username, password);
     }
@@ -24,4 +33,21 @@ public class WishService {
     public void resetPassword(String password, String username) throws SQLException {
         wr.resetPassword(password, username);
     }
+
+    public List<WishList> showListOfWishLists(int userID) {
+        return wr.showListOfWishLists(userID);
+    }
+
+    public List<Wish> showListOfWishes(int wishListID) {
+        return wr.showWishesInSpecificWishList(wishListID);
+    }
+
+    public UserProfile getUserData(int userID) {
+        return wr.getUserData(userID);
+    }
+
+    public void deleteWish(int wishID) {
+        wr.deleteWish(wishID);
+    }
+
 }

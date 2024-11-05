@@ -1,21 +1,22 @@
 package org.example.wishlistmmmd.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class WishList {
 
     private int wishListID;
     private String listName;
-    private LocalDate expireDate;
+    private Date expireDate;
     private List<Wish> wishesOnTheList;
 
-    public WishList(String listName, LocalDate expireDate) {
+    public WishList(String listName, Date expireDate, int wishListID) {
         this.listName = listName;
         this.expireDate = expireDate;
+        this.wishListID = wishListID;
     }
 
-    public int getWishListID() {
+    public int getID() {
         return wishListID;
     }
 
@@ -31,11 +32,11 @@ public class WishList {
         this.listName = listName;
     }
 
-    public LocalDate getExpireDate() {
+    public Date getExpireDate() {
         return expireDate;
     }
 
-    public void setExpireDate(LocalDate expireDate) {
+    public void setExpireDate(Date expireDate) {
         this.expireDate = expireDate;
     }
 
