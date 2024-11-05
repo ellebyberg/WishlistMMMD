@@ -13,7 +13,14 @@ import java.util.List;
 @Repository
 public class WishRepository {
 
-    private Connection dbConnection = ConnectionManager.getInstance().getConn();
+    private final Connection dbConnection;
+    //Eftersom vi i DatabaseConfig klassen som er lavet / annoteret til en Configurations klasse
+    //har oprettet en ConnectionManager-Bean, så er det Spring der administrerer klassen
+    //som en singleton, og sikrer at der kun er én åben forbindelse
+
+    public WishRepository(ConnectionManager connectionManager) {
+        this.dbConnection = connectionManager.getConn();
+    }
 
     //USER
     public boolean validateLogin(String username, String password) throws SQLException {
