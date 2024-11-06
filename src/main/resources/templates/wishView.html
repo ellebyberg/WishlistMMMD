@@ -26,7 +26,9 @@
         <tr><!-- her kommer næste række i tabellen-->
             <td th:text="${wish.getWishName()}"></td> <!-- td angiver indhold af hver celle-->
             <td th:text="${wish.getDescription()}"></td> <!-- td angiver indhold af hver celle-->
-            <td th:text="${wish.getLink()}"></td> <!-- td angiver indhold af hver celle-->
+            <td>
+            <a th:href="${wish.getLink()}" target="_blank" th:text="${wish.getLink()}"></a>
+            </td> <!-- anker-tag a gør linket klikbart. target _blank gør at linket åbnes på ny fane-->
             <td>
                 <form th:action="@{/makemywishcometrue/deleteWish/{userid}/{wishid}(userid=${userID},wishid=${wish.wishID})}"
                       method="post" onsubmit="return confirmDeletion()">
