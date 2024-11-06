@@ -210,7 +210,15 @@ public class WishRepository {
 
     }
 
-    public void deleteWishList() {
+    public void deleteWishList(int wishListID) {
+        String SQL = "DELETE FROM wishlist WHERE wishListID=?";
+
+        try(PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
+            ps.setInt(1,wishListID);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 

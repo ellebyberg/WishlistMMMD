@@ -37,6 +37,17 @@ xmlns:th="https://thymeleaf.org">
                     <button type="button">Show list</button>
                 </a>
             </td>
+            <td>
+                <form th:action="@{/makemywishcometrue/deleteWishList/{userID}/{wishListID}(userID=${UserProfile.userID},wishListID=${wishlist.ID})}"
+                      method="post" onsubmit="return confirmDeletion()">
+                    <button type="submit" class="submitbutton">Slet</button>
+                </form>
+                <script>
+                    function confirmDeletion() {
+                        return confirm("Are you sure you want to delete this list? This action cannot be reversed.")
+                    }
+                </script>
+            </td>
 
         </tr>
         </tbody>

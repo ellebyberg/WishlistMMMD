@@ -55,6 +55,10 @@ public class WishService {
         wr.createWishlist(listName, expireDate, userID);
     }
 
+    public void deleteWishList(int wishListID) {
+        wr.deleteWishList(wishListID);
+    }
+
     public void deleteWish(int wishID) {
         wr.deleteWish(wishID);
     }
