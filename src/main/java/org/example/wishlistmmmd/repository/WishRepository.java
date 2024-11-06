@@ -205,11 +205,6 @@ public class WishRepository {
         return listOfWishes;
     }
 
-
-    public void updateWishList() {
-
-    }
-
     public void deleteWishList(int wishListID) {
         String SQL = "DELETE FROM wishlist WHERE wishListID=?";
 
@@ -225,10 +220,6 @@ public class WishRepository {
     //CRUD WISH
     public void createWish() {
 
-    }
-
-    public List<Wish> showWish() {
-        return null;
     }
 
     public void updateWish() {
@@ -250,4 +241,21 @@ public class WishRepository {
 
     }
 
+    //HJÆLPEMETODER
+    public String getWishListNameFromID(int wishListID) {
+        String wishListName = "";
+
+        String SQL = "SELECT listName FROM wishlist WHERE wishListID=?";
+
+        try(PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
+            ps.setInt(1,wishListID);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                wishListName = rs.getString("listName");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return wishListName;
+    }
 }

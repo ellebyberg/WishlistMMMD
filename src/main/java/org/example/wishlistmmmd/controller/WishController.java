@@ -121,6 +121,8 @@ public class WishController {
     @GetMapping("/{userID}/{wishListID}")
     public String showSpecificWishList(@PathVariable int wishListID, @PathVariable int userID, Model model) {
         List<Wish> listOfWishes = ws.showListOfWishes(wishListID);
+        String wishListName = ws.getWishListNameFromID(wishListID);
+        model.addAttribute("wishListName", wishListName);
         model.addAttribute("listOfWishes", listOfWishes);
         model.addAttribute("userID",userID);
         model.addAttribute("wishListID",wishListID);

@@ -63,4 +63,8 @@ public class WishService {
         wr.deleteWish(wishID);
     }
 
+    public String getWishListNameFromID(int wishListID) {
+        return wr.getWishListNameFromID(wishListID);
+    }
+
 }
