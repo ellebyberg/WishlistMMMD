@@ -131,15 +131,17 @@ public class WishController {
 
     }
 
-    @GetMapping("{userID}/createWishlist")
+    @GetMapping("/{userID}/createWishlist")
     public String createWishList(@PathVariable int userID, Model model) {
-
-
+        model.addAttribute("userID", userID);//userID tilsættes som varibel, da den skal bruges i HTML formularen
+        System.out.println("Her køres createWishList Endpointet, den der henter formularen");
+        return "createWishList";
     }
 
-    @PostMapping("/saveWishlist")
-    public String saveWishlist(@RequestParam String listName, @RequestParam Date expireDate) {
-        //return redirectUserProfile;
+    @PostMapping("/saveWishList")
+    public String saveWishlist(@RequestParam String listName, @RequestParam Date expireDate, @RequestParam int userID) {
+        ws.createWishList(listName, expireDate, userID);
+        return "redirect:/makemywishcometrue/"+userID;
     }
 
 //    @GetMapping("/addWish")

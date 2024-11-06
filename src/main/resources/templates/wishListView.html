@@ -41,11 +41,11 @@ xmlns:th="https://thymeleaf.org">
         </tr>
         </tbody>
     </table>
-    <!--
-    <form th:action="@{/makemywishcometrue/}" method=get>
+
+    <form th:action="@{/makemywishcometrue/{userID}/createWishlist(userID=${UserProfile.userID})}" method=get>
         <button type="submit" class="createNewList">Create new list</button>
-    </form>   Denne skal tilrettes og med korrekt type
--->
+    </form>
+
 </main>
 </body>
 </html>
