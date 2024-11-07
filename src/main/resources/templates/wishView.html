@@ -2,17 +2,22 @@
 <html lang="en"
       xmlns:th="https://thymeleaf.org">
 <!--her angives at vi arbejder med thymeleaf og prefix th skal anvendes, når der skal kaldes attributter-->
-
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--denne meta-tag sørger for reponsiv visning. Ved at sætte bredde lig med device bredde
+    sikres det at bredden af visning bliver det samme som bredden af skærmen. Initial-scale settingen sørger for, at siden ikke starter zoomet ind eller ud, men starter
+    i oprindelig skala i forhold til enhedens skærmopløsning.-->
     <title>wishListView</title>
+    <link rel="stylesheet" href="/wishlist.css">
 </head>
 <body>
 <header>
     <h1>Wishes on the list</h1>
 </header>
+<profile>
+<p>KAN PROFIL INDSÆTTES HER?</p>
+</profile>
 <main>
-
     <table>
         <thead>
         <tr><!-- tr betyder en række af celler i en tabel-->
@@ -42,5 +47,11 @@
         </tbody>
     </table>
 </main>
+<footer>
+    <p><Strong>Kontakt os her</Strong></p>
+    <p>Email: <a href="#">teamMMMD@failmail.dk</a></p>
+    <p>Mobil: <a href="#">+45 xxxxxxxx</a></p>
+    <p>&copy; 2024 Ønskeskyprojekt - TeamMMMD (Mark, Martin, Mette, Daniel)</p>
+</footer>
 </body>
 </html>
