@@ -141,7 +141,20 @@ public class WishRepository {
 
 
     //CRUD WISHLIST
-    public void createWishlist() {
+    public void createWishlist(String listName, Date expireDate, int userID) {
+
+        String SQL = "INSERT INTO wishlist (listName, expireDate, userID) VALUES (?,?,?)";
+
+        try(PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
+            ps.setString(1,listName);
+            ps.setDate(2,expireDate);
+            ps.setInt(3,userID);
+            int affectedRows = ps.executeUpdate();
+            //Eventuelt laver jeg metoden om til at returnere int (affected Rows), så jeg kan bruge dette i Controlleren
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -192,22 +205,21 @@ public class WishRepository {
         return listOfWishes;
     }
 
+    public void deleteWishList(int wishListID) {
+        String SQL = "DELETE FROM wishlist WHERE wishListID=?";
 
-    public void updateWishList() {
-
-    }
-
-    public void deleteWishList() {
+        try(PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
+            ps.setInt(1,wishListID);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
     //CRUD WISH
     public void createWish() {
 
-    }
-
-    public List<Wish> showWish() {
-        return null;
     }
 
     public void updateWish() {
@@ -229,4 +241,22 @@ public class WishRepository {
 
     }
 
+    //HJÆLPEMETODER
+    public String getWishListNameFromID(int wishListID) {
+        String wishListName = "";
+
+        String SQL = "SELECT listName FROM wishlist WHERE wishListID=?";
+
+        try(PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
+            ps.setInt(1,wishListID);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                wishListName = rs.getString("listName");
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return wishListName;
+    }
 }

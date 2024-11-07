@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://thymeleaf.org">
+<!--her angives at vi arbejder med thymeleaf og prefix th skal anvendes, når der skal kaldes attributter-->
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Create New WishList</h1>
+<p>Please fill out all the fields below to create a new wishList</p>
+
+<form th:action="@{/makemywishcometrue/saveWishList}" method="post">
+    <label for="listName"></label>
+    <input type="text" id="listName" name="listName" placeholder="List Name" required> <br>
+
+   <label for="expireDate">Expiry Date:</label> <br>
+    <input type="date" id="expireDate" name="expireDate" required>
+
+    <!--skjult felt for at medsende userID ved save af formularen-->
+    <input type="hidden" name="userID" th:value="${userID}">
+
+    <button type ="submit">save</button> <br>
+
+    <!--Nedenfor en tilbage knap som udgangspunkt til en homepage. -->
+    <a th:href="@{/makemywishcometrue/{userID} (userID=${userID})}">
+        <button type="button">Go Back</button>
+    </a>
+
+
+</form>
+</body>
+
+</html>

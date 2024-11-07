@@ -6,8 +6,6 @@ import org.example.wishlistmmmd.model.WishList;
 import org.example.wishlistmmmd.service.WishService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.example.wishlistmmmd.model.UserProfile;
-import org.example.wishlistmmmd.service.WishService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 @Controller //annotation som fortæller Spring at denne klasse håndterer HTTP-forespørgsler
 @RequestMapping("/makemywishcometrue") //annotation Endpoint som fortæller hvilken url / sti at alle forespørgslerne til denne controller skal have for at køre metoderne
@@ -124,23 +121,33 @@ public class WishController {
     @GetMapping("/{userID}/{wishListID}")
     public String showSpecificWishList(@PathVariable int wishListID, @PathVariable int userID, Model model) {
         List<Wish> listOfWishes = ws.showListOfWishes(wishListID);
+        String wishListName = ws.getWishListNameFromID(wishListID);
+        model.addAttribute("wishListName", wishListName);
         model.addAttribute("listOfWishes", listOfWishes);
         model.addAttribute("userID",userID);
         model.addAttribute("wishListID",wishListID);
         return "wishView";
 
     }
-//
-//    @GetMapping("/createWishlist")
-//    public String createWishList() {
-//
-//    }
-//
-//    @PostMapping("/saveWishlist")
-//    public String saveWishlist() {
-//        //return redirectUserProfile;
-//    }
-//
+
+    @GetMapping("/{userID}/createWishlist")
+    public String createWishList(@PathVariable int userID, Model model) {
+        model.addAttribute("userID", userID);//userID tilsættes som varibel, da den skal bruges i HTML formularen
+        return "createWishList";
+    }
+
+    @PostMapping("/saveWishList")
+    public String saveWishlist(@RequestParam String listName, @RequestParam Date expireDate, @RequestParam int userID) {
+        ws.createWishList(listName, expireDate, userID);
+        return "redirect:/makemywishcometrue/"+userID;
+    }
+
+    @PostMapping("/deleteWishList/{userID}/{wishListID}")
+    public String deleteWishList(@PathVariable int userID, @PathVariable int wishListID) {
+        ws.deleteWishList(wishListID);
+        return "redirect:/makemywishcometrue/" +userID;
+    }
+
 //    @GetMapping("/addWish")
 //    public String addWish() {
 //
@@ -151,10 +158,10 @@ public class WishController {
 //        //return redirectSaveWish
 //    }
 
-    @PostMapping("/deleteWish/{userid}/{wishid}")
-    public String deleteWish(@PathVariable int userid, @PathVariable int wishid) {
-        ws.deleteWish(wishid);
-        return "redirect:/makemywishcometrue/"+userid ;
+    @PostMapping("/deleteWish/{userID}/{wishID}")
+    public String deleteWish(@PathVariable int userID, @PathVariable int wishID) {
+        ws.deleteWish(wishID);
+        return "redirect:/makemywishcometrue/"+ userID;
 
     }
 
