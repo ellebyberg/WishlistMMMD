@@ -49,15 +49,20 @@ public class WishController {
 //
     @PostMapping("/loginValidation")
     public String loginValidation(HttpServletRequest request, @RequestParam String username, @RequestParam String password) throws SQLException {
-        if (ws.validateLogin(username, password)) {
+        if (ws.validateLogin(username, password)) { //Brugeren logger ind
             HttpSession session = request.getSession();
-            session.setAttribute("loggedIn", true);
             int userID = ws.getUserIDFromDB(username);
             session.setAttribute("userID", userID);
             session.setAttribute("username", username);
+            /*
+            Data om brugen 'gemmes' på sessionen som ID og username. Dette bruges i placeholder metoder
+            for at sikre, at brugeren ikke tilgår andre endpoints, der tilhører andre profiler.
+             */
 
             return "redirect:/makemywishcometrue/"+userID;
         } else {
+            //Hvis validateLogin() ikke finder brugeren i DB, redirectes brugeren til login med en fejlbesked,
+            //som vises i html view.
             return "redirect:/loginPage?error=true";
         }
     }
@@ -65,9 +70,15 @@ public class WishController {
         Integer sessionUserID = (Integer) session.getAttribute("userID");
 
         if (sessionUserID == null) {
+            //Hvis brugeren ikke er logget ind ligger der ikke et ID gemt på session,
+            // hvorfor brugeren derfor promptes til at logge ind
             return "redirect:/makemywishcometrue/loginPage";
         }
         else if(!sessionUserID.equals(userID)) {
+            /*
+            Brugeren prøver at tilgå en anden brugers data.
+            De bliver redirected til deres egen side, hvis de er logget ind.
+             */
             return "redirect:/makemywishcometrue/"+sessionUserID;
         }
         return null;
@@ -91,6 +102,8 @@ public class WishController {
             ws.addUserToDB(up);
             return "redirect:/makemywishcometrue/"+up.getUserID();
         } else {
+            //En anden måde at vise fejlbeskeder på(redirectAttributes). Dette er godt til ting,
+            //som fejlbeskeder, der ikke skal persistere.
             redirectAttributes.addFlashAttribute("invalidUserNameErr", "The username is unavailable. Please try again using a different username.");
             return "redirect:/makemywishcometrue/createAccountPage";
         }
@@ -120,6 +133,11 @@ public class WishController {
         if (redirect != null) {
             return redirect;
         }
+        /*
+        redirectUserLoginAttributes() returnerer en string(html/endpoint. Hvis if-blokken i denne metode
+        ikke opfyldes, så returnerer metoden null og vi fortsætter /{userID}s metodeflow.
+        Se redirectUserLoginAttributes() dokumentation i koden.
+         */
 
         List<WishList> listOfWishLists = ws.showListOfWishLists(userID);
         UserProfile up = ws.getUserData(userID);
@@ -131,6 +149,11 @@ public class WishController {
 
     @GetMapping("/{userID}/{wishListID}")
     public String showSpecificWishList(@PathVariable int wishListID, @PathVariable int userID, Model model) {
+        String redirect = redirectUserLoginAttributes(userID);
+        if (redirect != null) {
+            return redirect;
+        }
+
         List<Wish> listOfWishes = ws.showListOfWishes(wishListID);
         String wishListName = ws.getWishListNameFromID(wishListID);
         model.addAttribute("wishListName", wishListName);
@@ -138,7 +161,6 @@ public class WishController {
         model.addAttribute("userID",userID);
         model.addAttribute("wishListID",wishListID);
         return "wishView";
-
     }
 
     @GetMapping("/{userID}/createWishlist")
