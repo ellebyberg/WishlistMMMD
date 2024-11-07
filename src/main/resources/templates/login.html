@@ -8,8 +8,7 @@
 <body>
 <h2>LOGIN</h2>
 <div th:if="${invalidUserNameErr}">
-    <p th:text="${invalidUserNameErr}" style="color: red;">
-</p>
+    <p th:text="${invalidUserNameErr}" style="color: red;"></p>
 </div>
 <div th:if="${errorMessage}" class="error"> <!-- Fejlbesked, hvis login failer -->
     <p th:text="${errorMessage}" style="color: red;"></p>
