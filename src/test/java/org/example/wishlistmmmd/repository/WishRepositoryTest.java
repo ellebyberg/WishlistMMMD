@@ -25,7 +25,6 @@ private String password = "PassTeamMMMD";
         connectionManager = ConnectionManager.getInstance(url,user,password);
         repository = new WishRepository(connectionManager);
     }
-
     @AfterEach
     void tearDown() {
     }
@@ -42,5 +41,18 @@ private String password = "PassTeamMMMD";
 
         //Assert
         Assertions.assertEquals(expectedPostsInList,actualPostsInList);
+    }
+
+    @Test
+    void testGetUserIDFromDB() {
+
+        //Arrange er lavet i setUp
+
+        //Act
+        int expectedUserID = 1;
+        int actualUserID = repository.getUserIDFromDB("asmith");
+
+        //Assert
+        Assertions.assertEquals(expectedUserID, actualUserID);
     }
 }
