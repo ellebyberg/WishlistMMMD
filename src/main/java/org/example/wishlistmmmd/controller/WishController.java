@@ -42,9 +42,12 @@ public class WishController {
     @PostMapping("/loginValidation")
     public String loginValidation(HttpServletRequest request, @RequestParam String username, @RequestParam String password) throws SQLException {
         if (ws.validateLogin(username, password)) {
+            int userID = ws.getUserIDFromDB(username);
             HttpSession session = request.getSession();
             session.setAttribute("loggedIn", true);
-            int userID = ws.getUserIDFromDB(username);
+            session.setAttribute("userID",userID);
+            session.setMaxInactiveInterval(60);
+
 
             //TODO: Der skal laves et if-tjek på følgende controller metoder for at sikre, at brugeren er logget ind.
             /*
@@ -60,13 +63,26 @@ public class WishController {
             return "redirect:/loginPage?error=true";
         }
     }
+    @GetMapping("/start")
     public String checkLoginStatus(HttpServletRequest request) {
-        HttpSession session = request.getSession();
+        //Når vi bruger parameteren false,så betyder det hent sessionen for denne bruger,
+        // hvis den findes. Hvis den ikke findes, så skal du ikke oprette ny!
+        // Hvis der ikke findes en session, så returneres null. Hvis vi ikke bruger en
+        // parameter, så oprettes automatisk en ny!
+        HttpSession session = request.getSession(false);
+        //Tjek af om der findes en session og ellers redirectes til login igen
+        if(session == null) {
+            return "redirect:/makemywishcometrue/loginPage";
+        }
+        Integer userID = (Integer)session.getAttribute("userID");
         Boolean loggedIn = (Boolean) session.getAttribute("loggedIn");
+        System.out.println("Tjek userID i checkLoginStatus: " +userID);
+        System.out.println("Tjek loggedIN i checkLoginStatus: " +loggedIn);
+        //Tjek af om brugeren er logget ind
         if (loggedIn == null || !loggedIn) {
-            return "redirect:/login";
+            return "redirect:/makemywishcometrue/loginPage";
         } else {
-            return "redirect:/home";
+            return "redirect:/makemywishcometrue/"+userID;
         }
     }
 
