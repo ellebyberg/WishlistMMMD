@@ -160,7 +160,7 @@ public class WishRepository {
 
     public List<WishList> showListOfWishLists(int userID) {
         List<WishList> listOfWishLists = new ArrayList<>();
-        listOfWishLists.clear();
+        //listOfWishLists.clear(); ikke nødvendigt
 
         String SQL = "SELECT wishlist.wishlistID AS listID, wishlist.listName AS listName, " +
                 "wishlist.expireDate FROM wishlist WHERE userID =?";
