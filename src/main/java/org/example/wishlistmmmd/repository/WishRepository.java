@@ -252,6 +252,7 @@ public class WishRepository {
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                 wishListName = rs.getString("listName");
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
