@@ -61,13 +61,6 @@ public class WishController {
             return "redirect:/loginPage?error=true";
         }
     }
-    public boolean checkLoginStatus(int userID) {
-        Integer sessionUserID = (Integer) session.getAttribute("userID");
-        if (sessionUserID != null && sessionUserID.equals(userID)) {
-            return true;
-        }
-        return false;
-    }
     public String redirectUserLoginAttributes(int userID) {
         Integer sessionUserID = (Integer) session.getAttribute("userID");
 
