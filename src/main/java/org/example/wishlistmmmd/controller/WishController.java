@@ -26,10 +26,21 @@ import java.sql.SQLException;
 public class WishController {
 
     private final WishService ws;
-
-    public WishController(WishService ws) {
+    public WishController(WishService ws, HttpSession session) {
         this.ws = ws;
+        this.session = session;
     }
+
+    /*
+    ###########################################
+    #           Session attributter           #
+    ###########################################
+     */
+    private HttpSession session;
+
+
+
+
 
 //    @GetMapping("/welcomePage")
 //    public String welcomePage() {
@@ -42,36 +53,39 @@ public class WishController {
             HttpSession session = request.getSession();
             session.setAttribute("loggedIn", true);
             int userID = ws.getUserIDFromDB(username);
+            session.setAttribute("userID", userID);
+            session.setAttribute("username", username);
 
-            //TODO: Der skal laves et if-tjek på følgende controller metoder for at sikre, at brugeren er logget ind.
-            /*
-            Boolean loggedIn = (Boolean) session.getAttribute("loggedIn");
-
-                if (loggedIn == null || !loggedIn) {
-                    return "redirect:/login";
-                }
-             */
-//            return "redirect:/makemywishcometrue/{userid}"; //TODO: Erstat med userProfileHomePage, når denne er færdig. Redirect fører ingen vegne i øjeblikket.
             return "redirect:/makemywishcometrue/"+userID;
         } else {
             return "redirect:/loginPage?error=true";
         }
     }
-    public String checkLoginStatus(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Boolean loggedIn = (Boolean) session.getAttribute("loggedIn");
-        if (loggedIn == null || !loggedIn) {
-            return "redirect:/login";
-        } else {
-            return "redirect:/home";
+    public boolean checkLoginStatus(int userID) {
+        Integer sessionUserID = (Integer) session.getAttribute("userID");
+        if (sessionUserID != null && sessionUserID.equals(userID)) {
+            return true;
         }
+        return false;
     }
+    public String redirectUserLoginAttributes(int userID) {
+        Integer sessionUserID = (Integer) session.getAttribute("userID");
+
+        if (sessionUserID == null) {
+            return "redirect:/makemywishcometrue/loginPage";
+        }
+        else if(!sessionUserID.equals(userID)) {
+            return "redirect:/makemywishcometrue/"+sessionUserID;
+        }
+        return null;
+    }
+
 
     @GetMapping("/loginPage")
     public String loginPage(@RequestParam(value = "error", required = false)String error, Model model) {
         if (error != null) {
             model.addAttribute("errorMessage", "An error has occurred. Please try again.");
-        } //TODO virker ikke lige nu
+        }
         return "login";
     }
     @PostMapping("/saveAccount")
@@ -85,7 +99,6 @@ public class WishController {
             return "redirect:/makemywishcometrue/"+up.getUserID();
         } else {
             redirectAttributes.addFlashAttribute("invalidUserNameErr", "The username is unavailable. Please try again using a different username.");
-//            return "redirect:/loginPage"; //TODO: Beslutte hvilken html der giver mest mening at redirecte til. Husk at flytte fejlbesked, hvis andet end status quo.
             return "redirect:/makemywishcometrue/createAccountPage";
         }
     }
@@ -110,6 +123,11 @@ public class WishController {
 //
     @GetMapping("/{userID}")
     public String showUserHomePage(@PathVariable int userID, Model model) {
+        String redirect = redirectUserLoginAttributes(userID);
+        if (redirect != null) {
+            return redirect;
+        }
+
         List<WishList> listOfWishLists = ws.showListOfWishLists(userID);
         UserProfile up = ws.getUserData(userID);
         model.addAttribute("listOfWishLists", listOfWishLists);
