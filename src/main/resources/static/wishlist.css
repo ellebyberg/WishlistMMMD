@@ -1,0 +1,144 @@
+/* === Layout og Grid-områder === */
+body {
+    min-height: 100vh;  /* Sætter body-højden til mindst 100% af viewport-højden */
+    display: grid;  /* Anvender CSS Grid til layout */
+    grid-gap: 1em;  /* Tilføjer et mellemrum mellem grid-områder */
+    grid-template-areas:  /* Definerer de forskellige grid-områder */
+            'header'
+            'profile'
+        'main'
+        'footer';
+    grid-template-rows: 10em 12em auto 12em;  /* Bestemmer højden på hver række */
+    grid-template-columns: 1fr;  /* En enkelt kolonne der fylder hele bredden */
+    background-color: white;  /* Bruger en farve som baggrund */
+}
+
+@media (min-width: 60em) {
+    body {
+        width: 80%;  /* Sætter body til at fylde 80% af viewportens bredde */
+        margin: 0 auto;  /* Centrerer layoutet horisontalt */
+        grid-template-areas:  /* Definerer et nyt grid-layout for større skærme */
+                'header'
+                'profile'
+            'main'
+            'footer';
+        grid-template-columns: auto;  /* Tre kolonner: navigation, hovedindhold og billede */
+        grid-template-rows: 10em 12em auto 12em;  /* Justerer højden på rækkerne */
+    }
+}
+
+main, footer {
+    background-color: darkgrey;  /* Giver alle områder en lys blå baggrund */
+    padding: 1em;  /* Tilføjer indvendig afstand i alle områder */
+    border-radius: 15px;  /* Gør hjørnerne runde */
+}
+
+header {
+    background-color: darkgrey;  /* Giver alle områder en lys blå baggrund */
+    border-radius: 15px;  /* Gør hjørnerne runde */
+}
+
+profile {
+    background-color: lightblue;  /* Giver alle områder en lys blå baggrund */
+    border-radius: 15px;  /* Gør hjørnerne runde */
+}
+
+header { grid-area: header; }  /* Tildeler headeren sit eget grid-område */
+profile { grid-area: profile; } /* Tildeler profile sit eget grid-område */
+main { grid-area: main; }  /* Tildeler hovedindholdet sit eget grid-område */
+footer { grid-area: footer; }  /* Tildeler footeren sit eget grid-område */
+
+h1 {
+    text-align: center; /* Centrerer teksten i H1-elementer */
+    font-family: sans-serif; /* Bruger en sans-serif skrifttype */
+    font-size: 70px; /* Sætter skriftstørrelsen til 55px */
+}
+
+h2 {
+    text-align: center;
+    font-family: "Century Gothic", serif;
+    font-size: 35px;
+}
+
+h3 {
+    font-family: "Century Gothic", serif;
+    font-size: 30px;
+}
+
+/* Profile grid layout */
+.profile-container {
+    display: grid;
+    grid-template-columns: auto 1fr; /* Første kolonne til billedet, anden til teksten */
+    gap: 1em; /* Afstand mellem billede og tekst */
+    align-items: center; /* Centrerer elementerne vertikalt */
+    background-color: lightblue;
+    padding: 1em;
+    border-radius: 15px;
+}
+
+/* Tilpasser billedet */
+.profile-image {
+    max-width: 300px; /* Sætter en fast bredde på billedet */
+    height: auto;
+    border-radius: 50%; /* Gør billedet rundt */
+    border: 1px solid black;
+}
+
+/* Tekst styling */
+.profile-info h2 {
+    margin: 0;
+    text-align: left;
+    font-family: "Century Gothic", serif;
+}
+
+/* Generelle tabelindstillinger */
+table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: separate; /* Tillader runde hjørner */
+    border-spacing: 0; /* Fjerner mellemrum mellem cellerne */
+    border: 1px solid black;
+    overflow: hidden; /* Sørger for, at indholdet følger runde hjørner */
+    border-radius: 15px; /* Runde hjørner */
+    background-color: lightgoldenrodyellow;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid black; /* Lige linjer mellem rækker */
+}
+
+th {
+    font-weight: bold;
+    border-top: 2px solid black;
+}
+
+tr:last-child td {
+    border-bottom: none; /* Ingen kantlinje under den sidste række */
+}
+tr:last-child th {
+    border-top: none;
+}
+
+.teksttabel {
+    font-size: 18px;
+    font-family: sans-serif;
+}
+
+.visønskelistebutton {
+    margin-top: 10px;  /* Tilføjer 10px margin over knappen */
+    padding: 5px 10px;  /* Tilføjer 5px top/bund og 10px venstre/højre padding */
+    font-size: 12px;  /* Sætter skriftstørrelsen til 12px */
+    background-color: green;  /* Bruger primærfarven som baggrundsfarve */
+    color: white;  /* Sætter tekstfarven til hvid */
+    border: 5px;  /* Tilføjer en 5px kant */
+    border-radius: 5px;  /* Gør hjørnerne runde */
+    cursor: pointer;  /* Ændrer markøren til en hånd */
+    width: fit-content;  /* Tilpasser bredden efter indholdet */
+}
+
+button:hover {
+    background-color: grey;
+}
+
