@@ -6,7 +6,13 @@
     <link rel="stylesheet" href="/wishlist.css">
 </head>
 <body>
+<header>
 <h2>LOGIN</h2>
+</header>
+<profile>
+
+</profile>
+<main>
 <div th:if="${invalidUserNameErr}">
     <p th:text="${invalidUserNameErr}" style="color: red;">
 </p>
@@ -24,6 +30,18 @@
 </form>
 <a th:href="@{/makemywishcometrue/createAccountPage}"><button type="submit">Create Account</button></a><br>
 <a th:href="@{/makemywishcometrue/showResetPasswordPage}"><button type="submit">Reset Password</button></a>
-
+</main>
+<footer>
+    <div>
+    <p><Strong>Kontakt os her</Strong></p>
+    <p>Email: <a href="#">teamMMMD@failmail.dk</a></p>
+    <p>Mobil: <a href="#">+45 xxxxxxxx</a></p>
+    <p>&copy; 2024 Ønskeskyprojekt - TeamMMMD (Mark, Martin, Mette, Daniel)</p>
+    </div>
+    >
+    <div>
+        <img src="/images/mmmm.jpg" alt="brandimage" class="brand-image">
+    </div>
+</footer>
 </body>
 </html>

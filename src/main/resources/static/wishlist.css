@@ -2,7 +2,7 @@
 body {
     min-height: 100vh;  /* Sætter body-højden til mindst 100% af viewport-højden */
     display: grid;  /* Anvender CSS Grid til layout */
-    grid-gap: 1em;  /* Tilføjer et mellemrum mellem grid-områder */
+    grid-gap: 5px;  /* Tilføjer et mellemrum mellem grid-områder */
     grid-template-areas:  /* Definerer de forskellige grid-områder */
             'header'
             'profile'
@@ -15,7 +15,7 @@ body {
 
 @media (min-width: 60em) {
     body {
-        width: 80%;  /* Sætter body til at fylde 80% af viewportens bredde */
+        width: 98%;  /* Sætter body til at fylde 80% af viewportens bredde */
         margin: 0 auto;  /* Centrerer layoutet horisontalt */
         grid-template-areas:  /* Definerer et nyt grid-layout for større skærme */
                 'header'
@@ -30,17 +30,17 @@ body {
 main, footer {
     background-color: darkgrey;  /* Giver alle områder en lys blå baggrund */
     padding: 1em;  /* Tilføjer indvendig afstand i alle områder */
-    border-radius: 15px;  /* Gør hjørnerne runde */
+    border-radius: 5px;  /* Gør hjørnerne runde */
 }
 
 header {
     background-color: darkgrey;  /* Giver alle områder en lys blå baggrund */
-    border-radius: 15px;  /* Gør hjørnerne runde */
+    border-radius: 5px;  /* Gør hjørnerne runde */
 }
 
 profile {
     background-color: lightblue;  /* Giver alle områder en lys blå baggrund */
-    border-radius: 15px;  /* Gør hjørnerne runde */
+    border-radius: 5px;  /* Gør hjørnerne runde */
 }
 
 header { grid-area: header; }  /* Tildeler headeren sit eget grid-område */
@@ -76,12 +76,27 @@ h3 {
     border-radius: 15px;
 }
 
+.footerContainer {
+    display: grid;
+    grid-template-columns: auto auto auto auto; /* Første kolonne til kontaktteskt, anden til billeder */
+    gap: 1em; /* Afstand mellem billede og tekst */
+    align-items: center; /* Centrerer elementerne vertikalt */
+    background-color: grey;
+    padding: 1em;
+    border-radius: 5px;
+}
+
 /* Tilpasser billedet */
 .profile-image {
     max-width: 300px; /* Sætter en fast bredde på billedet */
     height: auto;
     border-radius: 50%; /* Gør billedet rundt */
     border: 1px solid black;
+}
+
+.brand-image {
+    width: auto; /* Sætter en fast bredde på billedet */
+    max-height: 8em;
 }
 
 /* Tekst styling */
@@ -138,7 +153,43 @@ tr:last-child th {
     width: fit-content;  /* Tilpasser bredden efter indholdet */
 }
 
+.loginButton {
+    margin-top: 10px;  /* Tilføjer 10px margin over knappen */
+    padding: 5px 10px;  /* Tilføjer 5px top/bund og 10px venstre/højre padding */
+    font-size: 20px;  /* Sætter skriftstørrelsen til 12px */
+    font-family: "Century Gothic", serif;
+    background-color: lightblue;  /* Bruger primærfarven som baggrundsfarve */
+    color: black;  /* Sætter tekstfarven til hvid */
+    border: 5px;  /* Tilføjer en 5px kant */
+    border-radius: 5px;  /* Gør hjørnerne runde */
+    cursor: pointer;  /* Ændrer markøren til en hånd */
+    width: fit-content;  /* Tilpasser bredden efter indholdet */
+}
+
+.createResetPasswordButton {
+    margin-top: 10px;  /* Tilføjer 10px margin over knappen */
+    padding: 5px 10px;  /* Tilføjer 5px top/bund og 10px venstre/højre padding */
+    font-size: 20px;  /* Sætter skriftstørrelsen til 12px */
+    font-family: "Century Gothic", serif;
+    background-color: grey;  /* Bruger primærfarven som baggrundsfarve */
+    color: white;  /* Sætter tekstfarven til hvid */
+    border: 5px;  /* Tilføjer en 5px kant */
+    border-radius: 5px;  /* Gør hjørnerne runde */
+    cursor: pointer;  /* Ændrer markøren til en hånd */
+    width: fit-content;  /* Tilpasser bredden efter indholdet */
+}
+
+.usernamePasswordText {
+    font-family: "Century Gothic", serif;
+    font-size: 20px;
+}
+
 button:hover {
     background-color: grey;
 }
 
+input[type="text"], input[type="password"] {
+    width: 200px; /* Angiver bredden */
+    height: 23px; /* Angiver højden */
+    font-size: 20px;
+}
