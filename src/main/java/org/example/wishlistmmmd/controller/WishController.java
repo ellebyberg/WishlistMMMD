@@ -43,18 +43,9 @@ public class WishController {
             session.setAttribute("loggedIn", true);
             int userID = ws.getUserIDFromDB(username);
 
-            //TODO: Der skal laves et if-tjek på følgende controller metoder for at sikre, at brugeren er logget ind.
-            /*
-            Boolean loggedIn = (Boolean) session.getAttribute("loggedIn");
-
-                if (loggedIn == null || !loggedIn) {
-                    return "redirect:/login";
-                }
-             */
-//            return "redirect:/makemywishcometrue/{userid}"; //TODO: Erstat med userProfileHomePage, når denne er færdig. Redirect fører ingen vegne i øjeblikket.
             return "redirect:/makemywishcometrue/"+userID;
         } else {
-            return "redirect:/loginPage?error=true";
+            return "redirect:/makemywishcometrue/loginPage?error=true";
         }
     }
     public String checkLoginStatus(HttpServletRequest request) {
@@ -69,9 +60,9 @@ public class WishController {
 
     @GetMapping("/loginPage")
     public String loginPage(@RequestParam(value = "error", required = false)String error, Model model) {
-        if (error != null) {
+        if (error != null) { //Tjekker på error=true i loginValidation endpoint. Hvis den bliver givet videre må det konstateres, at error ikke er null, og der foreligger en fejl.
             model.addAttribute("errorMessage", "An error has occurred. Please try again.");
-        } //TODO virker ikke lige nu
+        }
         return "login";
     }
     @PostMapping("/saveAccount")
@@ -85,7 +76,6 @@ public class WishController {
             return "redirect:/makemywishcometrue/"+up.getUserID();
         } else {
             redirectAttributes.addFlashAttribute("invalidUserNameErr", "The username is unavailable. Please try again using a different username.");
-//            return "redirect:/loginPage"; //TODO: Beslutte hvilken html der giver mest mening at redirecte til. Husk at flytte fejlbesked, hvis andet end status quo.
             return "redirect:/makemywishcometrue/createAccountPage";
         }
     }
