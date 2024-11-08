@@ -39,5 +39,11 @@ public class ConnectionManager {
         return conn;
     }
 
+    //metode som tillader at vi kan nulstille ConnectionManager i starten af en test, så en ny instans
+    //oprettes med de test-specifikke databaseindstillinger
+    public static void resetInstance() {
+        instance = null;
+    }
+
 
 }
