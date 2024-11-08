@@ -60,7 +60,7 @@ public class WishRepository {
         }
     }
 
-    public boolean isUsernameAvailable(String username) throws SQLException {
+    public boolean isUsernameAvailable(String username) {
         String sql = "SELECT COUNT(username) FROM userprofile WHERE username=?";
         try (PreparedStatement ps = dbConnection.prepareStatement(sql)) {
             ps.setString(1, username);
@@ -69,6 +69,8 @@ public class WishRepository {
                     return rs.getInt(1) == 0;
                 }
             }
+        } catch (SQLException e){
+            e.printStackTrace();
         }
         return true;
     }

@@ -33,7 +33,7 @@ CREATE TABLE CombiWishList (
 );
 
 INSERT IGNORE INTO UserProfile (name, birthdate, username, password) VALUES
-('Alice Smith', '1990-04-12', 'asmith', 'password123'),
+('Alice Smith', '1990-04-12', 'newUserNameAsmith', 'password123'),
 ('Bob Johnson', '1985-07-23', 'bjohnson', 'password123'),
 ('Catherine Liu', '1993-10-02','cliu', 'password123'),
 ('David Kim', '1988-12-15', 'dkim', 'password123'),

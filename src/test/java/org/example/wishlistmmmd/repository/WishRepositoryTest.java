@@ -24,8 +24,7 @@ public class WishRepositoryTest {
 
     @BeforeEach
     public void setUp() {
-        //vi nulstiller ConnectionManager for at sikre, at det er test-konfigurationen
-        //der anvendes
+        //vi nulstiller ConnectionManager for at sikre, at det er test-konfigurationen der anvendes
         ConnectionManager.resetInstance();
     }
 
@@ -41,17 +40,23 @@ public class WishRepositoryTest {
 
     @Test
     void isUsernameAvailable() {
+        boolean actual = wishRepository.isUsernameAvailable("NoUserNameYet");
+        boolean expected = true;
+        assertEquals(expected,actual);
     }
 
     @Test
     void getUserIDFromDB() {
-        int found = wishRepository.getUserIDFromDB("asmith");
-        assertEquals(1,found);
+        int actual = wishRepository.getUserIDFromDB("newUserNameAsmith");
+        assertEquals(1,actual);
 
     }
 
     @Test
     void getUserData() {
+        String actualUserName = wishRepository.getUserData(3).getUsername();
+        String expectedUserName = "cliu";
+        assertEquals(expectedUserName,actualUserName);
     }
 
     @Test
