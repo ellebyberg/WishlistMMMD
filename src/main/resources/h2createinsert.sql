@@ -42,7 +42,7 @@ INSERT IGNORE INTO UserProfile (name, birthdate, username, password) VALUES
 INSERT IGNORE INTO WishList (listName, expireDate, userID) VALUES
 ('Holiday Wishes', '2024-12-31','2'),
 ('Birthday Wishlist', '2025-06-15','1'),
-('Wedding Registry', '2024-11-20','2'),
+('Wedding Registry', '2024-11-06','2'),
 ('Christmas Gifts', '2024-12-25','3'),
 ('New Year Gifts', '2025-01-01','4'),
 ('Easter Party', '2025-04-12','5'),
