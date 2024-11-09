@@ -149,8 +149,8 @@ public class WishController {
 
     @GetMapping("/{userID}/{wishListID}")
     public String showSpecificWishList(@PathVariable int wishListID, @PathVariable int userID, Model model) {
-        String redirect = redirectUserLoginAttributes(userID);
-        if (redirect != null) {
+        String redirect = redirectUserLoginAttributes(userID); //Hvis alt går som det skal, vil denne metode smide String null tilbage.
+        if (redirect != null && ws.doesUserOwnWishlist(wishListID, userID)) {
             return redirect;
         }
 
