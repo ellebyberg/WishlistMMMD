@@ -93,7 +93,7 @@ h3 {
         padding: 10px;           /* Giver lidt afstand til kanten af det grå område */
 }
 
-.header-cointainer {
+.header-container {
     display: flex;
     justify-content: center; /* Centrerer billederne vandret */
     align-items: center;     /* Centrerer billederne lodret */
@@ -121,6 +121,14 @@ h3 {
     max-height: 5em;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Skygge indstillinger */
     border-radius: 50%; /* Tilføj lidt afrunding til hjørnerne */
+
+}
+
+.icon-link {
+    text-decoration: none; /* Fjerner understregning */
+    border: none; /* Fjerner eventuel ramme */
+    outline: none; /* Fjerner fokusrammen, hvis den tilføjes */
+    margin-right: 25px;
 }
 
 /* Tekst styling */
