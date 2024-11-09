@@ -64,51 +64,51 @@ public class WishControllerTest {
 
 }
 
-@Test
-void checkLoginStatus() {
-}
-
-@Test
-void loginPage() {
-}
-
-@Test
-void saveNewAccountToDB() {
-}
-
-@Test
-void showCreateAccountPage() {
-}
-
-@Test
-void showResetPasswordPage() {
-}
-
-@Test
-void resetPasswordAction() {
-}
-
-@Test
-void showUserHomePage() {
-}
-
-@Test
-void showSpecificWishList() {
-}
-
-@Test
-void createWishList() {
-}
-
-@Test
-void saveWishlist() {
-}
-
-@Test
-void deleteWishList() {
-}
-
-@Test
-void deleteWish() {
-}
-}
+//@Test
+//void checkLoginStatus() {
+//}
+//
+//@Test
+//void loginPage() {
+//}
+//
+//@Test
+//void saveNewAccountToDB() {
+//}
+//
+//@Test
+//void showCreateAccountPage() {
+//}
+//
+//@Test
+//void showResetPasswordPage() {
+//}
+//
+//@Test
+//void resetPasswordAction() {
+//}
+//
+//@Test
+//void showUserHomePage() {
+//}
+//
+//@Test
+//void showSpecificWishList() {
+//}
+//
+//@Test
+//void createWishList() {
+//}
+//
+//@Test
+//void saveWishlist() {
+//}
+//
+//@Test
+//void deleteWishList() {
+//}
+//
+//@Test
+//void deleteWish() {
+//}
+//}
