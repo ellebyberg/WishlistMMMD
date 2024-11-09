@@ -158,7 +158,7 @@ public class WishRepository {
         listOfWishLists.clear();
 
         String SQL = "SELECT wishlist.wishlistID AS listID, wishlist.listName AS listName, " +
-                "wishlist.expireDate FROM wishlist WHERE userID =?";
+                "wishlist.expireDate FROM wishlist WHERE userID =?"; //TODO: Jeg(Daniel) får exceptions på den her metode? Leder efter userID i wishlist, der ikke har en række med det navn. Displayer derudover ingen ønskeliste på "profil" hovedsiden.
 
         try (PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
             ps.setInt(1, userID);
@@ -267,7 +267,7 @@ public class WishRepository {
 
         try(PreparedStatement ps = dbConnection.prepareStatement(sql)) {
             ps.setInt(1, wishlistID);
-            ps.setInt(1, userID);
+            ps.setInt(2, userID);
             try(ResultSet rs = ps.executeQuery()) {
                 if(rs.next()) {
                     String listName = rs.getString("listName");

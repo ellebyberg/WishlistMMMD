@@ -150,9 +150,13 @@ public class WishController {
     @GetMapping("/{userID}/{wishListID}")
     public String showSpecificWishList(@PathVariable int wishListID, @PathVariable int userID, Model model) {
         String redirect = redirectUserLoginAttributes(userID); //Hvis alt går som det skal, vil denne metode smide String null tilbage.
-        if (redirect != null && ws.doesUserOwnWishlist(wishListID, userID)) {
+        Integer sessionUserID = (Integer) session.getAttribute("userID");
+        if (redirect != null && !ws.doesUserOwnWishlist(wishListID, sessionUserID)) {
             return redirect;
         }
+        System.out.println(ws.doesUserOwnWishlist(wishListID, sessionUserID));
+        System.out.println(userID);
+        System.out.println(sessionUserID);
 
         List<Wish> listOfWishes = ws.showListOfWishes(wishListID);
         String wishListName = ws.getWishListNameFromID(wishListID);
