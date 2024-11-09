@@ -12,7 +12,12 @@ import java.sql.Connection;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@ActiveProfiles("test")
+@ActiveProfiles("testh2") //Disse test laves op imod h2 in-memory
+//databasen og ikke vores rigtige database. Når testen køres fortæller
+//denne annotation, at oplysninger fra application-testh2.properties
+//er gældende. Dvs der oprettes en h2 in memory database og køres den
+//oplyste sql create/insert fil, så der er data i test databasen
+
 public class WishRepositoryTest {
 
     @Autowired
