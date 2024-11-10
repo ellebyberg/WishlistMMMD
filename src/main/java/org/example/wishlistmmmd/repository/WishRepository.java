@@ -218,9 +218,34 @@ public class WishRepository {
     }
 
     //CRUD WISH
-    public void createWish() {
+    public void createWish(int wishListID, String wishName, String description, String link) {
+        // Insert the wish into the 'Wish' table
+        String sqlInsertWish = "INSERT INTO Wish (wishName, description, link) VALUES (?, ?, ?)";
+        try (PreparedStatement ps = dbConnection.prepareStatement(sqlInsertWish, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, wishName);
+            ps.setString(2, description);
+            ps.setString(3, link);
+            ps.executeUpdate();
 
+            // Get the generated wishID
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int wishID = generatedKeys.getInt(1);
+
+                    // Insert into the 'CombiWishList' table to associate the wish with the wishList
+                    String sqlInsertCombi = "INSERT INTO CombiWishList (wishID, wishListID) VALUES (?, ?)";
+                    try (PreparedStatement psCombi = dbConnection.prepareStatement(sqlInsertCombi)) {
+                        psCombi.setInt(1, wishID);  // The ID of the wish we just created
+                        psCombi.setInt(2, wishListID);  // The wishListID passed into the method
+                        psCombi.executeUpdate();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
 
     public void updateWish() {
 

@@ -133,6 +133,19 @@ public class WishController {
         return "redirect:/makemywishcometrue/"+userID;
     }
 
+    @GetMapping("/{userID}/{wishListID}/createWish")
+    public String createWish(@PathVariable int userID, @PathVariable int wishListID, Model model) {
+        model.addAttribute("userID", userID);
+        model.addAttribute("wishListID", wishListID);
+        return "createWish";
+    }
+
+    @PostMapping("/{userID}/{wishListID}/saveWish")
+    public String saveWish(@PathVariable int userID, @PathVariable int wishListID, @RequestParam String wishName, @RequestParam String description, @RequestParam String link) {
+        ws.createWish(wishListID, wishName, description, link);
+        return "redirect:/makemywishcometrue/" + userID + "/" + wishListID;
+    }
+
     @PostMapping("/deleteWishList/{userID}/{wishListID}")
     public String deleteWishList(@PathVariable int userID, @PathVariable int wishListID) {
         ws.deleteWishList(wishListID);

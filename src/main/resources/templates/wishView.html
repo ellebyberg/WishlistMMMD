@@ -19,6 +19,9 @@
 <p>KAN PROFIL INDSÆTTES HER?</p>
 </profile>
 <main>
+    <a th:href="@{/makemywishcometrue/{userID}/{wishListID}/createWish(userID=${userID}, wishListID=${wishListID})}">
+        <button type="button">Create new wish</button>
+    </a>
     <table>
         <thead>
         <tr><!-- tr betyder en række af celler i en tabel-->

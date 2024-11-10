@@ -59,6 +59,10 @@ public class WishService {
         wr.deleteWishList(wishListID);
     }
 
+    public void createWish(int wishListID, String wishName, String description, String link) {
+        wr.createWish(wishListID, wishName, description, link);
+    }
+
     public void deleteWish(int wishID) {
         wr.deleteWish(wishID);
     }
