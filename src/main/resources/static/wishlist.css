@@ -1,52 +1,84 @@
 /* === Layout og Grid-områder === */
 body {
-    min-height: 100vh;  /* Sætter body-højden til mindst 100% af viewport-højden */
-    display: grid;  /* Anvender CSS Grid til layout */
-    grid-gap: 5px;  /* Tilføjer et mellemrum mellem grid-områder */
-    grid-template-areas:  /* Definerer de forskellige grid-områder */
-            'header'
+    min-height: 100vh; /* Sætter body-højden til mindst 100% af viewport-højden */
+    display: grid; /* Anvender CSS Grid til layout */
+    /*grid-gap: 5px;  /* Tilføjer et mellemrum mellem grid-områder */
+    grid-template-areas:  /* Definerer de forskellige grid-områder */ 'header'
             'profile'
         'main'
         'footer';
-    grid-template-rows: 10em 12em auto 12em;  /* Bestemmer højden på hver række */
-    grid-template-columns: 1fr;  /* En enkelt kolonne der fylder hele bredden */
-    background-color: white;  /* Bruger en farve som baggrund */
+    grid-template-rows: 10em 12em auto auto; /* Bestemmer højden på hver række */
+    grid-template-columns: 1fr; /* En enkelt kolonne der fylder hele bredden */
 }
 
 @media (min-width: 60em) {
     body {
-        width: 98%;  /* Sætter body til at fylde 80% af viewportens bredde */
-        margin: 0 auto;  /* Centrerer layoutet horisontalt */
-        grid-template-areas:  /* Definerer et nyt grid-layout for større skærme */
-                'header'
+        width: 100%; /* Sætter body til at fylde 100% af viewportens bredde */
+        margin: 0 auto; /* Centrerer layoutet horisontalt */
+        grid-template-areas:  /* Definerer et nyt grid-layout for større skærme */ 'header'
                 'profile'
             'main'
             'footer';
-        grid-template-columns: auto;  /* Tre kolonner: navigation, hovedindhold og billede */
-        grid-template-rows: 10em 12em auto 12em;  /* Justerer højden på rækkerne */
+        grid-template-columns: auto; /* Tre kolonner: navigation, hovedindhold og billede */
+        grid-template-rows: 10em 12em auto auto; /* Justerer højden på rækkerne */
     }
 }
 
-main, footer {
-    background-color: darkgrey;  /* Giver alle områder en lys blå baggrund */
-    padding: 1em;  /* Tilføjer indvendig afstand i alle områder */
-    border-radius: 5px;  /* Gør hjørnerne runde */
-}
-
 header {
-    background-color: darkgrey;  /* Giver alle områder en lys blå baggrund */
-    border-radius: 5px;  /* Gør hjørnerne runde */
+    grid-area: header;
+    background-color: lightblue; /* Giver alle områder en lys blå baggrund */
+    display: flex;
+    justify-content: center; /* Centrerer billederne vandret */
+    align-items: center; /* Centrerer billederne lodret */
+    gap: 5em; /* Afstand mellem billederne */
+    padding: 10px; /* Giver lidt afstand til kanten af det grå område */
 }
 
 profile {
-    background-color: lightblue;  /* Giver alle områder en lys blå baggrund */
-    border-radius: 5px;  /* Gør hjørnerne runde */
+    background-color: lightblue; /* Giver alle områder en lys blå baggrund */
+    display: flex;
+    grid-template-columns: auto 1fr; /* Første kolonne til billedet, anden til teksten */
+    gap: 1em; /* Afstand mellem billede og tekst */
+    align-items: center; /* Centrerer elementerne vertikalt */
+    padding: 1em;
+    /*border-radius: 5px;  /* Gør hjørnerne runde */
 }
 
-header { grid-area: header; }  /* Tildeler headeren sit eget grid-område */
-profile { grid-area: profile; } /* Tildeler profile sit eget grid-område */
-main { grid-area: main; }  /* Tildeler hovedindholdet sit eget grid-område */
-footer { grid-area: footer; }  /* Tildeler footeren sit eget grid-område */
+main {
+    background-color: white; /* Giver alle områder en lys blå baggrund */
+    padding: 1em 5em;
+}
+
+footer {
+    background-color: lightblue;
+    display: grid;
+    grid-template-columns: auto auto; /* Første kolonne til kontaktteskt, anden til billeder */
+    gap: 1em; /* Afstand mellem billede og tekst */
+    align-items: center; /* Centrerer elementerne vertikalt */
+    padding: 2em;
+
+}
+
+/* Tildeler headeren sit eget grid-område */
+header {
+    grid-area: header;
+}
+
+profile {
+    grid-area: profile;
+}
+
+/* Tildeler profile sit eget grid-område */
+main {
+    grid-area: main;
+}
+
+/* Tildeler hovedindholdet sit eget grid-område */
+footer {
+    grid-area: footer;
+}
+
+/* Tildeler footeren sit eget grid-område */
 
 h1 {
     text-align: center; /* Centrerer teksten i H1-elementer */
@@ -65,40 +97,12 @@ h3 {
     font-size: 30px;
 }
 
-
-.profile-container {
-    display: flex;
-    grid-template-columns: auto 1fr; /* Første kolonne til billedet, anden til teksten */
-    gap: 1em; /* Afstand mellem billede og tekst */
-    align-items: center; /* Centrerer elementerne vertikalt */
-    background-color: lightblue;
-    padding: 1em;
-    border-radius: 15px;
-}
-
-.footerContainer {
-    display: grid;
-    grid-template-columns: auto auto auto auto; /* Første kolonne til kontaktteskt, anden til billeder */
-    gap: 1em; /* Afstand mellem billede og tekst */
-    align-items: center; /* Centrerer elementerne vertikalt */
-    background-color: grey;
-    padding: 1em;
-    border-radius: 5px;
-}
 .brand-image-container {
-        display: flex;
-        justify-content: center; /* Centrerer billederne vandret */
-        align-items: center;     /* Centrerer billederne lodret */
-        gap: 20px;               /* Afstand mellem billederne */
-        padding: 10px;           /* Giver lidt afstand til kanten af det grå område */
-}
-
-.header-container {
     display: flex;
     justify-content: center; /* Centrerer billederne vandret */
-    align-items: center;     /* Centrerer billederne lodret */
-    gap: 20px;               /* Afstand mellem billederne */
-    padding: 10px;           /* Giver lidt afstand til kanten af det grå område */
+    align-items: center; /* Centrerer billederne lodret */
+    gap: 20px; /* Afstand mellem billederne */
+    padding: 10px; /* Giver lidt afstand til kanten af det grå område */
 }
 
 /* Tilpasser billedet */
@@ -109,18 +113,36 @@ h3 {
     border: 1px solid black;
 }
 
+.wishlist-image {
+    max-height: 400px;
+    padding-right: 5%;
+    padding-bottom: 5%;
+    padding-top: 5%;
+}
+
 .brand-image {
     width: auto; /* Sætter en fast bredde på billedet */
     max-height: 8em;
+    max-width: 100%
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Skygge indstillinger */
     border-radius: 5px; /* Tilføj lidt afrunding til hjørnerne */
 }
 
 .icon-image {
-    width: auto; /* Sætter en fast bredde på billedet */
+    width: auto;
     max-height: 5em;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Skygge indstillinger */
     border-radius: 50%; /* Tilføj lidt afrunding til hjørnerne */
+}
+
+.login-image {
+    max-height: 400px; /* Angiv maks højde i pixels */
+    object-fit: cover; /* Sikrer, at billedet bevarer sin proportion */
+    padding-left: 10%;
+}
+
+.star-image {
+    max-height: 80%;
 
 }
 
@@ -164,6 +186,7 @@ th {
 tr:last-child td {
     border-bottom: none; /* Ingen kantlinje under den sidste række */
 }
+
 tr:last-child th {
     border-top: none;
 }
@@ -174,41 +197,41 @@ tr:last-child th {
 }
 
 .visønskelistebutton {
-    margin-top: 10px;  /* Tilføjer 10px margin over knappen */
-    padding: 5px 10px;  /* Tilføjer 5px top/bund og 10px venstre/højre padding */
-    font-size: 12px;  /* Sætter skriftstørrelsen til 12px */
-    background-color: green;  /* Bruger primærfarven som baggrundsfarve */
-    color: white;  /* Sætter tekstfarven til hvid */
-    border: 5px;  /* Tilføjer en 5px kant */
-    border-radius: 5px;  /* Gør hjørnerne runde */
-    cursor: pointer;  /* Ændrer markøren til en hånd */
-    width: fit-content;  /* Tilpasser bredden efter indholdet */
+    margin-top: 10px; /* Tilføjer 10px margin over knappen */
+    padding: 5px 10px; /* Tilføjer 5px top/bund og 10px venstre/højre padding */
+    font-size: 12px; /* Sætter skriftstørrelsen til 12px */
+    background-color: green; /* Bruger primærfarven som baggrundsfarve */
+    color: white; /* Sætter tekstfarven til hvid */
+    border: 5px; /* Tilføjer en 5px kant */
+    border-radius: 5px; /* Gør hjørnerne runde */
+    cursor: pointer; /* Ændrer markøren til en hånd */
+    width: fit-content; /* Tilpasser bredden efter indholdet */
 }
 
 .loginButton {
-    margin-top: 10px;  /* Tilføjer 10px margin over knappen */
-    padding: 5px 10px;  /* Tilføjer 5px top/bund og 10px venstre/højre padding */
-    font-size: 20px;  /* Sætter skriftstørrelsen til 12px */
+    margin-top: 10px; /* Tilføjer 10px margin over knappen */
+    padding: 5px 10px; /* Tilføjer 5px top/bund og 10px venstre/højre padding */
+    font-size: 20px; /* Sætter skriftstørrelsen til 12px */
     font-family: "Century Gothic", serif;
-    background-color: lightblue;  /* Bruger primærfarven som baggrundsfarve */
-    color: black;  /* Sætter tekstfarven til hvid */
-    border: 5px;  /* Tilføjer en 5px kant */
-    border-radius: 5px;  /* Gør hjørnerne runde */
-    cursor: pointer;  /* Ændrer markøren til en hånd */
-    width: fit-content;  /* Tilpasser bredden efter indholdet */
+    background-color: lightblue; /* Bruger primærfarven som baggrundsfarve */
+    color: black; /* Sætter tekstfarven til hvid */
+    border: 5px; /* Tilføjer en 5px kant */
+    border-radius: 5px; /* Gør hjørnerne runde */
+    cursor: pointer; /* Ændrer markøren til en hånd */
+    width: fit-content; /* Tilpasser bredden efter indholdet */
 }
 
 .createResetPasswordButton {
-    margin-top: 10px;  /* Tilføjer 10px margin over knappen */
-    padding: 5px 10px;  /* Tilføjer 5px top/bund og 10px venstre/højre padding */
-    font-size: 20px;  /* Sætter skriftstørrelsen til 12px */
+    margin-top: 10px; /* Tilføjer 10px margin over knappen */
+    padding: 5px 10px; /* Tilføjer 5px top/bund og 10px venstre/højre padding */
+    font-size: 20px; /* Sætter skriftstørrelsen til 12px */
     font-family: "Century Gothic", serif;
-    background-color: grey;  /* Bruger primærfarven som baggrundsfarve */
-    color: white;  /* Sætter tekstfarven til hvid */
-    border: 5px;  /* Tilføjer en 5px kant */
-    border-radius: 5px;  /* Gør hjørnerne runde */
-    cursor: pointer;  /* Ændrer markøren til en hånd */
-    width: fit-content;  /* Tilpasser bredden efter indholdet */
+    background-color: grey; /* Bruger primærfarven som baggrundsfarve */
+    color: white; /* Sætter tekstfarven til hvid */
+    border: 5px; /* Tilføjer en 5px kant */
+    border-radius: 5px; /* Gør hjørnerne runde */
+    cursor: pointer; /* Ændrer markøren til en hånd */
+    width: fit-content; /* Tilpasser bredden efter indholdet */
 }
 
 .usernamePasswordText {
@@ -224,4 +247,22 @@ input[type="text"], input[type="password"] {
     width: 200px; /* Angiver bredden */
     height: 23px; /* Angiver højden */
     font-size: 20px;
+    border: 1px solid black;
+}
+
+.loginBilledeContainer {
+    display: grid;
+    grid-template-columns: 1fr auto; /* 1 kolonne til tekst og 1 kolonne til billede */
+    gap: 20px; /* Afstand mellem tekst og billede */
+}
+
+.loginField {
+    padding-left: 20%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+p {
+    font-size: 20px;
+    font-family: "Century Gothic", serif;
 }

@@ -6,18 +6,18 @@
     <link rel="stylesheet" href="/wishlist.css">
 </head>
 <body>
-<header class="header-container">
+<header class="header">
     <div>
-    <h1>Ønskesky Projekt</h1>
+        <h1>Ønskesky Projekt</h1>
     </div>
     <div>
-        <a href="https://dragoerbadminton.dk" class="icon-link">
+        <a th:href="@{/makemywishcometrue/homeView}" class="icon-link">
             <img src="/icons/home.jpg" alt="Home" class="icon-image">
         </a>
-        <a href="https://dragoerbadminton.dk" class="icon-link">
+        <a href="#" class="icon-link">
             <img src="/icons/profile.jpg" alt="Home" class="icon-image">
         </a>
-        <a href="https://dragoerbadminton.dk" class="icon-link">
+        <a href="#" class="icon-link">
             <img src="/icons/wishlist.jpg" alt="Home" class="icon-image">
         </a>
     </div>
@@ -26,32 +26,39 @@
 
 </profile>
 <main>
-    <div th:if="${invalidUserNameErr}">
-        <p th:text="${invalidUserNameErr}" style="color: red;">
-        </p>
+    <div class="loginBilledeContainer">
+        <div class="loginField">
+            <div th:if="${invalidUserNameErr}">
+                <p th:text="${invalidUserNameErr}" style="color: red;">
+                </p>
+            </div>
+            <div th:if="${errorMessage}" class="error"> <!-- Fejlbesked, hvis login failer -->
+                <p th:text="${errorMessage}" style="color: red;"></p>
+            </div>
+            <h3>User Info</h3>
+            <form action="/makemywishcometrue/loginValidation" method="post">
+                <label class="usernamePasswordText" for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <br>
+                <br>
+                <label class="usernamePasswordText" for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <br>
+                <button class="loginButton" type="submit">Login</button>
+            </form>
+            <a th:href="@{/makemywishcometrue/createAccountPage}">
+                <button class="createResetPasswordButton" type="submit">Create Account</button>
+            </a><br>
+            <a th:href="@{/makemywishcometrue/showResetPasswordPage}">
+                <button class="createResetPasswordButton" type="submit">Reset Password</button>
+            </a>
+        </div>
+        <div>
+            <img src="/images/wishlist.jpg" alt="wishlist" class="wishlist-image">
+        </div>
     </div>
-    <div th:if="${errorMessage}" class="error"> <!-- Fejlbesked, hvis login failer -->
-        <p th:text="${errorMessage}" style="color: red;"></p>
-    </div>
-    <h3>User Info</h3>
-    <form action="/makemywishcometrue/loginValidation" method="post">
-        <label class="usernamePasswordText" for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <br>
-        <label class="usernamePasswordText" for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <button class="loginButton" type="submit">Login</button>
-    </form>
-    <a th:href="@{/makemywishcometrue/createAccountPage}">
-        <button class="createResetPasswordButton" type="submit">Create Account</button>
-    </a><br>
-    <a th:href="@{/makemywishcometrue/showResetPasswordPage}">
-        <button class="createResetPasswordButton" type="submit">Reset Password</button>
-    </a>
 </main>
-<footer class="footerContainer">
+<footer class="footer">
     <div>
         <p><Strong>Kontakt os her</Strong></p>
         <p>Email: <a href="#">teamMMMD@failmail.dk</a></p>
