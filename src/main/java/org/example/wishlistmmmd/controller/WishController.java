@@ -6,6 +6,7 @@ import org.example.wishlistmmmd.model.WishList;
 import org.example.wishlistmmmd.service.WishService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,7 +67,7 @@ public class WishController {
         return "login";
     }
     @PostMapping("/saveAccount")
-    public String saveNewAccountToDB(@RequestParam String name, @RequestParam Date birthdate, @RequestParam String username, @RequestParam String password, RedirectAttributes redirectAttributes) throws SQLException {
+    public String saveNewAccountToDB(@RequestParam String name, @RequestParam(required = false) Date birthdate, @RequestParam String username, @RequestParam String password, RedirectAttributes redirectAttributes) throws SQLException {
 
         UserProfile up = new UserProfile(name,birthdate, username, password);
 
@@ -98,7 +99,7 @@ public class WishController {
             return "redirect:/showResetPasswordPage";
         }
     }
-//
+
     @GetMapping("/{userID}")
     public String showUserHomePage(@PathVariable int userID, Model model) {
         List<WishList> listOfWishLists = ws.showListOfWishLists(userID);
