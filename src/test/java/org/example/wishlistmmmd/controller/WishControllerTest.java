@@ -1,14 +1,14 @@
 package org.example.wishlistmmmd.controller;
 
 import org.example.wishlistmmmd.model.UserProfile;
+import org.example.wishlistmmmd.model.WishList;
 import org.example.wishlistmmmd.service.WishService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +18,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 
 @WebMvcTest(WishController.class)
@@ -149,19 +152,35 @@ public class WishControllerTest {
 //}
 //
     @Test
-    void showUserHomePage() {
+    void showUserHomePage() throws Exception {
 
         //Arrange
-        Mockito.when(wishService.showListOfWishLists(userID)).
+        WishList wl1 = new WishList();
+        wl1.setListName("wl1");
+        wl1.setWishListID(1);
+        wl1.setUserID(3);
+        WishList wl2 = new WishList();
+        wl2.setListName("wl2");
+        wl2.setWishListID(2);
+        wl2.setUserID(3);
 
+        List<WishList> mockWishLists = Arrays.asList(wl1, wl2);
+        // Konfigurer mocks til at returnere disse værdier, når de kaldes i controlleren
+        Mockito.when(wishService.showListOfWishLists(userID)).thenReturn(mockWishLists);
+        Mockito.when(wishService.getUserData(userID)).thenReturn(testUser);
 
-        //Act
+        //Act: Simuler en GET-anmodning til endpointet for at se brugerens startside
+        mockMvc.perform(get("/makemywishcometrue/" + userID))
 
+                // Assert: Tjek at det korrekte view returneres, og at statuskoden er 200 OK
+                .andExpect(status().isOk())
+                .andExpect(view().name("wishListView"))
+                .andExpect(model().attribute("listOfWishLists", mockWishLists))
+                .andExpect(model().attribute("UserProfile", testUser));
 
-        //Assert
-
-
-        //Verify
+        // Verify: Bekræft at showListOfWishLists og getUserData blev kaldt med det rigtige userID
+        Mockito.verify(wishService).showListOfWishLists(userID);
+        Mockito.verify(wishService).getUserData(userID);
 
 
     }
