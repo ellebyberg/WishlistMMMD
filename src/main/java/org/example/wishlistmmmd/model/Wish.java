@@ -6,12 +6,14 @@ public class Wish {
     private String wishName;
     private String description;
     private String link;
+    private double price;
 
-    public Wish(int wishID, String wishName, String description, String link) {
+    public Wish(int wishID, String wishName, String description, String link, double price) {
         this.wishID = wishID;
         this.wishName = wishName;
         this.description = description;
         this.link = link;
+        this.price = price;
     }
 
     public int getWishID() {
@@ -44,5 +46,13 @@ public class Wish {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

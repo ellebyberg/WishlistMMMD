@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="/wishlist.css">
 </head>
 <body>
-<header>
+<header class="header">
     <div>
-    <h1>Wishes on the list</h1>
+        <h1>Wishes on the list</h1>
     </div>
     <div>
         <a th:href="@{/makemywishcometrue/homeView}" class="icon-link">
@@ -28,19 +28,17 @@
     </div>
 </header>
 <profile>
-<p>KAN PROFIL INDSÆTTES HER?</p>
+    <p>KAN PROFIL INDSÆTTES HER?</p>
 </profile>
 <main>
     <h3 th:text="${wishListName}"></h3>
-    <a th:href="@{/makemywishcometrue/{userID}/{wishListID}/createWish(userID=${userID}, wishListID=${wishListID})}">
-        <button type="button">Create new wish</button>
-    </a>
     <table>
         <thead>
         <tr><!-- tr betyder en række af celler i en tabel-->
             <th class="teksttabel">Wish</th> <!-- th angiver indhold af hver celle i øverste række af tabellen-->
             <th class="teksttabel">Description</th>
             <th class="teksttabel">Link</th>
+            <th class="teksttabel">Price</th>
             <th class="teksttabel">Functions</th>
         </tr>
         </thead>
@@ -48,23 +46,26 @@
         <tr><!-- her kommer næste række i tabellen-->
             <td th:text="${wish.getWishName()}"></td> <!-- td angiver indhold af hver celle-->
             <td th:text="${wish.getDescription()}"></td> <!-- td angiver indhold af hver celle-->
-            <td>
-            <a th:href="${wish.getLink()}" target="_blank" th:text="${wish.getLink()}"></a>
-            </td> <!-- anker-tag a gør linket klikbart. target _blank gør at linket åbnes på ny fane-->
-            <td>
-                <form th:action="@{/makemywishcometrue/deleteWish/{userid}/{wishid}(userid=${userID},wishid=${wish.wishID})}"
-                      method="post" onsubmit="return confirmDeletion()">
-                    <button class="createResetPasswordButton" type="submit">Delete</button>
-                </form>
-                <script>
-                    function confirmDeletion() {
-                        return confirm("Are you sure you want to delete this wish? This action cannot be reversed.")
-                    }
-                </script>
+            <td><a th:href="${wish.getLink()}" target="_blank" th:text="${wish.getLink()}"></a></td>
+            <!-- Anker-tag a gør linket klikbart. target _blank gør at linket åbnes på ny fane-->
+            <td th:text="${wish.getPrice()}"></td>
+            <td><form th:action="@{/makemywishcometrue/deleteWish/{userid}/{wishid}(userid=${userID},wishid=${wish.wishID})}"
+                  method="post" onsubmit="return confirmDeletion()">
+                <button class="visønskelistebutton" type="submit">Delete</button>
+            </form>
+            <script>
+                function confirmDeletion() {
+                    return confirm("Are you sure you want to delete this wish? This action cannot be reversed.")
+                }
+            </script>
             </td>
         </tr>
         </tbody>
     </table>
+    <a th:href="@{/makemywishcometrue/{userID}/{wishListID}/createWish(userID=${userID}, wishListID=${wishListID})}">
+        <button class="createResetPasswordButton" type="button">Create new wish</button>
+    </a>
+    <br>
     <!--Nedenfor en tilbage knap som udgangspunkt til en homepage. -->
     <a th:href="@{/makemywishcometrue/{userID} (userID=${userID})}">
         <button class="createResetPasswordButton" type="button">Go Back</button>

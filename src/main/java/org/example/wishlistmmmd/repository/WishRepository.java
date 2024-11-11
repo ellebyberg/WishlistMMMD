@@ -176,7 +176,7 @@ public class WishRepository {
 
         List<Wish> listOfWishes = new ArrayList<>();
 
-        String SQL = "SELECT wish.wishname, wish.description, wish.wishid, link FROM wish \n" +
+        String SQL = "SELECT wish.wishname, wish.description, wish.wishid, wish.link, wish.price FROM wish \n" +
                 "INNER JOIN combiwishlist ON wish.wishid = combiwishlist.wishid WHERE wishlistid = ?;";
 
         try (PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
@@ -188,7 +188,8 @@ public class WishRepository {
                 String wishName = rs.getString("wishname");
                 String wishDescription = rs.getString("description");
                 String link = rs.getString("link");
-                listOfWishes.add(new Wish(wishID, wishName, wishDescription, link));
+                double price = rs.getDouble("price");
+                listOfWishes.add(new Wish(wishID, wishName, wishDescription, link, price));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -209,13 +210,14 @@ public class WishRepository {
     }
 
     //CRUD WISH
-    public void createWish(int wishListID, String wishName, String description, String link) {
+    public void createWish(int wishListID, String wishName, String description, String link, double price) {
         // Insert the wish into the 'Wish' table
-        String sqlInsertWish = "INSERT INTO Wish (wishName, description, link) VALUES (?, ?, ?)";
+        String sqlInsertWish = "INSERT INTO Wish (wishName, description, link, price) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = dbConnection.prepareStatement(sqlInsertWish, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, wishName);
             ps.setString(2, description);
             ps.setString(3, link);
+            ps.setDouble(4, price);
             ps.executeUpdate();
 
             // Get the generated wishID
