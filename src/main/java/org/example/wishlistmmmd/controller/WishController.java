@@ -39,13 +39,21 @@ public class WishController {
 //
     @PostMapping("/loginValidation")
     public String loginValidation(HttpServletRequest request, @RequestParam String username, @RequestParam String password) throws SQLException {
-        if (ws.validateLogin(username, password)) {
+        if (ws.validateLogin(username, password)) { //Brugeren logger ind
             HttpSession session = request.getSession();
             session.setAttribute("loggedIn", true);
             int userID = ws.getUserIDFromDB(username);
+            session.setAttribute("userID", userID);
+            session.setAttribute("username", username);
+            /*
+            Data om brugeren 'gemmes' på sessionen som ID og username. Dette bruges i placeholder metoder
+            for at sikre, at brugeren ikke tilgår andre endpoints, der tilhører andre profiler.
+             */
 
             return "redirect:/makemywishcometrue/"+userID;
         } else {
+            //Hvis validateLogin() ikke finder brugeren i DB, redirectes brugeren til login med en fejlbesked,
+            //som vises i html view.
             return "redirect:/makemywishcometrue/loginPage?error=true";
         }
     }
