@@ -256,8 +256,7 @@ public class WishRepository {
     }
 
     public WishList getWishListByWlIdAndUserId(int wishlistID, int userID) {
-//        String sql = "SELECT wishlist.wishListID, wishlist.listName, expireDate FROM wishlist INNER JOIN combiwishList ON wishlist.wishListID = combiwishlist.wishListID WHERE wishlist.wishListID = ?";
-        String sql = "SELECT wishlist.wishListID, wishlist.listname, wishlist.expireDate FROM wishlist INNER JOIN combiuserlist ON wishlist.wishListID = combiuserlist.wishListID WHERE wishlist.wishListID = ? AND combiuserlist.userID = ?";
+        String sql = "SELECT wishlist.wishListID, wishlist.listname, wishlist.expireDate FROM wishlist WHERE wishlist.userID = ? AND wishListID = ?";
         WishList wishlist = null;
         /*
         Vi laver et SQL lookup for at finde frem til en ønskeliste med det bestemte ID. Vi sikrer os allerede her, at brugeren skal have adgang til listen
