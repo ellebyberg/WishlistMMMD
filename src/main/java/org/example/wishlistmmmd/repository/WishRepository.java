@@ -3,7 +3,6 @@ package org.example.wishlistmmmd.repository;
 import org.example.wishlistmmmd.model.UserProfile;
 import org.example.wishlistmmmd.model.Wish;
 import org.example.wishlistmmmd.model.WishList;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -13,8 +12,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.Date;
-import java.sql.*;
-import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -126,8 +123,6 @@ public class WishRepository {
         LocalDate today = LocalDate.now();
         Date sqlDate = Date.valueOf(today);
 
-
-
         try(PreparedStatement ps = dbConnection.prepareStatement(sql)) {
             ps.setDate(1, sqlDate);
             try(ResultSet rs = ps.executeQuery()) {
@@ -163,7 +158,7 @@ public class WishRepository {
         listOfWishLists.clear();
 
         String SQL = "SELECT wishlist.wishlistID AS listID, wishlist.listName AS listName, " +
-                "wishlist.expireDate FROM wishlist WHERE userID =?";
+                "wishlist.expireDate FROM wishlist WHERE userID =?"; //TODO: Jeg(Daniel) får exceptions på den her metode? Leder efter userID i wishlist, der ikke har en række med det navn. Displayer derudover ingen ønskeliste på "profil" hovedsiden.
 
         try (PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
             ps.setInt(1, userID);
@@ -258,5 +253,42 @@ public class WishRepository {
             e.printStackTrace();
         }
         return wishListName;
+    }
+
+    public WishList getWishListByWlIdAndUserId(int wishlistID, int userID) {
+        String sql = "SELECT wishlist.wishListID, wishlist.listname, wishlist.expireDate FROM wishlist WHERE wishlist.userID = ? AND wishListID = ?";
+        WishList wishlist = null;
+        /*
+        Vi laver et SQL lookup for at finde frem til en ønskeliste med det bestemte ID. Vi sikrer os allerede her, at brugeren skal have adgang til listen
+        ved at tjekke, om der er en forbindelse mellem user og wishlist i vores assocation table. SQL vil derfor ikke returnere nogen liste, hvis en anden
+        bruger prøver at tilgå en liste, som de ikke ejer.
+         */
+
+        try(PreparedStatement ps = dbConnection.prepareStatement(sql)) {
+            ps.setInt(1, wishlistID);
+            ps.setInt(2, userID);
+            try(ResultSet rs = ps.executeQuery()) {
+                if(rs.next()) {
+                    String listName = rs.getString("listName");
+                    Date expireDate = rs.getDate("expireDate");
+                    int wishlistIDFromDB = rs.getInt("wishListID");
+                    List<Wish> wishesOnTheList = showWishesInSpecificWishList(wishlistID);
+
+                    wishlist = new WishList(listName, expireDate, wishlistIDFromDB);
+                    wishlist.setWishesOnTheList(wishesOnTheList);
+                    /*
+                    Vi befolker vores Java WishList, hvis den findes i databasen.
+                     */
+                }
+            }
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+//        if (wishlist != null) { //Hvis listen findes i databasen returneres den med metoden
+//            return wishlist;
+//        } else { //Hvis den ikke findes i databasen kaster vi en exception for lettere fejlfinding.
+//            throw new NullPointerException("The wishlist could not be found or was not created properly. WR. L284");
+//        }
+        return wishlist; //Vi tjekker for null værdier i Servicelag
     }
 }
