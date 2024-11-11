@@ -5,13 +5,9 @@ import org.example.wishlistmmmd.model.Wish;
 import org.example.wishlistmmmd.model.WishList;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.List;
 
 @Repository
