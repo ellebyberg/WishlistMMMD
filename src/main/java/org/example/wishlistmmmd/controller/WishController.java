@@ -202,4 +202,9 @@ public class WishController {
 
     }
 
+    @GetMapping("/homeView")
+    public String showHomeView() {
+        return "homeView";
+    }
+
 }
