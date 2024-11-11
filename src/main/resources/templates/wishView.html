@@ -32,6 +32,9 @@
 </profile>
 <main>
     <h3 th:text="${wishListName}"></h3>
+    <a th:href="@{/makemywishcometrue/{userID}/{wishListID}/createWish(userID=${userID}, wishListID=${wishListID})}">
+        <button type="button">Create new wish</button>
+    </a>
     <table>
         <thead>
         <tr><!-- tr betyder en række af celler i en tabel-->
@@ -51,7 +54,7 @@
             <td>
                 <form th:action="@{/makemywishcometrue/deleteWish/{userid}/{wishid}(userid=${userID},wishid=${wish.wishID})}"
                       method="post" onsubmit="return confirmDeletion()">
-                    <button class="createResetPasswordButton" type="submit">Slet</button>
+                    <button class="createResetPasswordButton" type="submit">Delete</button>
                 </form>
                 <script>
                     function confirmDeletion() {

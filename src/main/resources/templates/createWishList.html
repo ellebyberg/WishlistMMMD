@@ -1,35 +1,49 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="https://thymeleaf.org">
+<html lang="en" xmlns:th="https://thymeleaf.org">
 <!--her angives at vi arbejder med thymeleaf og prefix th skal anvendes, når der skal kaldes attributter-->
->
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Wishlist</title>
+    <link rel="stylesheet" href="/wishlist.css">
 </head>
 <body>
-<h1>Create New WishList</h1>
-<p>Please fill out all the fields below to create a new wishList</p>
 
-<form th:action="@{/makemywishcometrue/saveWishList}" method="post">
-    <label for="listName"></label>
-    <input type="text" id="listName" name="listName" placeholder="List Name" required> <br>
+<header>
+    <h1>Create a New WishList</h1>
+</header>
+<p>Please fill out all the fields below to create a new wishlist</p>
+<main>
+    <form th:action="@{/makemywishcometrue/saveWishList}" method="post">
 
-   <label for="expireDate">Expiry Date:</label> <br>
-    <input type="date" id="expireDate" name="expireDate" required>
+        <!--skjult felt for at medsende userID ved save af formularen-->
+        <input type="hidden" name="userID" th:value="${userID}">
 
-    <!--skjult felt for at medsende userID ved save af formularen-->
-    <input type="hidden" name="userID" th:value="${userID}">
+        <div>
+            <label for="listName">List Name:</label>
+            <input type="text" id="listName" name="listName" required>
+        </div>
 
-    <button type ="submit">save</button> <br>
+        <div>
+            <label for="expireDate">Expiry Date:</label>
+            <input type="date" id="expireDate" name="expireDate" required>
+        </div>
 
+        <div>
+    <button type ="submit">Create wishlist</button>
+        </div>
+
+    </form>
     <!--Nedenfor en tilbage knap som udgangspunkt til en homepage. -->
     <a th:href="@{/makemywishcometrue/{userID} (userID=${userID})}">
         <button type="button">Go Back</button>
     </a>
+</main>
 
+<footer>
+    <p>&copy; 2024 Ønskeskyprojekt - TeamMMMD (Mark, Martin, Mette, Daniel)</p>
+</footer>
 
-</form>
 </body>
 
 </html>

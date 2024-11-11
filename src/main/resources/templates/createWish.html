@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Wish</title>
+    <link rel="stylesheet" href="/wishlist.css">
+</head>
+<body>
+
+<header>
+    <h1>Create a New Wish</h1>
+</header>
+
+<main>
+    <form th:action="@{/makemywishcometrue/{userID}/{wishListID}/saveWish(userID=${userID}, wishListID=${wishListID})}" method="post">
+
+        <!--skjult felt for at medsende userID ved save af formularen-->
+        <input type="hidden" name="userID" th:value="${userID}">
+
+        <div>
+            <label for="wishName">Wish Name:</label>
+            <input type="text" id="wishName" name="wishName" required>
+        </div>
+
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+        </div>
+
+        <div>
+            <label for="link">Link (optional):</label>
+            <input type="url" id="link" name="link">
+        </div>
+
+        <div>
+            <button type="submit">Create wish</button>
+        </div>
+
+    </form>
+    <!--Nedenfor en tilbage knap som udgangspunkt til en homepage. -->
+    <a th:href="@{/makemywishcometrue/{userID}/{wishListID}(userID=${userID}, wishListID=${wishListID})}">
+        <button type="button">Back to Wishlist</button>
+    </a>
+</main>
+
+<footer>
+    <p>&copy; 2024 Ønskeskyprojekt - TeamMMMD (Mark, Martin, Mette, Daniel)</p>
+</footer>
+
+</body>
+
+</html>
