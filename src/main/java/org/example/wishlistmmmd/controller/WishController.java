@@ -26,22 +26,19 @@ import java.sql.SQLException;
 
 public class WishController {
 
+    /*
+    ###########################################
+    #             attributter                 #
+    ###########################################
+     */
+
     private final WishService ws;
+    private HttpSession session;
 
     public WishController(WishService ws, HttpSession session) {
         this.ws = ws;
         this.session = session;
     }
-
-    /*
-    ###########################################
-    #           Session attributter           #
-    ###########################################
-     */
-    private HttpSession session;
-
-
-
 
 
 //    @GetMapping("/welcomePage")
@@ -67,23 +64,6 @@ public class WishController {
             //som vises i html view.
             return "redirect:/makemywishcometrue/loginPage?error=true";
         }
-    }
-    public String redirectUserLoginAttributes(int userID) {
-        Integer sessionUserID = (Integer) session.getAttribute("userID");
-
-        if (sessionUserID == null) {
-            //Hvis brugeren ikke er logget ind ligger der ikke et ID gemt på session,
-            // hvorfor brugeren derfor promptes til at logge ind
-            return "redirect:/makemywishcometrue/loginPage";
-        }
-        else if(!sessionUserID.equals(userID)) {
-            /*
-            Brugeren prøver at tilgå en anden brugers data.
-            De bliver redirected til deres egen side, hvis de er logget ind.
-             */
-            return "redirect:/makemywishcometrue/"+sessionUserID;
-        }
-        return null;
     }
 
     @GetMapping("/loginPage")
@@ -131,7 +111,7 @@ public class WishController {
 
     @GetMapping("/{userID}")
     public String showUserHomePage(@PathVariable int userID, Model model) {
-        String redirect = redirectUserLoginAttributes(userID);
+        String redirect = ws.redirectUserLoginAttributes(session, userID);
         if (redirect != null) {
             return redirect;
         }
@@ -151,11 +131,13 @@ public class WishController {
 
     @GetMapping("/{userID}/{wishListID}")
     public String showSpecificWishList(@PathVariable int wishListID, @PathVariable int userID, Model model) {
-        String redirect = redirectUserLoginAttributes(userID); //Hvis alt går som det skal, vil denne metode smide String null tilbage.
+        String redirect = ws.redirectUserLoginAttributes(session, userID); //Hvis alt går som det skal, vil denne metode smide String null tilbage.
         Integer sessionUserID = (Integer) session.getAttribute("userID");
         if (redirect != null && !ws.doesUserOwnWishlist(wishListID, sessionUserID)) {
             return redirect;
         }
+        System.out.println("Session:" +session);
+        System.out.println("SessionID:" +session.getId());
         System.out.println(ws.doesUserOwnWishlist(wishListID, sessionUserID));
         System.out.println(userID);
         System.out.println(sessionUserID);
@@ -199,16 +181,6 @@ public class WishController {
         ws.deleteWishList(wishListID);
         return "redirect:/makemywishcometrue/" +userID;
     }
-
-//    @GetMapping("/addWish")
-//    public String addWish() {
-//
-//    }
-//
-//    @PostMapping("/saveWish")
-//    public String saveWish() {
-//        //return redirectSaveWish
-//    }
 
     @PostMapping("/deleteWish/{userID}/{wishID}")
     public String deleteWish(@PathVariable int userID, @PathVariable int wishID) {

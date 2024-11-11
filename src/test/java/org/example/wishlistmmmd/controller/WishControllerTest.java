@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -94,7 +95,7 @@ public class WishControllerTest {
                 .andExpect(redirectedUrl("/makemywishcometrue/3"));//denne tjekker, om redirect-adressen er /makemywishcometrue/1,
         // hvilket indikerer, at login var succesfuldt, og brugeren blev omdirigeret til sin personlige side.
 
-        //Verify: Bekræft at validateLogin blev kaldt med de rigtige parametre
+        //Verify: Bekræft at validateLogin bliver kaldt med de rigtige parametre
         //Med verifikation sørger vi for, at controlleren ikke bare reagerer korrekt, men at den også interagerer korrekt med andre systemkomponenter.
         //Uden verifikation kunne vi have en test, der bekræfter, at en controller returnerer en korrekt status (f.eks. en redirect),
         //men vi ville ikke kunne vide, om den faktisk kaldte de nødvendige metoder i wishService. Det er især nyttigt for at sikre,
@@ -103,6 +104,7 @@ public class WishControllerTest {
         Mockito.verify(wishService).getUserIDFromDB(username);
     }
 
+//    JEG KAN IKKE FÅ TEST MED DATE TIL AT KØRE KORREKT!!!
 //    @Test
 //    void saveNewAccountToDB() throws Exception {
 //
@@ -151,10 +153,15 @@ public class WishControllerTest {
 //void resetPasswordAction() {
 //}
 //
+
     @Test
     void showUserHomePage() throws Exception {
 
         //Arrange
+
+        MockHttpSession session = new MockHttpSession(); // Opret session og sæt attributter
+        //session.setAttribute("someSessionAttribute", "someValue");  // Eksempel på at sætte en sessionattribut, hvis nødvendigt
+
         WishList wl1 = new WishList();
         wl1.setListName("wl1");
         wl1.setWishListID(1);
@@ -168,6 +175,7 @@ public class WishControllerTest {
         // Konfigurer mocks til at returnere disse værdier, når de kaldes i controlleren
         Mockito.when(wishService.showListOfWishLists(userID)).thenReturn(mockWishLists);
         Mockito.when(wishService.getUserData(userID)).thenReturn(testUser);
+        Mockito.when(wishService.redirectUserLoginAttributes(session,userID)).thenReturn(null);
 
         //Act: Simuler en GET-anmodning til endpointet for at se brugerens startside
         mockMvc.perform(get("/makemywishcometrue/" + userID))

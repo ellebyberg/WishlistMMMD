@@ -9,7 +9,7 @@ public class UserProfile {
     private Date birthdate;
     private String username;
     private String password;
-    private List<WishList> listOfWishList;
+    private List<WishList> listOfWishList; //BRUGER VI DENNE?
 
     public UserProfile(int userID, String name, Date birthdate, String username, String password) {
         this.userID = userID;
