@@ -4,8 +4,6 @@ import org.example.wishlistmmmd.model.UserProfile;
 import org.example.wishlistmmmd.model.Wish;
 import org.example.wishlistmmmd.model.WishList;
 import org.example.wishlistmmmd.repository.WishRepository;
-import org.example.wishlistmmmd.model.UserProfile;
-import org.example.wishlistmmmd.repository.WishRepository;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -59,12 +57,24 @@ public class WishService {
         wr.deleteWishList(wishListID);
     }
 
+    public void createWish(int wishListID, String wishName, String description, String link) {
+        wr.createWish(wishListID, wishName, description, link);
+    }
+
     public void deleteWish(int wishID) {
         wr.deleteWish(wishID);
     }
 
     public String getWishListNameFromID(int wishListID) {
         return wr.getWishListNameFromID(wishListID);
+    }
+    public boolean doesUserOwnWishlist(int wishlistID, int userID) {
+        WishList wishlist = wr.getWishListByWlIdAndUserId(wishlistID, userID);
+        if (wishlist != null) {
+            return true; //Det må antages, at user ejer en wishlist, hvis den ikke er null. Tjek dokumentation i Repository lag for getWishListByWlIdAndUserId() for mere information.
+        } else {
+            return false;
+        }
     }
 
 }

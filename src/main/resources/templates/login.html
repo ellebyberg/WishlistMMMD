@@ -6,23 +6,74 @@
     <link rel="stylesheet" href="/wishlist.css">
 </head>
 <body>
-<h2>LOGIN</h2>
-<div th:if="${invalidUserNameErr}">
-    <p th:text="${invalidUserNameErr}" style="color: red;"></p>
-</div>
-<div th:if="${errorMessage}" class="error"> <!-- Fejlbesked, hvis login failer -->
-    <p th:text="${errorMessage}" style="color: red;"></p>
-</div>
-<form action="/makemywishcometrue/loginValidation" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
-    <label for ="password">Password:</label>
-    <input type="password" id="password" name="password" required>
+<header class="header">
+    <div>
+        <h1>Ønskesky Projekt</h1>
+    </div>
+    <div>
+        <a th:href="@{/makemywishcometrue/homeView}" class="icon-link">
+            <img src="/icons/home.jpg" alt="Home" class="icon-image">
+        </a>
+        <a href="#" class="icon-link">
+            <img src="/icons/profile.jpg" alt="Home" class="icon-image">
+        </a>
+        <a href="#" class="icon-link">
+            <img src="/icons/wishlist.jpg" alt="Home" class="icon-image">
+        </a>
+    </div>
+</header>
+<profile>
 
-    <button type="submit">Login</button>
-</form>
-<a th:href="@{/makemywishcometrue/createAccountPage}"><button type="submit">Create Account</button></a><br>
-<a th:href="@{/makemywishcometrue/showResetPasswordPage}"><button type="submit">Reset Password</button></a>
-
+</profile>
+<main>
+    <div class="loginBilledeContainer">
+        <div class="loginField">
+            <div th:if="${invalidUserNameErr}">
+                <p th:text="${invalidUserNameErr}" style="color: red;">
+                </p>
+            </div>
+            <div th:if="${errorMessage}" class="error"> <!-- Fejlbesked, hvis login failer -->
+                <p th:text="${errorMessage}" style="color: red;"></p>
+            </div>
+            <h3>User Info</h3>
+            <form action="/makemywishcometrue/loginValidation" method="post">
+                <label class="usernamePasswordText" for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <br>
+                <br>
+                <label class="usernamePasswordText" for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <br>
+                <button class="loginButton" type="submit">Login</button>
+            </form>
+            <a th:href="@{/makemywishcometrue/createAccountPage}">
+                <button class="createResetPasswordButton" type="submit">Create Account</button>
+            </a><br>
+            <a th:href="@{/makemywishcometrue/showResetPasswordPage}">
+                <button class="createResetPasswordButton" type="submit">Reset Password</button>
+            </a>
+        </div>
+        <div>
+            <img src="/images/wishlist.jpg" alt="wishlist" class="wishlist-image">
+        </div>
+    </div>
+</main>
+<footer class="footer">
+    <div>
+        <p><Strong>Kontakt os her</Strong></p>
+        <p>Email: <a href="#">teamMMMD@failmail.dk</a></p>
+        <p>Mobil: <a href="#">+45 xxxxxxxx</a></p>
+        <p>&copy; 2024 Ønskeskyprojekt -</p>
+        <p>TeamMMMD (Mark, Martin, Mette, Daniel)</p>
+    </div>
+    <div class="brand-image-container">
+        <img src="/images/adidas.webp" alt="adidas" class="brand-image">
+        <img src="/images/lego.png" alt="lego" class="brand-image">
+        <img src="/images/nike.jpg" alt="nike" class="brand-image">
+        <img src="/images/victor.png" alt="victor" class="brand-image">
+        <img src="/images/yonex.jpg" alt="yonex" class="brand-image">
+        <img src="/images/lining.png" alt="yonex" class="brand-image">
+    </div>
+</footer>
 </body>
 </html>

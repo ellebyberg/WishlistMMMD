@@ -5,13 +5,12 @@ import org.example.wishlistmmmd.model.Wish;
 import org.example.wishlistmmmd.model.WishList;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -56,7 +55,7 @@ public class WishRepository {
         }
     }
 
-    public boolean isUsernameAvailable(String username) {
+    public boolean isUsernameAvailable(String username) throws SQLException {
         String sql = "SELECT COUNT(username) FROM userprofile WHERE username=?";
         try (PreparedStatement ps = dbConnection.prepareStatement(sql)) {
             ps.setString(1, username);
@@ -65,8 +64,6 @@ public class WishRepository {
                     return rs.getInt(1) == 0;
                 }
             }
-        } catch (SQLException e){
-            e.printStackTrace();
         }
         return true;
     }
@@ -119,20 +116,19 @@ public class WishRepository {
         return up;
     }
 
-    public void checkExpiredList() {
+    public void checkExpiredList() throws SQLException {
         String sql = "SELECT wishListID FROM wishlist WHERE expireDate < ?";
         LocalDate today = LocalDate.now();
         Date sqlDate = Date.valueOf(today);
 
         try(PreparedStatement ps = dbConnection.prepareStatement(sql)) {
             ps.setDate(1, sqlDate);
-            ResultSet rs = ps.executeQuery();
+            try(ResultSet rs = ps.executeQuery()) {
                 while(rs.next()) {
                     int wishListID = rs.getInt("wishListID");
-                    deleteWishList(wishListID);
+                    //TODO: Indsæt kald til deleteWishlist() når denne metode er færdig.
                 }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            }
         }
     }
 
@@ -157,10 +153,10 @@ public class WishRepository {
 
     public List<WishList> showListOfWishLists(int userID) {
         List<WishList> listOfWishLists = new ArrayList<>();
-        //listOfWishLists.clear(); ikke nødvendigt
+        listOfWishLists.clear();//mener ikke denne er nødvendig
 
         String SQL = "SELECT wishlist.wishlistID AS listID, wishlist.listName AS listName, " +
-                "wishlist.expireDate FROM wishlist WHERE userID =?";
+                "wishlist.expireDate FROM wishlist WHERE userID =?"; //TODO: Jeg(Daniel) får exceptions på den her metode? Leder efter userID i wishlist, der ikke har en række med det navn. Displayer derudover ingen ønskeliste på "profil" hovedsiden.
 
         try (PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
             ps.setInt(1, userID);
@@ -215,9 +211,34 @@ public class WishRepository {
     }
 
     //CRUD WISH
-    public void createWish() {
+    public void createWish(int wishListID, String wishName, String description, String link) {
+        // Insert the wish into the 'Wish' table
+        String sqlInsertWish = "INSERT INTO Wish (wishName, description, link) VALUES (?, ?, ?)";
+        try (PreparedStatement ps = dbConnection.prepareStatement(sqlInsertWish, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, wishName);
+            ps.setString(2, description);
+            ps.setString(3, link);
+            ps.executeUpdate();
 
+            // Get the generated wishID
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int wishID = generatedKeys.getInt(1);
+
+                    // Insert into the 'CombiWishList' table to associate the wish with the wishList
+                    String sqlInsertCombi = "INSERT INTO CombiWishList (wishID, wishListID) VALUES (?, ?)";
+                    try (PreparedStatement psCombi = dbConnection.prepareStatement(sqlInsertCombi)) {
+                        psCombi.setInt(1, wishID);  // The ID of the wish we just created
+                        psCombi.setInt(2, wishListID);  // The wishListID passed into the method
+                        psCombi.executeUpdate();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
 
     public void updateWish() {
 
@@ -255,5 +276,42 @@ public class WishRepository {
             e.printStackTrace();
         }
         return wishListName;
+    }
+
+    public WishList getWishListByWlIdAndUserId(int wishlistID, int userID) {
+        String sql = "SELECT wishlist.wishListID, wishlist.listname, wishlist.expireDate FROM wishlist WHERE wishlist.userID = ? AND wishListID = ?";
+        WishList wishlist = null;
+        /*
+        Vi laver et SQL lookup for at finde frem til en ønskeliste med det bestemte ID. Vi sikrer os allerede her, at brugeren skal have adgang til listen
+        ved at tjekke, om der er en forbindelse mellem user og wishlist i vores assocation table. SQL vil derfor ikke returnere nogen liste, hvis en anden
+        bruger prøver at tilgå en liste, som de ikke ejer.
+         */
+
+        try(PreparedStatement ps = dbConnection.prepareStatement(sql)) {
+            ps.setInt(1, wishlistID);
+            ps.setInt(2, userID);
+            try(ResultSet rs = ps.executeQuery()) {
+                if(rs.next()) {
+                    String listName = rs.getString("listName");
+                    Date expireDate = rs.getDate("expireDate");
+                    int wishlistIDFromDB = rs.getInt("wishListID");
+                    List<Wish> wishesOnTheList = showWishesInSpecificWishList(wishlistID);
+
+                    wishlist = new WishList(listName, expireDate, wishlistIDFromDB);
+                    wishlist.setWishesOnTheList(wishesOnTheList);
+                    /*
+                    Vi befolker vores Java WishList, hvis den findes i databasen.
+                     */
+                }
+            }
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+//        if (wishlist != null) { //Hvis listen findes i databasen returneres den med metoden
+//            return wishlist;
+//        } else { //Hvis den ikke findes i databasen kaster vi en exception for lettere fejlfinding.
+//            throw new NullPointerException("The wishlist could not be found or was not created properly. WR. L284");
+//        }
+        return wishlist; //Vi tjekker for null værdier i Servicelag
     }
 }

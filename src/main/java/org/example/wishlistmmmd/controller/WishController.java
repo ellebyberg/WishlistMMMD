@@ -28,9 +28,21 @@ public class WishController {
 
     private final WishService ws;
 
-    public WishController(WishService ws) {
+    public WishController(WishService ws, HttpSession session) {
         this.ws = ws;
+        this.session = session;
     }
+
+    /*
+    ###########################################
+    #           Session attributter           #
+    ###########################################
+     */
+    private HttpSession session;
+
+
+
+
 
 //    @GetMapping("/welcomePage")
 //    public String welcomePage() {
@@ -41,7 +53,6 @@ public class WishController {
     public String loginValidation(HttpServletRequest request, @RequestParam String username, @RequestParam String password) throws SQLException {
         if (ws.validateLogin(username, password)) { //Brugeren logger ind
             HttpSession session = request.getSession();
-            session.setAttribute("loggedIn", true);
             int userID = ws.getUserIDFromDB(username);
             session.setAttribute("userID", userID);
             session.setAttribute("username", username);
@@ -57,14 +68,22 @@ public class WishController {
             return "redirect:/makemywishcometrue/loginPage?error=true";
         }
     }
-    public String checkLoginStatus(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Boolean loggedIn = (Boolean) session.getAttribute("loggedIn");
-        if (loggedIn == null || !loggedIn) {
-            return "redirect:/login";
-        } else {
-            return "redirect:/home";
+    public String redirectUserLoginAttributes(int userID) {
+        Integer sessionUserID = (Integer) session.getAttribute("userID");
+
+        if (sessionUserID == null) {
+            //Hvis brugeren ikke er logget ind ligger der ikke et ID gemt på session,
+            // hvorfor brugeren derfor promptes til at logge ind
+            return "redirect:/makemywishcometrue/loginPage";
         }
+        else if(!sessionUserID.equals(userID)) {
+            /*
+            Brugeren prøver at tilgå en anden brugers data.
+            De bliver redirected til deres egen side, hvis de er logget ind.
+             */
+            return "redirect:/makemywishcometrue/"+sessionUserID;
+        }
+        return null;
     }
 
     @GetMapping("/loginPage")
@@ -75,7 +94,7 @@ public class WishController {
         return "login";
     }
     @PostMapping("/saveAccount")
-    public String saveNewAccountToDB(@RequestParam String name, @RequestParam(required = false) Date birthdate, @RequestParam String username, @RequestParam String password, RedirectAttributes redirectAttributes) throws SQLException {
+    public String saveNewAccountToDB(@RequestParam String name, @RequestParam Date birthdate, @RequestParam String username, @RequestParam String password, RedirectAttributes redirectAttributes) throws SQLException {
 
         UserProfile up = new UserProfile(name,birthdate, username, password);
 
@@ -85,6 +104,8 @@ public class WishController {
             up.setUserID(userIdFromDB);
             return "redirect:/makemywishcometrue/"+up.getUserID();
         } else {
+            //En anden måde at vise fejlbeskeder på(redirectAttributes). Dette er godt til ting,
+            //som fejlbeskeder, der ikke skal persistere.
             redirectAttributes.addFlashAttribute("invalidUserNameErr", "The username is unavailable. Please try again using a different username.");
             return "redirect:/makemywishcometrue/createAccountPage";
         }
@@ -110,6 +131,16 @@ public class WishController {
 
     @GetMapping("/{userID}")
     public String showUserHomePage(@PathVariable int userID, Model model) {
+        String redirect = redirectUserLoginAttributes(userID);
+        if (redirect != null) {
+            return redirect;
+        }
+        /*
+        redirectUserLoginAttributes() returnerer en string(html/endpoint. Hvis if-blokken i denne metode
+        ikke opfyldes, så returnerer metoden null og vi fortsætter /{userID}s metodeflow.
+        Se redirectUserLoginAttributes() dokumentation i koden.
+         */
+
         List<WishList> listOfWishLists = ws.showListOfWishLists(userID);
         UserProfile up = ws.getUserData(userID);
         model.addAttribute("listOfWishLists", listOfWishLists);
@@ -120,6 +151,15 @@ public class WishController {
 
     @GetMapping("/{userID}/{wishListID}")
     public String showSpecificWishList(@PathVariable int wishListID, @PathVariable int userID, Model model) {
+        String redirect = redirectUserLoginAttributes(userID); //Hvis alt går som det skal, vil denne metode smide String null tilbage.
+        Integer sessionUserID = (Integer) session.getAttribute("userID");
+        if (redirect != null && !ws.doesUserOwnWishlist(wishListID, sessionUserID)) {
+            return redirect;
+        }
+        System.out.println(ws.doesUserOwnWishlist(wishListID, sessionUserID));
+        System.out.println(userID);
+        System.out.println(sessionUserID);
+
         List<Wish> listOfWishes = ws.showListOfWishes(wishListID);
         String wishListName = ws.getWishListNameFromID(wishListID);
         model.addAttribute("wishListName", wishListName);
@@ -127,7 +167,6 @@ public class WishController {
         model.addAttribute("userID",userID);
         model.addAttribute("wishListID",wishListID);
         return "wishView";
-
     }
 
     @GetMapping("/{userID}/createWishlist")
@@ -140,6 +179,19 @@ public class WishController {
     public String saveWishlist(@RequestParam String listName, @RequestParam Date expireDate, @RequestParam int userID) {
         ws.createWishList(listName, expireDate, userID);
         return "redirect:/makemywishcometrue/"+userID;
+    }
+
+    @GetMapping("/{userID}/{wishListID}/createWish")
+    public String createWish(@PathVariable int userID, @PathVariable int wishListID, Model model) {
+        model.addAttribute("userID", userID);
+        model.addAttribute("wishListID", wishListID);
+        return "createWish";
+    }
+
+    @PostMapping("/{userID}/{wishListID}/saveWish")
+    public String saveWish(@PathVariable int userID, @PathVariable int wishListID, @RequestParam String wishName, @RequestParam String description, @RequestParam String link) {
+        ws.createWish(wishListID, wishName, description, link);
+        return "redirect:/makemywishcometrue/" + userID + "/" + wishListID;
     }
 
     @PostMapping("/deleteWishList/{userID}/{wishListID}")
@@ -163,6 +215,11 @@ public class WishController {
         ws.deleteWish(wishID);
         return "redirect:/makemywishcometrue/"+ userID;
 
+    }
+
+    @GetMapping("/homeView")
+    public String showHomeView() {
+        return "homeView";
     }
 
 }
