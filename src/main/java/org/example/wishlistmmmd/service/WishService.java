@@ -76,5 +76,8 @@ public class WishService {
             return false;
         }
     }
+    public void checkExpiredListAndDelete() throws SQLException {
+        wr.checkExpiredListAndDelete();
+    }
 
 }
