@@ -12,13 +12,26 @@
 </head>
 <body>
 <header>
+    <div>
     <h1>Wishes on the list</h1>
-    <h2 th:text="${wishListName}"></h2>
+    </div>
+    <div>
+        <a th:href="@{/makemywishcometrue/homeView}" class="icon-link">
+            <img src="/icons/home.jpg" alt="Home" class="icon-image">
+        </a>
+        <a href="#" class="icon-link">
+            <img src="/icons/profile.jpg" alt="Home" class="icon-image">
+        </a>
+        <a href="#" class="icon-link">
+            <img src="/icons/wishlist.jpg" alt="Home" class="icon-image">
+        </a>
+    </div>
 </header>
 <profile>
 <p>KAN PROFIL INDSÆTTES HER?</p>
 </profile>
 <main>
+    <h3 th:text="${wishListName}"></h3>
     <a th:href="@{/makemywishcometrue/{userID}/{wishListID}/createWish(userID=${userID}, wishListID=${wishListID})}">
         <button type="button">Create new wish</button>
     </a>
@@ -41,7 +54,7 @@
             <td>
                 <form th:action="@{/makemywishcometrue/deleteWish/{userid}/{wishid}(userid=${userID},wishid=${wish.wishID})}"
                       method="post" onsubmit="return confirmDeletion()">
-                    <button type="submit" class="submitbutton">Slet</button>
+                    <button class="createResetPasswordButton" type="submit">Delete</button>
                 </form>
                 <script>
                     function confirmDeletion() {
@@ -54,14 +67,25 @@
     </table>
     <!--Nedenfor en tilbage knap som udgangspunkt til en homepage. -->
     <a th:href="@{/makemywishcometrue/{userID} (userID=${userID})}">
-        <button type="button">Go Back</button>
+        <button class="createResetPasswordButton" type="button">Go Back</button>
     </a>
 </main>
-<footer>
-    <p><Strong>Kontakt os her</Strong></p>
-    <p>Email: <a href="#">teamMMMD@failmail.dk</a></p>
-    <p>Mobil: <a href="#">+45 xxxxxxxx</a></p>
-    <p>&copy; 2024 Ønskeskyprojekt - TeamMMMD (Mark, Martin, Mette, Daniel)</p>
+<footer class="footer">
+    <div>
+        <p><Strong>Kontakt os her</Strong></p>
+        <p>Email: <a href="#">teamMMMD@failmail.dk</a></p>
+        <p>Mobil: <a href="#">+45 xxxxxxxx</a></p>
+        <p>&copy; 2024 Ønskeskyprojekt -</p>
+        <p>TeamMMMD (Mark, Martin, Mette, Daniel)</p>
+    </div>
+    <div class="brand-image-container">
+        <img src="/images/adidas.webp" alt="adidas" class="brand-image">
+        <img src="/images/lego.png" alt="lego" class="brand-image">
+        <img src="/images/nike.jpg" alt="nike" class="brand-image">
+        <img src="/images/victor.png" alt="victor" class="brand-image">
+        <img src="/images/yonex.jpg" alt="yonex" class="brand-image">
+        <img src="/images/lining.png" alt="yonex" class="brand-image">
+    </div>
 </footer>
 </body>
 </html>
