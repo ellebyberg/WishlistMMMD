@@ -27,9 +27,15 @@
         </a>
     </div>
 </header>
-<profile>
-<p>KAN PROFIL INDSÆTTES HER?</p>
+<profile class="profile">
+    <img src="/images/mmmm.jpg" alt="Profilbillede" class="profile-image">
+    <div class="profile-info">
+        <h2 th:text="${UserProfile.name}"></h2>
+        <h2 th:text="${UserProfile.username}"></h2>
+        <h2 th:text="${UserProfile.birthdate}"></h2>
+    </div>
 </profile>
+
 <main>
     <h3 th:text="${wishListName}"></h3>
     <a th:href="@{/makemywishcometrue/{userID}/{wishListID}/createWish(userID=${userID}, wishListID=${wishListID})}">
