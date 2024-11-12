@@ -83,10 +83,9 @@ p {
 
 /* === Billede og Ikoner Styling === */
 .profile-image {
-    max-width: 300px;
+    max-width: 200px;
     height: auto;
     border-radius: 50%;
-    border: 1px solid black;
 }
 
 .brand-image {
