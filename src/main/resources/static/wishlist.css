@@ -12,7 +12,7 @@ body {
 @media (min-width: 60em) {
     body {
         width: 100%;
-        margin: 0 auto;
+        /*margin: 0 auto;*/
         grid-template-areas: 'header' 'profile' 'main' 'footer';
         grid-template-columns: auto;
         grid-template-rows: 10em 12em auto auto;
@@ -44,8 +44,8 @@ body {
 
 .main {
     grid-area: main;
-    background-color: blue/*rgba(175,209,205,255)*/;
-    padding: 1em 5em;
+    background-color: blue /*rgba(175,209,205,255)*/;
+
 }
 
 .footer {
@@ -61,24 +61,17 @@ body {
 /* === Typografi === */
 h1 {
     font-family: sans-serif;
-    text-align: center;
+    text-align: left;
     font-size: 70px;
 }
 
 h2 {
     font-family: "Century Gothic", serif;
     font-size: 35px;
-    text-align: center;
-}
-
-.profile-info h2 {
-    font-family: "Century Gothic", serif;
-    font-size: 35px;
-    text-align: left;
 }
 
 h3 {
-    margin-left: 20px;
+    margin-left: 5%;
     font-family: "Century Gothic", serif;
     font-size: 30px;
 }
@@ -108,39 +101,38 @@ p {
     max-height: 5em;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 50%;
+    background-color: white;
 }
 
 .wishlist-image {
-    max-height: 400px;
-    padding: 10%;
+    max-height: 500px;
+    padding: 5%;
     border-radius: 15%;
 }
 
 .login-image {
     max-height: 400px;
     object-fit: cover;
-    padding-left: 20%;
+    /*padding-left: 20%;
     padding-top: 5%;
-    padding-bottom: 5%;
-}
-
-.star-image {
-    max-height: 80%;
+    padding-bottom: 5%;*/
 }
 
 /* === Tabel Styling === */
 table {
-    width: 80%;
-    margin-left: 5px;
-    margin-right: 20px;
-    margin-bottom: 20px;
-    margin-top: 5px;
+    padding: 10px;
+    margin-top: 1em;
+    martin-bottom: 1em;
+    margin-right: 5%;
+    margin-left: 5%;
     border-collapse: separate;
     border-spacing: 0;
     border: 1px solid black;
     overflow: hidden;
     border-radius: 15px;
-    background-color: lightgoldenrodyellow;
+    background-color: whitesmoke;
+    justify-content: center;
+    align-items: center;
 }
 
 th, td {
@@ -202,12 +194,13 @@ tr:last-child td {
 }
 
 /* === Formular Felter === */
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"], input[type="url"] {
     width: 200px;
     height: 23px;
     font-size: 20px;
     border: 1px solid black;
 }
+
 
 /* === Tekst og Container Styling === */
 .teksttabel {
@@ -224,17 +217,15 @@ input[type="text"], input[type="password"] {
     display: flex;
     justify-content: center; /* Centrerer indholdet horisontalt */
     align-items: center; /* Centrerer indholdet vertikalt */
-    gap: 5em; /* Afstand mellem de to elementer */
-
+    margin: auto;
+    padding: 5px;
 }
 
 .loginField {
-    /*padding-left: 20%;
-    padding-top: 5%;
-    padding-bottom: 5%;*/
-    padding: 1%;
+    padding-right: 5%;
+    padding-left: 5%;
     border: 2px solid black; /* Sort kant omkring loginField */
-    border-radius: 10px; /* Rundede hjørner (valgfrit) */
+    border-radius: 15px; /* Rundede hjørner (valgfrit) */
 }
 
 button:hover {

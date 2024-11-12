@@ -4,9 +4,7 @@
 <!--her angives at vi arbejder med thymeleaf og prefix th skal anvendes, når der skal kaldes attributter-->
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--denne meta-tag sørger for reponsiv visning. Ved at sætte bredde lig med device bredde
-    sikres det at bredden af visning bliver det samme som bredden af skærmen. Initial-scale settingen sørger for, at siden ikke starter zoomet ind eller ud, men starter
-    i oprindelig skala i forhold til enhedens skærmopløsning.-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="/wishlist.css">
 </head>
@@ -20,10 +18,16 @@
             <img src="/icons/home.jpg" alt="Home" class="icon-image">
         </a>
         <a href="#" class="icon-link">
-            <img src="/icons/profile.jpg" alt="Home" class="icon-image">
+            <img src="/icons/profile.jpg" alt="Profile" class="icon-image">
         </a>
         <a href="#" class="icon-link">
-            <img src="/icons/wishlist.jpg" alt="Home" class="icon-image">
+            <img src="/icons/wishlist.jpg" alt="Wishlist" class="icon-image">
+        </a>
+        <a th:href="@{/makemywishcometrue/loginPage}" class="icon-link">
+            <img src="/icons/login.png" alt="Login" class="icon-image">
+        </a>
+        <a th:href="@{/makemywishcometrue/createAccountPage}" class="icon-link">
+            <img src="/icons/createuser.png" alt="CreateAccount" class="icon-image">
         </a>
     </div>
 </header>
@@ -35,6 +39,11 @@
         <div>
             <a th:href="@{/makemywishcometrue/loginPage}" class="icon-link">
                 <img src="/icons/login.png" alt="Login" class="login-image">
+            </a>
+        </div>
+        <div>
+            <a th:href="@{/makemywishcometrue/createAccountPage}" class="icon-link">
+                <img src="/icons/createuser.png" alt="CreateAccount" class="login-image">
             </a>
         </div>
         <div>
