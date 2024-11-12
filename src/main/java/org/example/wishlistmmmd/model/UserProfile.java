@@ -9,7 +9,7 @@ public class UserProfile {
     private Date birthdate;
     private String username;
     private String password;
-    private List<WishList> listOfWishList;
+    private List<WishList> listOfWishList; //BRUGER VI DENNE?
 
     public UserProfile(int userID, String name, Date birthdate, String username, String password) {
         this.userID = userID;
@@ -22,6 +22,11 @@ public class UserProfile {
         this.name = name;
         this.username = username;
         this.password = password;
+        this.birthdate = birthdate;
+    }
+
+    public UserProfile() {
+        //Tom konstruktør til testbrug
     }
 
     public void setListOfWishList(List<WishList> listOfWishList) {
@@ -39,7 +44,6 @@ public class UserProfile {
         return name;
     }
 
-
     public Date getBirthdate() {
         return birthdate;
     }
@@ -54,6 +58,22 @@ public class UserProfile {
 
     public List<WishList> getListOfWishList() {
         return listOfWishList;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
     }
 
     @Override

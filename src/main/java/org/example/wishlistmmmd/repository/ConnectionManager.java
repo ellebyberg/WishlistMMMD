@@ -1,8 +1,5 @@
 package org.example.wishlistmmmd.repository;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -37,6 +34,12 @@ public class ConnectionManager {
 
     public Connection getConn() { //getter til at få fat på connection som hører til instansen
         return conn;
+    }
+
+    //metode som tillader at vi kan nulstille ConnectionManager i starten af en test, så en ny instans
+    //oprettes med de test-specifikke databaseindstillinger
+    public static void resetInstance() {
+        instance = null;
     }
 
 

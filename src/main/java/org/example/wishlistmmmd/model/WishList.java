@@ -8,12 +8,17 @@ public class WishList {
     private int wishListID;
     private String listName;
     private Date expireDate;
+    private int userID;
     private List<Wish> wishesOnTheList;
 
     public WishList(String listName, Date expireDate, int wishListID) {
         this.listName = listName;
         this.expireDate = expireDate;
         this.wishListID = wishListID;
+    }
+
+    public WishList() {
+        //Tom konstruktør til test brug
     }
 
     public int getID() {
@@ -26,6 +31,14 @@ public class WishList {
 
     public String getListName() {
         return listName;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public void setListName(String listName) {

@@ -1,5 +1,6 @@
 package org.example.wishlistmmmd.service;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.wishlistmmmd.model.UserProfile;
 import org.example.wishlistmmmd.model.Wish;
 import org.example.wishlistmmmd.model.WishList;
@@ -78,6 +79,25 @@ public class WishService {
     }
     public void checkExpiredListAndDelete() throws SQLException {
         wr.checkExpiredListAndDelete();
+    }
+    //////HJÆLPEMETODE TIL CONTROLLEREN////////
+
+    public String redirectUserLoginAttributes(HttpSession session, int userID) {
+        Integer sessionUserID = (Integer) session.getAttribute("userID");
+
+        if (sessionUserID == null) {
+            //Hvis brugeren ikke er logget ind ligger der ikke et ID gemt på session,
+            // hvorfor brugeren derfor promptes til at logge ind
+            return "redirect:/makemywishcometrue/loginPage";
+        }
+        else if(!sessionUserID.equals(userID)) {
+            /*
+            Brugeren prøver at tilgå en anden brugers data.
+            De bliver redirected til deres egen side, hvis de er logget ind.
+             */
+            return "redirect:/makemywishcometrue/"+sessionUserID;
+        }
+        return null;
     }
 
 }

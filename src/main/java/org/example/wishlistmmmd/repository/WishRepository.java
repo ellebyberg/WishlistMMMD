@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.sql.Date;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -45,7 +48,6 @@ public class WishRepository {
         String sql = "INSERT INTO userprofile(name, birthdate, username, password) VALUES(?,?,?,?)";
         try (PreparedStatement ps = dbConnection.prepareStatement(sql)) {
             ps.setString(1, up.getName());
-//            ps.setString(2, up.getGender());
             ps.setDate(2, (java.sql.Date) up.getBirthdate());
             ps.setString(3, up.getUsername());
             ps.setString(4, up.getPassword());
@@ -53,15 +55,17 @@ public class WishRepository {
         }
     }
 
-    public boolean isUsernameAvailable(String username) throws SQLException {
+    public boolean isUsernameAvailable(String username) {
         String sql = "SELECT COUNT(username) FROM userprofile WHERE username=?";
         try (PreparedStatement ps = dbConnection.prepareStatement(sql)) {
             ps.setString(1, username);
-            try (ResultSet rs = ps.executeQuery()) {
+            ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     return rs.getInt(1) == 0;
                 }
-            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return true;
     }
@@ -168,7 +172,7 @@ public class WishRepository {
 
     public List<WishList> showListOfWishLists(int userID) {
         List<WishList> listOfWishLists = new ArrayList<>();
-        listOfWishLists.clear();
+        listOfWishLists.clear();//mener ikke denne er nødvendig
 
         String SQL = "SELECT wishlist.wishlistID AS listID, wishlist.listName AS listName, " +
                 "wishlist.expireDate FROM wishlist WHERE userID =?";

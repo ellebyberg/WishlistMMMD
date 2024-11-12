@@ -13,7 +13,7 @@ public class WishlistMmmdApplication {
 
 
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         SpringApplication.run(WishlistMmmdApplication.class, args);
 
 
