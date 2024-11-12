@@ -58,6 +58,7 @@ public class WishController {
             for at sikre, at brugeren ikke tilgår andre endpoints, der tilhører andre profiler.
              */
 
+            ws.checkExpiredListAndDelete();
             return "redirect:/makemywishcometrue/"+userID;
         } else {
             //Hvis validateLogin() ikke finder brugeren i DB, redirectes brugeren til login med en fejlbesked,
@@ -136,11 +137,6 @@ public class WishController {
         if (redirect != null && !ws.doesUserOwnWishlist(wishListID, sessionUserID)) {
             return redirect;
         }
-        System.out.println("Session:" +session);
-        System.out.println("SessionID:" +session.getId());
-        System.out.println(ws.doesUserOwnWishlist(wishListID, sessionUserID));
-        System.out.println(userID);
-        System.out.println(sessionUserID);
 
         List<Wish> listOfWishes = ws.showListOfWishes(wishListID);
         String wishListName = ws.getWishListNameFromID(wishListID);

@@ -77,6 +77,9 @@ public class WishService {
             return false;
         }
     }
+    public void checkExpiredListAndDelete() throws SQLException {
+        wr.checkExpiredListAndDelete();
+    }
     //////HJÆLPEMETODE TIL CONTROLLEREN////////
 
     public String redirectUserLoginAttributes(HttpSession session, int userID) {
