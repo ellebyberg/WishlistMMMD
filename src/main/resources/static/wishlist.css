@@ -5,15 +5,19 @@ body {
     grid-template-areas: 'header' 'profile' 'main' 'footer';
     grid-template-rows: 10em 12em auto auto;
     grid-template-columns: 1fr;
+    background-color: white; /* Baggrundsfarve for hele body */
+
 }
 
 @media (min-width: 60em) {
     body {
         width: 100%;
-        margin: 0 auto;
+        /*margin: 0 auto;*/
         grid-template-areas: 'header' 'profile' 'main' 'footer';
         grid-template-columns: auto;
         grid-template-rows: 10em 12em auto auto;
+        background-color: white; /* Baggrundsfarve for hele body */
+
     }
 }
 
@@ -40,8 +44,8 @@ body {
 
 .main {
     grid-area: main;
-    background-color: white;
-    padding: 1em 5em;
+    background-color: blue /*rgba(175,209,205,255)*/;
+
 }
 
 .footer {
@@ -57,23 +61,17 @@ body {
 /* === Typografi === */
 h1 {
     font-family: sans-serif;
-    text-align: center;
+    text-align: left;
     font-size: 70px;
 }
 
 h2 {
     font-family: "Century Gothic", serif;
     font-size: 35px;
-    text-align: center;
-}
-
-.profile-info h2 {
-    font-family: "Century Gothic", serif;
-    font-size: 35px;
-    text-align: left;
 }
 
 h3 {
+    margin-left: 5%;
     font-family: "Century Gothic", serif;
     font-size: 30px;
 }
@@ -85,10 +83,9 @@ p {
 
 /* === Billede og Ikoner Styling === */
 .profile-image {
-    max-width: 300px;
+    max-width: 200px;
     height: auto;
     border-radius: 50%;
-    border: 1px solid black;
 }
 
 .brand-image {
@@ -103,35 +100,38 @@ p {
     max-height: 5em;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 50%;
+    background-color: white;
 }
 
 .wishlist-image {
-    max-height: 400px;
-    padding-right: 5%;
-    padding-bottom: 5%;
-    padding-top: 5%;
+    max-height: 500px;
+    padding: 5%;
+    border-radius: 15%;
 }
 
 .login-image {
     max-height: 400px;
     object-fit: cover;
-    padding-left: 10%;
-}
-
-.star-image {
-    max-height: 80%;
+    /*padding-left: 20%;
+    padding-top: 5%;
+    padding-bottom: 5%;*/
 }
 
 /* === Tabel Styling === */
 table {
-    width: 100%;
-    margin: 20px 0;
+    padding: 10px;
+    margin-top: 1em;
+    martin-bottom: 1em;
+    margin-right: 5%;
+    margin-left: 5%;
     border-collapse: separate;
     border-spacing: 0;
     border: 1px solid black;
     overflow: hidden;
     border-radius: 15px;
-    background-color: lightgoldenrodyellow;
+    background-color: whitesmoke;
+    justify-content: center;
+    align-items: center;
 }
 
 th, td {
@@ -152,7 +152,7 @@ tr:last-child td {
 .visønskelistebutton {
     margin-top: 10px;
     padding: 5px 10px;
-    font-size: 12px;
+    font-size: 14px;
     background-color: green;
     color: white;
     border-radius: 5px;
@@ -173,7 +173,6 @@ tr:last-child td {
 }
 
 .createResetPasswordButton {
-    margin-top: 10px;
     padding: 5px 10px;
     font-size: 20px;
     font-family: "Century Gothic", serif;
@@ -182,6 +181,7 @@ tr:last-child td {
     border-radius: 5px;
     cursor: pointer;
     width: fit-content;
+    margin: 10px;
 }
 
 /* === Links === */
@@ -193,12 +193,13 @@ tr:last-child td {
 }
 
 /* === Formular Felter === */
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"], input[type="url"] {
     width: 200px;
     height: 23px;
     font-size: 20px;
     border: 1px solid black;
 }
+
 
 /* === Tekst og Container Styling === */
 .teksttabel {
@@ -212,15 +213,18 @@ input[type="text"], input[type="password"] {
 }
 
 .loginBilledeContainer {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 20px;
+    display: flex;
+    justify-content: center; /* Centrerer indholdet horisontalt */
+    align-items: center; /* Centrerer indholdet vertikalt */
+    margin: auto;
+    padding: 5px;
 }
 
 .loginField {
-    padding-left: 20%;
-    padding-top: 5%;
-    padding-bottom: 5%;
+    padding-right: 5%;
+    padding-left: 5%;
+    border: 2px solid black; /* Sort kant omkring loginField */
+    border-radius: 15px; /* Rundede hjørner (valgfrit) */
 }
 
 button:hover {

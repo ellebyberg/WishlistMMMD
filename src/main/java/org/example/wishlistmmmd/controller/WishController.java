@@ -169,8 +169,8 @@ public class WishController {
     }
 
     @PostMapping("/{userID}/{wishListID}/saveWish")
-    public String saveWish(@PathVariable int userID, @PathVariable int wishListID, @RequestParam String wishName, @RequestParam String description, @RequestParam String link) {
-        ws.createWish(wishListID, wishName, description, link);
+    public String saveWish(@PathVariable int userID, @PathVariable int wishListID, @RequestParam String wishName, @RequestParam String description, @RequestParam String link, @RequestParam double price) {
+        ws.createWish(wishListID, wishName, description, link, price);
         return "redirect:/makemywishcometrue/" + userID + "/" + wishListID;
     }
 

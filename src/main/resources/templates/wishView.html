@@ -4,16 +4,14 @@
 <!--her angives at vi arbejder med thymeleaf og prefix th skal anvendes, når der skal kaldes attributter-->
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--denne meta-tag sørger for reponsiv visning. Ved at sætte bredde lig med device bredde
-    sikres det at bredden af visning bliver det samme som bredden af skærmen. Initial-scale settingen sørger for, at siden ikke starter zoomet ind eller ud, men starter
-    i oprindelig skala i forhold til enhedens skærmopløsning.-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>wishListView</title>
     <link rel="stylesheet" href="/wishlist.css">
 </head>
 <body>
-<header>
+<header class="header">
     <div>
-    <h1>Wishes on the list</h1>
+        <h1>Ønskesky Projekt</h1>
     </div>
     <div>
         <a th:href="@{/makemywishcometrue/homeView}" class="icon-link">
@@ -28,7 +26,7 @@
     </div>
 </header>
 <profile class="profile">
-    <img src="/images/mmmm.jpg" alt="Profilbillede" class="profile-image">
+    <img src="/images/profileperson.png" alt="Profilbillede" class="profile-image">
     <div class="profile-info">
         <h2 th:text="${UserProfile.name}"></h2>
         <h2 th:text="${UserProfile.username}"></h2>
@@ -38,15 +36,13 @@
 
 <main>
     <h3 th:text="${wishListName}"></h3>
-    <a th:href="@{/makemywishcometrue/{userID}/{wishListID}/createWish(userID=${userID}, wishListID=${wishListID})}">
-        <button type="button">Create new wish</button>
-    </a>
     <table>
         <thead>
         <tr><!-- tr betyder en række af celler i en tabel-->
             <th class="teksttabel">Wish</th> <!-- th angiver indhold af hver celle i øverste række af tabellen-->
             <th class="teksttabel">Description</th>
             <th class="teksttabel">Link</th>
+            <th class="teksttabel">Price</th>
             <th class="teksttabel">Functions</th>
         </tr>
         </thead>
@@ -54,26 +50,29 @@
         <tr><!-- her kommer næste række i tabellen-->
             <td th:text="${wish.getWishName()}"></td> <!-- td angiver indhold af hver celle-->
             <td th:text="${wish.getDescription()}"></td> <!-- td angiver indhold af hver celle-->
-            <td>
-            <a th:href="${wish.getLink()}" target="_blank" th:text="${wish.getLink()}"></a>
-            </td> <!-- anker-tag a gør linket klikbart. target _blank gør at linket åbnes på ny fane-->
-            <td>
-                <form th:action="@{/makemywishcometrue/deleteWish/{userid}/{wishid}(userid=${userID},wishid=${wish.wishID})}"
-                      method="post" onsubmit="return confirmDeletion()">
-                    <button class="createResetPasswordButton" type="submit">Delete</button>
-                </form>
-                <script>
-                    function confirmDeletion() {
-                        return confirm("Are you sure you want to delete this wish? This action cannot be reversed.")
-                    }
-                </script>
+            <td><a th:href="${wish.getLink()}" target="_blank" th:text="${wish.getLink()}"></a></td>
+            <!-- Anker-tag a gør linket klikbart. target _blank gør at linket åbnes på ny fane-->
+            <td th:text="${wish.getPrice()}"></td>
+            <td><form th:action="@{/makemywishcometrue/deleteWish/{userid}/{wishid}(userid=${userID},wishid=${wish.wishID})}"
+                  method="post" onsubmit="return confirmDeletion()">
+                <button class="visønskelistebutton" type="submit">Delete</button>
+            </form>
+            <script>
+                function confirmDeletion() {
+                    return confirm("Are you sure you want to delete this wish? This action cannot be reversed.")
+                }
+            </script>
             </td>
         </tr>
         </tbody>
     </table>
+    <a th:href="@{/makemywishcometrue/{userID}/{wishListID}/createWish(userID=${userID}, wishListID=${wishListID})}">
+        <button class="createResetPasswordButton" style="margin-left:5%" type="button">Create new wish</button>
+    </a>
+    <br>
     <!--Nedenfor en tilbage knap som udgangspunkt til en homepage. -->
     <a th:href="@{/makemywishcometrue/{userID} (userID=${userID})}">
-        <button class="createResetPasswordButton" type="button">Go Back</button>
+        <button class="createResetPasswordButton" style="margin-left:5%" type="button">Go Back</button>
     </a>
 </main>
 <footer class="footer">

@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="/wishlist.css">
 </head>
@@ -35,7 +36,7 @@
             <div th:if="${errorMessage}" class="error"> <!-- Fejlbesked, hvis login failer -->
                 <p th:text="${errorMessage}" style="color: red;"></p>
             </div>
-            <h3>User Info</h3>
+            <h3>Login</h3>
             <form action="/makemywishcometrue/loginValidation" method="post">
                 <label class="usernamePasswordText" for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
@@ -54,10 +55,11 @@
             </a>
         </div>
         <div>
-            <img src="/images/wishlist.jpg" alt="wishlist" class="wishlist-image">
+            <img src="/images/makemywishcometrue.png" alt="Wishlist" class="wishlist-image">
         </div>
     </div>
 </main>
+
 <footer class="footer">
     <div>
         <p><Strong>Kontakt os her</Strong></p>
