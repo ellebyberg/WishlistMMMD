@@ -140,9 +140,11 @@ public class WishController {
 
         List<Wish> listOfWishes = ws.showListOfWishes(wishListID);
         String wishListName = ws.getWishListNameFromID(wishListID);
+        UserProfile up = ws.getUserData(userID);
         model.addAttribute("wishListName", wishListName);
         model.addAttribute("listOfWishes", listOfWishes);
         model.addAttribute("userID",userID);
+        model.addAttribute("UserProfile",up);
         model.addAttribute("wishListID",wishListID);
         return "wishView";
     }
