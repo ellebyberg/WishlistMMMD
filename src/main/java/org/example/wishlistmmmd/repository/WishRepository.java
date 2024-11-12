@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.sql.Date;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -45,7 +48,6 @@ public class WishRepository {
         String sql = "INSERT INTO userprofile(name, birthdate, username, password) VALUES(?,?,?,?)";
         try (PreparedStatement ps = dbConnection.prepareStatement(sql)) {
             ps.setString(1, up.getName());
-//            ps.setString(2, up.getGender());
             ps.setDate(2, (java.sql.Date) up.getBirthdate());
             ps.setString(3, up.getUsername());
             ps.setString(4, up.getPassword());
@@ -53,15 +55,17 @@ public class WishRepository {
         }
     }
 
-    public boolean isUsernameAvailable(String username) throws SQLException {
+    public boolean isUsernameAvailable(String username) {
         String sql = "SELECT COUNT(username) FROM userprofile WHERE username=?";
         try (PreparedStatement ps = dbConnection.prepareStatement(sql)) {
             ps.setString(1, username);
-            try (ResultSet rs = ps.executeQuery()) {
+            ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     return rs.getInt(1) == 0;
                 }
-            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return true;
     }
@@ -114,19 +118,36 @@ public class WishRepository {
         return up;
     }
 
-    public void checkExpiredList() throws SQLException {
+    public void checkExpiredListAndDelete() throws SQLException {
         String sql = "SELECT wishListID FROM wishlist WHERE expireDate < ?";
         LocalDate today = LocalDate.now();
         Date sqlDate = Date.valueOf(today);
+        /* Vi tjekker, hvilke lister i DB, der er udløbet. Vi benytter os af transactions(delvist for sjov).
+        Hvis én delete operation fejler ruller vi ændringerne tilbage og DB'en er som før metodekaldet skete.
+        Ekstra i fht. try blok sammen med throws signatur: pga. rollback() og setAutoCommit() er uden for try-blokken. Disse kan stadig kaste exceptions.
+         */
+        try {
+            dbConnection.setAutoCommit(false); //Sørger for, at DB ikke løbende/automatisk 'committer' eller gemmer ændringer.
 
-        try(PreparedStatement ps = dbConnection.prepareStatement(sql)) {
-            ps.setDate(1, sqlDate);
-            try(ResultSet rs = ps.executeQuery()) {
-                while(rs.next()) {
-                    int wishListID = rs.getInt("wishListID");
-                    //TODO: Indsæt kald til deleteWishlist() når denne metode er færdig.
+            try (PreparedStatement ps = dbConnection.prepareStatement(sql)) {
+                ps.setDate(1, sqlDate);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        int wishListID = rs.getInt("wishListID");
+                        deleteWishList(wishListID);
+                    }
                 }
             }
+
+            dbConnection.commit(); //Vi committer/gemmer vores ændringer ved succesfulde delete-operationer.
+        }catch(SQLException e) {
+            dbConnection.rollback(); //Vi ruller DB tilbage, hvis der sker en exception.
+            throw e;
+        } finally {
+            /*finally-blokken vil altid eksekvere sin kode. Både ved fejl eller success bliver auto-commit sat til igen
+            Efter ovenstående operation, og hvis man glemmer at bede om, at autocommit skal slås til igen kan det give anledning
+            til frustrationer og forvirring senere hen i koden.*/
+            dbConnection.setAutoCommit(true);
         }
     }
 
@@ -151,10 +172,10 @@ public class WishRepository {
 
     public List<WishList> showListOfWishLists(int userID) {
         List<WishList> listOfWishLists = new ArrayList<>();
-        listOfWishLists.clear();
+        listOfWishLists.clear();//mener ikke denne er nødvendig
 
         String SQL = "SELECT wishlist.wishlistID AS listID, wishlist.listName AS listName, " +
-                "wishlist.expireDate FROM wishlist WHERE userID =?"; //TODO: Jeg(Daniel) får exceptions på den her metode? Leder efter userID i wishlist, der ikke har en række med det navn. Displayer derudover ingen ønskeliste på "profil" hovedsiden.
+                "wishlist.expireDate FROM wishlist WHERE userID =?";
 
         try (PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
             ps.setInt(1, userID);
