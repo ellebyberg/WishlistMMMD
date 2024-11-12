@@ -37,7 +37,7 @@ body {
     background-color: lightblue;
     display: flex;
     align-items: center;
-    grid-template-columns: auto 1fr;
+    /*grid-template-columns: auto 1fr;*/
     gap: 1em;
     padding: 1em;
 }
@@ -71,7 +71,6 @@ h2 {
 }
 
 h3 {
-    margin-left: 5%;
     font-family: "Century Gothic", serif;
     font-size: 30px;
 }
@@ -81,12 +80,18 @@ p {
     font-size: 20px;
 }
 
+.forside-tekst {
+    font-family: DialogInput;
+    font-size: 30px;
+}
+
 /* === Billede og Ikoner Styling === */
 .profile-image {
-    max-width: 200px;
+    max-width: 275px;
     height: auto;
     border-radius: 50%;
-}
+    border: none;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);}
 
 .brand-image {
     width: auto;
@@ -121,17 +126,18 @@ p {
 table {
     padding: 10px;
     margin-top: 1em;
-    martin-bottom: 1em;
-    margin-right: 5%;
-    margin-left: 5%;
+    margin-bottom: 1em; /* Rettet 'martin-bottom' til 'margin-bottom' */
+    margin-right: 10%; /* Giver en 10% margin på højre for at gøre bredden 80% */
+    margin-left: 10%;  /* Giver en 10% margin på venstre for at gøre bredden 80% */
     border-collapse: separate;
     border-spacing: 0;
     border: 1px solid black;
     overflow: hidden;
     border-radius: 15px;
     background-color: whitesmoke;
-    justify-content: center;
-    align-items: center;
+    width: 80%; /* Sørger for at tabellen fylder 80% af skærmen */
+    max-width: 100%; /* Sørger for at tabellen ikke bliver større end containeren */
+    table-layout: auto; /* Gør at tabellen kan udvide sig baseret på indhold */
 }
 
 th, td {
@@ -158,6 +164,7 @@ tr:last-child td {
     border-radius: 5px;
     cursor: pointer;
     width: fit-content;
+
 }
 
 .loginButton {
@@ -220,13 +227,26 @@ input[type="text"], input[type="password"], input[type="url"] {
     padding: 5px;
 }
 
+.forsideContainer {
+    display: flex;
+    justify-content: center; /* Centrerer indholdet horisontalt */
+    align-items: center; /* Centrerer indholdet vertikalt */
+    margin: auto;
+}
+
 .loginField {
     padding-right: 5%;
     padding-left: 5%;
-    border: 2px solid black; /* Sort kant omkring loginField */
+    border: none; /* Sort kant omkring loginField */
     border-radius: 15px; /* Rundede hjørner (valgfrit) */
 }
 
 button:hover {
     background-color: grey;
+}
+
+.forside-tekst-container {
+    justify-content: center; /* Centrerer indholdet horisontalt */
+    align-items: center; /* Centrerer indholdet vertikalt */
+    margin: 0;
 }
