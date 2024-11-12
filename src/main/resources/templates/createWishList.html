@@ -9,39 +9,73 @@
 </head>
 <body>
 
-<header>
-    <h1>Create a New WishList</h1>
+<header class="header">
+    <div>
+        <h1>Ønskesky Projekt</h1>
+    </div>
+    <div>
+        <a th:href="@{/makemywishcometrue/homeView}" class="icon-link">
+            <img src="/icons/home.jpg" alt="Home" class="icon-image">
+        </a>
+        <a href="#" class="icon-link">
+            <img src="/icons/profile.jpg" alt="Home" class="icon-image">
+        </a>
+        <a href="#" class="icon-link">
+            <img src="/icons/wishlist.jpg" alt="Home" class="icon-image">
+        </a>
+    </div>
 </header>
-<p>Please fill out all the fields below to create a new wishlist</p>
+<profile>
+    <p>KAN PROFIL INDSÆTTES HER?</p>
+</profile>
+
 <main>
-    <form th:action="@{/makemywishcometrue/saveWishList}" method="post">
 
-        <!--skjult felt for at medsende userID ved save af formularen-->
-        <input type="hidden" name="userID" th:value="${userID}">
+    <div class="loginBilledeContainer">
+        <div class="loginField">
+            <h2>Create a new wishlist</h2>
+            <form th:action="@{/makemywishcometrue/saveWishList}" method="post">
 
-        <div>
-            <label for="listName">List Name:</label>
-            <input type="text" id="listName" name="listName" required>
+                <!--skjult felt for at medsende userID ved save af formularen-->
+                <input type="hidden" name="userID" th:value="${userID}">
+
+
+                <label class="usernamePasswordText" for="listName">List Name:</label>
+                <input type="text" id="listName" name="listName" required>
+                <br>
+                <label class="usernamePasswordText" for="expireDate">Expiry Date:</label>
+                <input type="date" id="expireDate" name="expireDate" required>
+                <br>
+                <button class="createResetPasswordButton" type="submit">Create wishlist</button>
+            </form>
+
+            <!--Nedenfor en tilbage knap som udgangspunkt til en homepage. -->
+            <a th:href="@{/makemywishcometrue/{userID} (userID=${userID})}">
+                <button class="createResetPasswordButton" type="button">Go Back</button>
+            </a>
         </div>
-
         <div>
-            <label for="expireDate">Expiry Date:</label>
-            <input type="date" id="expireDate" name="expireDate" required>
+            <img src="/images/makemywishcometrue.png" alt="Wishlist" class="wishlist-image">
         </div>
-
-        <div>
-    <button type ="submit">Create wishlist</button>
-        </div>
-
-    </form>
-    <!--Nedenfor en tilbage knap som udgangspunkt til en homepage. -->
-    <a th:href="@{/makemywishcometrue/{userID} (userID=${userID})}">
-        <button type="button">Go Back</button>
-    </a>
+    </div>
 </main>
 
-<footer>
-    <p>&copy; 2024 Ønskeskyprojekt - TeamMMMD (Mark, Martin, Mette, Daniel)</p>
+<footer class="footer">
+    <div>
+        <p><Strong>Kontakt os her</Strong></p>
+        <p>Email: <a href="#">teamMMMD@failmail.dk</a></p>
+        <p>Mobil: <a href="#">+45 xxxxxxxx</a></p>
+        <p>&copy; 2024 Ønskeskyprojekt -</p>
+        <p>TeamMMMD (Mark, Martin, Mette, Daniel)</p>
+    </div>
+    <div class="brand-image-container">
+        <img src="/images/adidas.webp" alt="adidas" class="brand-image">
+        <img src="/images/lego.png" alt="lego" class="brand-image">
+        <img src="/images/nike.jpg" alt="nike" class="brand-image">
+        <img src="/images/victor.png" alt="victor" class="brand-image">
+        <img src="/images/yonex.jpg" alt="yonex" class="brand-image">
+        <img src="/images/lining.png" alt="yonex" class="brand-image">
+    </div>
 </footer>
 
 </body>

@@ -3,62 +3,70 @@
       xmlns:th="https://thymeleaf.org">
 <!--her angives at vi arbejder med thymeleaf og prefix th skal anvendes, når der skal kaldes attributter-->
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--denne meta-tag sørger for reponsiv visning. Ved at sætte bredde lig med device bredde
-    sikres det at bredden af visning bliver det samme som bredden af skærmen. Initial-scale settingen sørger for, at siden ikke starter zoomet ind eller ud, men starter
-    i oprindelig skala i forhold til enhedens skærmopløsning.-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-  <link rel="stylesheet" href="/wishlist.css">
+    <link rel="stylesheet" href="/wishlist.css">
 </head>
 <body>
-<header>
-  <div>
-  <h1>Ønskesky Projekt</h1>
-  </div>
-  <div>
-  <a th:href="@{/makemywishcometrue/homeView}" class="icon-link">
-    <img src="/icons/home.jpg" alt="Home" class="icon-image">
-  </a>
-  <a href="#" class="icon-link">
-    <img src="/icons/profile.jpg" alt="Home" class="icon-image">
-  </a>
-  <a href="#" class="icon-link">
-    <img src="/icons/wishlist.jpg" alt="Home" class="icon-image">
-  </a>
-  </div>
+<header class="header">
+    <div>
+        <h1>Ønskesky Projekt</h1>
+    </div>
+    <div>
+        <a th:href="@{/makemywishcometrue/homeView}" class="icon-link">
+            <img src="/icons/home.jpg" alt="Home" class="icon-image">
+        </a>
+        <a href="#" class="icon-link">
+            <img src="/icons/profile.jpg" alt="Profile" class="icon-image">
+        </a>
+        <a href="#" class="icon-link">
+            <img src="/icons/wishlist.jpg" alt="Wishlist" class="icon-image">
+        </a>
+        <a th:href="@{/makemywishcometrue/loginPage}" class="icon-link">
+            <img src="/icons/login.png" alt="Login" class="icon-image">
+        </a>
+        <a th:href="@{/makemywishcometrue/createAccountPage}" class="icon-link">
+            <img src="/icons/createuser.png" alt="CreateAccount" class="icon-image">
+        </a>
+    </div>
 </header>
 <profile>
-<img src="/images/star.png" alt="Star" class="star-image">
-<!--HVIS DER SKAL SÆTTES FLERE STJERNE IND SKAL DER LAVES HELT OM I VORES GRID CSS-->
+
 </profile>
 <main>
-  <div class="loginBilledeContainer">
-    <div>
-      <a th:href="@{/makemywishcometrue/loginPage}" class="icon-link">
-        <img src="/icons/login.png" alt="Login" class="login-image">
-      </a>
+    <div class="loginBilledeContainer">
+        <div>
+            <a th:href="@{/makemywishcometrue/loginPage}" class="icon-link">
+                <img src="/icons/login.png" alt="Login" class="login-image">
+            </a>
+        </div>
+        <div>
+            <a th:href="@{/makemywishcometrue/createAccountPage}" class="icon-link">
+                <img src="/icons/createuser.png" alt="CreateAccount" class="login-image">
+            </a>
+        </div>
+        <div>
+            <img src="/images/makemywishcometrue.png" alt="Wishlist" class="wishlist-image">
+        </div>
     </div>
-    <div>
-      <img src="/images/wishlist.jpg" alt="wishlist" class="wishlist-image">
-    </div>
-  </div>
 </main>
 <footer class="footer">
-  <div>
-    <p><Strong>Kontakt os her</Strong></p>
-    <p>Email: <a href="#">teamMMMD@failmail.dk</a></p>
-    <p>Mobil: <a href="#">+45 xxxxxxxx</a></p>
-    <p>&copy; 2024 Ønskeskyprojekt -</p>
-    <p>TeamMMMD (Mark, Martin, Mette, Daniel)</p>
-  </div>
-  <div class="brand-image-container">
-    <img src="/images/adidas.webp" alt="adidas" class="brand-image">
-    <img src="/images/lego.png" alt="lego" class="brand-image">
-    <img src="/images/nike.jpg" alt="nike" class="brand-image">
-    <img src="/images/victor.png" alt="victor" class="brand-image">
-    <img src="/images/yonex.jpg" alt="yonex" class="brand-image">
-    <img src="/images/lining.png" alt="yonex" class="brand-image">
-  </div>
+    <div>
+        <p><Strong>Kontakt os her</Strong></p>
+        <p>Email: <a href="#">teamMMMD@failmail.dk</a></p>
+        <p>Mobil: <a href="#">+45 xxxxxxxx</a></p>
+        <p>&copy; 2024 Ønskeskyprojekt -</p>
+        <p>TeamMMMD (Mark, Martin, Mette, Daniel)</p>
+    </div>
+    <div class="brand-image-container">
+        <img src="/images/adidas.webp" alt="adidas" class="brand-image">
+        <img src="/images/lego.png" alt="lego" class="brand-image">
+        <img src="/images/nike.jpg" alt="nike" class="brand-image">
+        <img src="/images/victor.png" alt="victor" class="brand-image">
+        <img src="/images/yonex.jpg" alt="yonex" class="brand-image">
+        <img src="/images/lining.png" alt="yonex" class="brand-image">
+    </div>
 </footer>
 </body>
 </html>

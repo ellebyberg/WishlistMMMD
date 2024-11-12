@@ -2,42 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account</title>
+    <link rel="stylesheet" href="/wishlist.css">
 </head>
 <body>
-<h1>Create Account</h1>
-<div th:if="${invalidUserNameErr}">
-    <p th:text="${invalidUserNameErr}" style="color: red;">
-    </p>
-</div>
-<p>Please fill out all the fields below to create an account</p>
-<form action="/makemywishcometrue/saveAccount" method="post">
-    <label for="name"></label>
-    <input type="text" id="name" name="name" placeholder="Full Name" required> <br>
+<header class="header">
+    <div>
+        <h1>Ønskesky Projekt</h1>
+    </div>
+    <div>
+        <a th:href="@{/makemywishcometrue/homeView}" class="icon-link">
+            <img src="/icons/home.jpg" alt="Home" class="icon-image">
+        </a>
+        <a href="#" class="icon-link">
+            <img src="/icons/profile.jpg" alt="Profile" class="icon-image">
+        </a>
+        <a href="#" class="icon-link">
+            <img src="/icons/wishlist.jpg" alt="Wishlist" class="icon-image">
+        </a>
+    </div>
+</header>
+<profile>
+    <p>KAN PROFIL INDSÆTTES HER?</p>
+</profile>
+<main>
+    <div th:if="${invalidUserNameErr}">
+        <p th:text="${invalidUserNameErr}" style="color: red;">
+        </p>
+    </div>
+    <div class="loginBilledeContainer">
+        <div class="loginField">
+            <h2>Create Account</h2>            <form action="/makemywishcometrue/saveAccount" method="post">
+                <label class="usernamePasswordText" for="name">Full Name: </label>
+                <input type="text" id="name" name="name" required>
+                <br>
+                <label class="usernamePasswordText" for="birthday">Birthday: </label>
+                <input type="date" id="birthday" name="birthdate" required>
+                <br>
+                <label class="usernamePasswordText" for="username">Username: </label>
+                <input type="text" id="username" name="username" required>
+                <br>
+                <label class="usernamePasswordText" for="password">Password: </label>
+                <input type="password" id="password" name="password" required> <br>
+                <input type="checkbox" onclick="showPasswordCheckBox()">Show Password <br>
 
-    <select name="gender" required>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="Other">Other</option>
-    </select> <br>
+                <button class="createResetPasswordButton" type="submit">Create User</button>
+                <br>
+                <!--Nedenfor en tilbage knap som udgangspunkt til en homepage. -->
+                <a th:href="@{/makemywishcometrue/loginPage}">
+                    <button class="createResetPasswordButton" type="button">Go Back</button>
+                </a>
 
-    <label for="birthday">Birthday</label> <br>
-    <input type="date" id="birthday" name="birthdate" required>
-
-    <label for="username"></label> <br>
-    <input type="text" id="username" name="username" placeholder="Username" required>
-
-    <label for="password"></label> <br>
-    <input type="password" id="password" name="password" placeholder="Password" required> <br>
-    <input type="checkbox" onclick="showPasswordCheckBox()">Show Password <br>
-
-    <button type ="submit">Create User</button> <br>
-    <!--Nedenfor en tilbage knap som udgangspunkt til en homepage. -->
-    <a th:href="@{/makemywishcometrue/loginPage}"><button type="button">Go Back</button></a>
-
-
-</form>
-
+            </form>
+        </div>
+        <div>
+            <img src="/images/makemywishcometrue.png" alt="Wishlist" class="wishlist-image">
+        </div>
+    </div>
+</main>
+<footer class="footer">
+    <div>
+        <p><Strong>Kontakt os her</Strong></p>
+        <p>Email: <a href="#">teamMMMD@failmail.dk</a></p>
+        <p>Mobil: <a href="#">+45 xxxxxxxx</a></p>
+        <p>&copy; 2024 Ønskeskyprojekt -</p>
+        <p>TeamMMMD (Mark, Martin, Mette, Daniel)</p>
+    </div>
+    <div class="brand-image-container">
+        <img src="/images/adidas.webp" alt="adidas" class="brand-image">
+        <img src="/images/lego.png" alt="lego" class="brand-image">
+        <img src="/images/nike.jpg" alt="nike" class="brand-image">
+        <img src="/images/victor.png" alt="victor" class="brand-image">
+        <img src="/images/yonex.jpg" alt="yonex" class="brand-image">
+        <img src="/images/lining.png" alt="yonex" class="brand-image">
+    </div>
+</footer>
 </body>
 </html>
 <script>
