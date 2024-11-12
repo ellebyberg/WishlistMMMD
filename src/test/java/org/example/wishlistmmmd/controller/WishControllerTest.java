@@ -102,7 +102,7 @@ public class WishControllerTest {
         // at controlleren ikke bare reagerer korrekt på inddata, men at den også udfører de nødvendige operationer på serviceniveau.
         Mockito.verify(wishService).validateLogin(username, password);
         Mockito.verify(wishService).getUserIDFromDB(username);
-        Mockito.verify(wishService).checkExpiredListAndDelete();
+        Mockito.verify(wishService).checkExpiredListAndDelete(userID);
     }
 
 //    JEG KAN IKKE FÅ TEST MED DATE TIL AT KØRE KORREKT!!!
