@@ -59,7 +59,6 @@
                     <td th:text="${wishlist.listName}"></td> <!-- td angiver indhold af hver celle-->
                     <td th:text="${wishlist.expireDate}"></td> <!-- td angiver indhold af hver celle-->
 
-
                     <td>
                         <a th:href="@{/makemywishcometrue/{userID}/{wishListID}(userID=${UserProfile.userID}, wishListID=${wishlist.ID})}">
                             <button class="visønskelistebutton" type="button">Show list</button>
