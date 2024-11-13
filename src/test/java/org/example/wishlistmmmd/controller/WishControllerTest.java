@@ -131,30 +131,6 @@ public class WishControllerTest {
 ////        Mockito.verify(wishService).addUserToDB(testUser);
 //    }
 
-
-//@Test
-//void checkLoginStatus() {
-//}
-//
-//@Test
-//void loginPage() {
-//}
-//
-
-    //
-//@Test
-//void showCreateAccountPage() {
-//}
-//
-//@Test
-//void showResetPasswordPage() {
-//}
-//
-//@Test
-//void resetPasswordAction() {
-//}
-//
-
     @Test
     void showUserHomePage() throws Exception {
 
@@ -193,25 +169,4 @@ public class WishControllerTest {
 
 
     }
-//
-//@Test
-//void showSpecificWishList() {
-//}
-//
-//@Test
-//void createWishList() {
-//}
-//
-//@Test
-//void saveWishlist() {
-//}
-//
-//@Test
-//void deleteWishList() {
-//}
-//
-//@Test
-//void deleteWish() {
-//}
-//}
 }

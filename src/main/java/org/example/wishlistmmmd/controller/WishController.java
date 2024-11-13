@@ -16,13 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.sql.Date;
 import java.util.List;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.SQLException;
 
 @Controller //annotation som fortæller Spring at denne klasse håndterer HTTP-forespørgsler
-@RequestMapping("/makemywishcometrue") //annotation Endpoint som fortæller hvilken url / sti at alle forespørgslerne til denne controller skal have for at køre metoderne
+@RequestMapping("/makemywishcometrue")
+//annotation Endpoint som fortæller hvilken url / sti at alle forespørgslerne til denne controller skal have for at køre metoderne
 
 public class WishController {
 
@@ -40,12 +42,6 @@ public class WishController {
         this.session = session;
     }
 
-
-//    @GetMapping("/welcomePage")
-//    public String welcomePage() {
-//
-//    }
-//
     @PostMapping("/loginValidation")
     public String loginValidation(HttpServletRequest request, @RequestParam String username, @RequestParam String password) throws SQLException {
         if (ws.validateLogin(username, password)) { //Brugeren logger ind
@@ -59,7 +55,7 @@ public class WishController {
              */
 
             ws.checkExpiredListAndDelete(userID);
-            return "redirect:/makemywishcometrue/"+userID;
+            return "redirect:/makemywishcometrue/" + userID;
         } else {
             //Hvis validateLogin() ikke finder brugeren i DB, redirectes brugeren til login med en fejlbesked,
             //som vises i html view.
@@ -68,22 +64,23 @@ public class WishController {
     }
 
     @GetMapping("/loginPage")
-    public String loginPage(@RequestParam(value = "error", required = false)String error, Model model) {
+    public String loginPage(@RequestParam(value = "error", required = false) String error, Model model) {
         if (error != null) { //Tjekker på error=true i loginValidation endpoint. Hvis den bliver givet videre må det konstateres, at error ikke er null, og der foreligger en fejl.
             model.addAttribute("errorMessage", "Either username or password do not match. Please try again.");
         }
         return "login";
     }
+
     @PostMapping("/saveAccount")
     public String saveNewAccountToDB(@RequestParam String name, @RequestParam Date birthdate, @RequestParam String username, @RequestParam String password, RedirectAttributes redirectAttributes) throws SQLException {
 
-        UserProfile up = new UserProfile(name,birthdate, username, password);
+        UserProfile up = new UserProfile(name, birthdate, username, password);
 
         if (ws.isUsernameAvailable(username)) {
             ws.addUserToDB(up);
             int userIdFromDB = ws.getUserIDFromDB(username);
             up.setUserID(userIdFromDB);
-            return "redirect:/makemywishcometrue/"+up.getUserID();
+            return "redirect:/makemywishcometrue/" + up.getUserID();
         } else {
             //En anden måde at vise fejlbeskeder på(redirectAttributes). Dette er godt til ting,
             //som fejlbeskeder, der ikke skal persistere.
@@ -91,21 +88,24 @@ public class WishController {
             return "redirect:/makemywishcometrue/createAccountPage";
         }
     }
+
     @GetMapping("/createAccountPage")
     public String showCreateAccountPage() {
         return "createAccount";
     }
+
     @GetMapping("/showResetPasswordPage")
     public String showResetPasswordPage() {
         return "resetPassword";
     }
+
     @PostMapping("/resetPassword")
     public String resetPasswordAction(@RequestParam String password, @RequestParam String username, RedirectAttributes redirectAttributes) throws SQLException {
         if (!ws.isUsernameAvailable(username)) {
             ws.resetPassword(password, username);
             return "redirect:/makemywishcometrue/loginPage";
         } else {
-            redirectAttributes.addFlashAttribute("PasswordErr93","Something went wrong, please try again.");
+            redirectAttributes.addFlashAttribute("PasswordErr93", "Something went wrong, please try again.");
             return "redirect:/showResetPasswordPage";
         }
     }
@@ -125,7 +125,7 @@ public class WishController {
         List<WishList> listOfWishLists = ws.showListOfWishLists(userID);
         UserProfile up = ws.getUserData(userID);
         model.addAttribute("listOfWishLists", listOfWishLists);
-        model.addAttribute("UserProfile",up);
+        model.addAttribute("UserProfile", up);
         return "wishListView";
 
     }
@@ -143,9 +143,9 @@ public class WishController {
         UserProfile up = ws.getUserData(userID);
         model.addAttribute("wishListName", wishListName);
         model.addAttribute("listOfWishes", listOfWishes);
-        model.addAttribute("userID",userID);
-        model.addAttribute("UserProfile",up);
-        model.addAttribute("wishListID",wishListID);
+        model.addAttribute("userID", userID);
+        model.addAttribute("UserProfile", up);
+        model.addAttribute("wishListID", wishListID);
         return "wishView";
     }
 
@@ -158,7 +158,7 @@ public class WishController {
     @PostMapping("/saveWishList")
     public String saveWishlist(@RequestParam String listName, @RequestParam Date expireDate, @RequestParam int userID) {
         ws.createWishList(listName, expireDate, userID);
-        return "redirect:/makemywishcometrue/"+userID;
+        return "redirect:/makemywishcometrue/" + userID;
     }
 
     @GetMapping("/{userID}/{wishListID}/createWish")
@@ -177,13 +177,13 @@ public class WishController {
     @PostMapping("/deleteWishList/{userID}/{wishListID}")
     public String deleteWishList(@PathVariable int userID, @PathVariable int wishListID) {
         ws.deleteWishList(wishListID);
-        return "redirect:/makemywishcometrue/" +userID;
+        return "redirect:/makemywishcometrue/" + userID;
     }
 
     @PostMapping("/deleteWish/{userID}/{wishID}")
     public String deleteWish(@PathVariable int userID, @PathVariable int wishID) {
         ws.deleteWish(wishID);
-        return "redirect:/makemywishcometrue/"+ userID;
+        return "redirect:/makemywishcometrue/" + userID;
 
     }
 
