@@ -70,7 +70,7 @@ public class WishController {
     @GetMapping("/loginPage")
     public String loginPage(@RequestParam(value = "error", required = false)String error, Model model) {
         if (error != null) { //Tjekker på error=true i loginValidation endpoint. Hvis den bliver givet videre må det konstateres, at error ikke er null, og der foreligger en fejl.
-            model.addAttribute("errorMessage", "An error has occurred. Please try again.");
+            model.addAttribute("errorMessage", "Either username or password do not match. Please try again.");
         }
         return "login";
     }
