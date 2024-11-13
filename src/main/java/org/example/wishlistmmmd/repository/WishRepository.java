@@ -118,8 +118,8 @@ public class WishRepository {
         return up;
     }
 
-    public void checkExpiredListAndDelete() throws SQLException {
-        String sql = "SELECT wishListID FROM wishlist WHERE expireDate < ?";
+    public void checkExpiredListAndDelete(int userID) throws SQLException {
+        String sql = "SELECT wishListID FROM wishlist WHERE expireDate < ? AND userID = ?";
         LocalDate today = LocalDate.now();
         Date sqlDate = Date.valueOf(today);
         /* Vi tjekker, hvilke lister i DB, der er udløbet. Vi benytter os af transactions(delvist for sjov).
@@ -131,6 +131,7 @@ public class WishRepository {
 
             try (PreparedStatement ps = dbConnection.prepareStatement(sql)) {
                 ps.setDate(1, sqlDate);
+                ps.setInt(2, userID);
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
                         int wishListID = rs.getInt("wishListID");
