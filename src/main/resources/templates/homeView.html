@@ -17,17 +17,11 @@
         <a th:href="@{/makemywishcometrue/homeView}" class="icon-link">
             <img src="/icons/home.jpg" alt="Home" class="icon-image">
         </a>
-        <a href="#" class="icon-link">
-            <img src="/icons/profile.jpg" alt="Profile" class="icon-image">
-        </a>
-        <a href="#" class="icon-link">
-            <img src="/icons/wishlist.jpg" alt="Wishlist" class="icon-image">
+        <a th:href="@{/makemywishcometrue/createAccountPage}" class="icon-link">
+            <img src="/icons/createuser.png" alt="CreateAccount" class="icon-image">
         </a>
         <a th:href="@{/makemywishcometrue/loginPage}" class="icon-link">
             <img src="/icons/login.png" alt="Login" class="icon-image">
-        </a>
-        <a th:href="@{/makemywishcometrue/createAccountPage}" class="icon-link">
-            <img src="/icons/createuser.png" alt="CreateAccount" class="icon-image">
         </a>
     </div>
 </header>
@@ -35,16 +29,11 @@
 
 </profile>
 <main>
-    <div class="loginBilledeContainer">
-        <div>
-            <a th:href="@{/makemywishcometrue/loginPage}" class="icon-link">
-                <img src="/icons/login.png" alt="Login" class="login-image">
-            </a>
-        </div>
-        <div>
-            <a th:href="@{/makemywishcometrue/createAccountPage}" class="icon-link">
-                <img src="/icons/createuser.png" alt="CreateAccount" class="login-image">
-            </a>
+    <div class="forsideContainer">
+        <div class="forside-tekst-container">
+            <p class="forside-tekst">Lav din egen ønskeliste, vis den til familie og venner</p>
+            <p class="forside-tekst">og få præcis de gaver, du ønsker dig.</p>
+            <p class="forside-tekst">Perfekt til alle anledninger!</p>
         </div>
         <div>
             <img src="/images/makemywishcometrue.png" alt="Wishlist" class="wishlist-image">

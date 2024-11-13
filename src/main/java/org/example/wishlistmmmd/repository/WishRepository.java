@@ -60,36 +60,38 @@ public class WishRepository {
         try (PreparedStatement ps = dbConnection.prepareStatement(sql)) {
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    return rs.getInt(1) == 0;
-                }
+            if (rs.next()) {
+                return rs.getInt(1) == 0;
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return true;
     }
+
     public void resetPassword(String password, String username) throws SQLException {
         String sql = "UPDATE userprofile SET password = ? WHERE username = ?";
-        try(PreparedStatement ps = dbConnection.prepareStatement(sql)) {
+        try (PreparedStatement ps = dbConnection.prepareStatement(sql)) {
             ps.setString(1, password);
             ps.setString(2, username);
             ps.executeUpdate();
         }
     }
+
     public int getUserIDFromDB(String username) {
-        String sql ="SELECT userid FROM userprofile WHERE username=?";
+        String sql = "SELECT userid FROM userprofile WHERE username=?";
         int userID = -1;
 
-        try(PreparedStatement ps = dbConnection.prepareStatement(sql)) {
-            ps.setString(1,username);
+        try (PreparedStatement ps = dbConnection.prepareStatement(sql)) {
+            ps.setString(1, username);
 
-            try(ResultSet rs = ps.executeQuery() ) {
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     userID = rs.getInt("userid");
                 }
             }
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return userID;
@@ -141,7 +143,7 @@ public class WishRepository {
             }
 
             dbConnection.commit(); //Vi committer/gemmer vores ændringer ved succesfulde delete-operationer.
-        }catch(SQLException e) {
+        } catch (SQLException e) {
             dbConnection.rollback(); //Vi ruller DB tilbage, hvis der sker en exception.
             throw e;
         } finally {
@@ -158,14 +160,14 @@ public class WishRepository {
 
         String SQL = "INSERT INTO wishlist (listName, expireDate, userID) VALUES (?,?,?)";
 
-        try(PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
-            ps.setString(1,listName);
-            ps.setDate(2,expireDate);
-            ps.setInt(3,userID);
+        try (PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
+            ps.setString(1, listName);
+            ps.setDate(2, expireDate);
+            ps.setInt(3, userID);
             int affectedRows = ps.executeUpdate();
             //Eventuelt laver jeg metoden om til at returnere int (affected Rows), så jeg kan bruge dette i Controlleren
 
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -222,8 +224,8 @@ public class WishRepository {
     public void deleteWishList(int wishListID) {
         String SQL = "DELETE FROM wishlist WHERE wishListID=?";
 
-        try(PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
-            ps.setInt(1,wishListID);
+        try (PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
+            ps.setInt(1, wishListID);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -263,7 +265,7 @@ public class WishRepository {
 
 
     public void updateWish() {
-
+//TODO:
     }
 
     public void deleteWish(int wishID) {
@@ -287,10 +289,10 @@ public class WishRepository {
 
         String SQL = "SELECT listName FROM wishlist WHERE wishListID=?";
 
-        try(PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
-            ps.setInt(1,wishListID);
+        try (PreparedStatement ps = dbConnection.prepareStatement(SQL)) {
+            ps.setInt(1, wishListID);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 wishListName = rs.getString("listName");
 
             }
@@ -309,11 +311,11 @@ public class WishRepository {
         bruger prøver at tilgå en liste, som de ikke ejer.
          */
 
-        try(PreparedStatement ps = dbConnection.prepareStatement(sql)) {
+        try (PreparedStatement ps = dbConnection.prepareStatement(sql)) {
             ps.setInt(1, wishlistID);
             ps.setInt(2, userID);
-            try(ResultSet rs = ps.executeQuery()) {
-                if(rs.next()) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
                     String listName = rs.getString("listName");
                     Date expireDate = rs.getDate("expireDate");
                     int wishlistIDFromDB = rs.getInt("wishListID");
@@ -326,14 +328,9 @@ public class WishRepository {
                      */
                 }
             }
-        }catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-//        if (wishlist != null) { //Hvis listen findes i databasen returneres den med metoden
-//            return wishlist;
-//        } else { //Hvis den ikke findes i databasen kaster vi en exception for lettere fejlfinding.
-//            throw new NullPointerException("The wishlist could not be found or was not created properly. WR. L284");
-//        }
         return wishlist; //Vi tjekker for null værdier i Servicelag
     }
 }
