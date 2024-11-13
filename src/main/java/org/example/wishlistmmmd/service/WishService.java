@@ -77,8 +77,8 @@ public class WishService {
             return false;
         }
     }
-    public void checkExpiredListAndDelete() throws SQLException {
-        wr.checkExpiredListAndDelete();
+    public void checkExpiredListAndDelete(int userID) throws SQLException {
+        wr.checkExpiredListAndDelete(userID);
     }
     //////HJÆLPEMETODE TIL CONTROLLEREN////////
 

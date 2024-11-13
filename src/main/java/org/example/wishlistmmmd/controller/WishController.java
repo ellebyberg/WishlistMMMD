@@ -58,7 +58,7 @@ public class WishController {
             for at sikre, at brugeren ikke tilgår andre endpoints, der tilhører andre profiler.
              */
 
-            ws.checkExpiredListAndDelete();
+            ws.checkExpiredListAndDelete(userID);
             return "redirect:/makemywishcometrue/"+userID;
         } else {
             //Hvis validateLogin() ikke finder brugeren i DB, redirectes brugeren til login med en fejlbesked,
