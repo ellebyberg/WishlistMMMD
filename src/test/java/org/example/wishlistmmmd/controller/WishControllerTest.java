@@ -7,6 +7,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static java.util.Date.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -21,7 +22,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -68,6 +69,8 @@ public class WishControllerTest {
         name = testUser.getName();
         testUser.setUserID(3);
         userID = testUser.getUserID();
+        testUser.setBirthdate(Date.valueOf("1974-02-23"));
+        birthDate = (Date) testUser.getBirthdate();
 
         wishListID = 2;
         wishID = 1;
@@ -96,7 +99,8 @@ public class WishControllerTest {
         // hvilket indikerer, at login var succesfuldt, og brugeren blev omdirigeret til sin personlige side.
 
         //Verify: Bekræft at validateLogin bliver kaldt med de rigtige parametre
-        //Med verifikation sørger vi for, at controlleren ikke bare reagerer korrekt, men at den også interagerer korrekt med andre systemkomponenter.
+        //Med verifikation sørger vi for, at controlleren ikke bare reagerer korrekt, men at den også interagerer korrekt med andre systemkomponenter,
+        // her wishService.
         //Uden verifikation kunne vi have en test, der bekræfter, at en controller returnerer en korrekt status (f.eks. en redirect),
         //men vi ville ikke kunne vide, om den faktisk kaldte de nødvendige metoder i wishService. Det er især nyttigt for at sikre,
         // at controlleren ikke bare reagerer korrekt på inddata, men at den også udfører de nødvendige operationer på serviceniveau.
@@ -105,31 +109,37 @@ public class WishControllerTest {
         Mockito.verify(wishService).checkExpiredListAndDelete(userID);
     }
 
-//    JEG KAN IKKE FÅ TEST MED DATE TIL AT KØRE KORREKT!!!
-//    @Test
-//    void saveNewAccountToDB() throws Exception {
-//
-//        //Arrange
-//
-//        Mockito.when(wishService.isUsernameAvailable(username)).thenReturn(true);
-//        Mockito.doNothing().when(wishService).addUserToDB(testUser); //doNothing anvendes da metoden er void
-//        Mockito.when(wishService.getUserIDFromDB(username)).thenReturn(3);
-//
-//        //Act
-//        mockMvc.perform(post("/makemywishcometrue/saveAccount")
-//                        .param("name", name)
-//                        .param("birthdate", "")
-//                        .param("username", username)
-//                        .param("password",password))
-//
-//                //Assert
-//                .andExpect(status().is3xxRedirection())
-//                .andExpect(redirectedUrl("/makemywishcometrue/3"));
-//
-//                //Verify
-////        Mockito.verify(wishService).isUsernameAvailable(username);
-////        Mockito.verify(wishService).addUserToDB(testUser);
-//    }
+
+    @Test
+    void saveNewAccountToDB() throws Exception {
+
+        //Arrange
+        //Eftersom der i test af denne metode skal bruges et helt objekt af UserProfile, så havde jeg problemer med, at hvis det var et specifikt
+        //objekt, som jeg testede op imod, så fejlede testen, da værdierne selvom de var identiske ikke blev læst/identificeret korrekt (Date der drillede).
+        //Derfor benyttes i stedet Mockito ArgumentsMatchers, som gør at testen vil tillade match med ethvert UserProfile objekt, som har de rigtige værdier.
+        //Dvs. Ved at bruge any(UserProfile.class) i stedet for et specifikt UserProfile-objekt, matcher Mockito ethvert UserProfile-objekt, der bliver
+        //sendt som parameter til addUserToDB. Det gør, at vi undgår fejlen, der opstår, fordi objekterne ikke er identiske.
+
+        Mockito.when(wishService.isUsernameAvailable(username)).thenReturn(true);
+        Mockito.doNothing().when(wishService).addUserToDB(Mockito.any(UserProfile.class)); //doNothing anvendes da metoden er void.
+        Mockito.when(wishService.getUserIDFromDB(username)).thenReturn(3);
+
+        //Act
+        mockMvc.perform(post("/makemywishcometrue/saveAccount")
+                        .param("name", name)
+                        .param("birthdate", String.valueOf(birthDate))
+                        .param("username", username)
+                        .param("password",password))
+
+                //Assert
+                .andExpect(status().is3xxRedirection()) //Her kan ikke anvendes .isOk() da det er redirect
+                .andExpect(redirectedUrl("/makemywishcometrue/3"));
+
+                //Verify
+        Mockito.verify(wishService).isUsernameAvailable(username);
+        Mockito.verify(wishService).addUserToDB(Mockito.any(UserProfile.class));
+        Mockito.verify(wishService).getUserIDFromDB(username);
+    }
 
     @Test
     void showUserHomePage() throws Exception {
@@ -158,12 +168,12 @@ public class WishControllerTest {
         mockMvc.perform(get("/makemywishcometrue/" + userID))
 
                 // Assert: Tjek at det korrekte view returneres, og at statuskoden er 200 OK
-                .andExpect(status().isOk())
+                .andExpect(status().isOk()) //Her kan .isOk() anvendes, da metoden returnerer et nyt view
                 .andExpect(view().name("wishListView"))
                 .andExpect(model().attribute("listOfWishLists", mockWishLists))
                 .andExpect(model().attribute("UserProfile", testUser));
 
-        // Verify: Bekræft at showListOfWishLists og getUserData blev kaldt med det rigtige userID
+        // Verify: Bekræft at showListOfWishLists og getUserData blev kaldt korrekt med det rigtige userID
         Mockito.verify(wishService).showListOfWishLists(userID);
         Mockito.verify(wishService).getUserData(userID);
 
